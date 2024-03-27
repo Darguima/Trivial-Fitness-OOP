@@ -4,7 +4,7 @@
 
 This project was developed for the subject OOP (POO in portuguese) from University of Minho - Software Engineering degree.
 
-#### Grade ⭐️ ?/20
+#### Grade ⭐️ ⚠️⚠️ Complete this after the project is done ⚠️⚠️/20
 
 ### Demo 📽️
 
@@ -49,8 +49,41 @@ $ cd Trivial-Fitness-OOP/
 ```
 
 ##### Compiling the code 🛠️
+
+Java compiler will create a `bin/` folder with the compiled classes. Then you can execute the Main class, or pack the classes in a JAR file, as on the next command.
+
 ```bash
 $ make
+
+# With debug flags
+$ DEBUG=1 make
+
+# Running the class
+$ cd bin && java Main <...params>
+```
+
+##### Packing the classes 🛠️📦️
+
+If you want to distribute the project, you can pack the classes in a JAR file:
+
+```bash
+$ make compile-jar
+
+# Executing program
+$ java -jar trivial-fitness.jar
+```
+
+##### Developing
+
+This function `clean`, `compile` in debug mode and `execute` the project
+
+```bash
+$ make dev <...params>
+```
+
+##### Cleaning classes files and JAR executable
+```bash
+$ make clean
 ```
 
 ## Developed by 🧑‍💻:
