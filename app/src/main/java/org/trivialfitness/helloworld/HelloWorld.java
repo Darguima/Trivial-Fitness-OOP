@@ -1,4 +1,4 @@
-package helloworld;
+package org.trivialfitness.helloworld;
 
 public class HelloWorld {
   public static void HelloWorldMessage() {

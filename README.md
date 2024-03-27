@@ -48,42 +48,43 @@ Start by going to the project root folder:
 $ cd Trivial-Fitness-OOP/
 ```
 
-##### Compiling the code 🛠️
-
-Java compiler will create a `bin/` folder with the compiled classes. Then you can execute the Main class, or pack the classes in a JAR file, as on the next command.
+This project uses Gradle to manage dependencies and tasks. To get a full list of tasks, you can run:
 
 ```bash
-$ make
+$ ./gradlew tasks
+```
 
-# With debug flags
-$ DEBUG=1 make
+Although, I explain here the most important ones.
 
-# Running the class
-$ cd bin && java Main <...params>
+##### Compiling the code 🛠️
+
+```bash
+$ ./gradlew build
 ```
 
 ##### Packing the classes 🛠️📦️
 
-If you want to distribute the project, you can pack the classes in a JAR file:
+If you want to distribute the project, you can pack the classes in an executable file:
 
 ```bash
-$ make compile-jar
+$ ./gradlew distZip
 
-# Executing program
-$ java -jar trivial-fitness.jar
+# Unzipping the file
+$ unzip app/build/distributions/trivial-fitness.zip
+
+# Executing program - needs be with Java 21
+$ ./trivial-fitness/bin/app
 ```
 
-##### Developing
-
-This function `clean`, `compile` in debug mode and `execute` the project
+##### Developing 🧑‍💻
 
 ```bash
-$ make dev <...params>
+$ ./gradlew run
 ```
 
-##### Cleaning classes files and JAR executable
+##### Cleaning build files 🧹
 ```bash
-$ make clean
+$ ./gradlew clean
 ```
 
 ## Developed by 🧑‍💻:
