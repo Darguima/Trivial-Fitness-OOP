@@ -56,6 +56,12 @@ $ ./gradlew tasks
 
 Although, I explain here the most important ones.
 
+##### Developing 🧑‍💻
+
+```bash
+$ ./gradlew run
+```
+
 ##### Compiling the code 🛠️
 
 ```bash
@@ -74,12 +80,6 @@ $ unzip app/build/distributions/trivial-fitness.zip
 
 # Executing program - needs be with Java 21
 $ ./trivial-fitness/bin/app
-```
-
-##### Developing 🧑‍💻
-
-```bash
-$ ./gradlew run
 ```
 
 ##### Cleaning build files 🧹
