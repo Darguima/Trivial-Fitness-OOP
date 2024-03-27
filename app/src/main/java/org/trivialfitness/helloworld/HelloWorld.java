@@ -1,7 +1,7 @@
 package org.trivialfitness.helloworld;
 
 public class HelloWorld {
-  public static void helloWorldMessage() {
+  public static void HelloWorldMessage() {
     System.out.println("Hello World!");
   }
 
