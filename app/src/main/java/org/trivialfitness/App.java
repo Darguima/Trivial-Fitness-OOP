@@ -3,7 +3,6 @@ package org.trivialfitness;
 import org.trivialfitness.helloworld.HelloWorld;
 
 public class App {
-
 	public String getGreeting() {
 		return "Hello World!";
 	}
@@ -13,5 +12,4 @@ public class App {
 		HelloWorld.helloWorldMessage();
 		HelloWorld.byeWorldMessage();
 	}
-
 }
