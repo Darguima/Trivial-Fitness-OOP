@@ -4,5 +4,8 @@
 # Ignore Gradle build output directory
 build
 
+# Ignore Gradle formatter classes output directory
+app/bin
+
 # Ignore distZip extracted folder
 /trivial-fitness
