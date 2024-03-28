@@ -9,6 +9,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
     id("com.github.spotbugs") version "6.0.9"
+    id("io.spring.javaformat") version "0.0.41"
 }
 
 repositories {
@@ -36,6 +37,15 @@ java {
 application {
     // Define the main class for the application.
     mainClass = "org.trivialfitness.App"
+}
+
+// Formatting code while developing
+tasks.named<JavaExec>("run") {
+    dependsOn("format")
+}
+
+tasks.named("compileJava") {
+    mustRunAfter("formatMain")
 }
 
 tasks.named<Test>("test") {
