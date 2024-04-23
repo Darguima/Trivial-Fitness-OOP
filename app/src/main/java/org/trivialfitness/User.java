@@ -43,7 +43,7 @@ public abstract class User {
 	public abstract double calculateFitnessMultiplier();
 
 	public void addActivity(Activitie activity) {
-		activities.add(activity.clone());
+		activities.add(activity.copy());
 	}
 
 	// Getters
@@ -69,18 +69,18 @@ public abstract class User {
 
 	public List<Activitie> getActivities() {
 		// return copy of activities using streams, and using clone method
-		return activities.stream().map(Activitie::clone).collect(Collectors.toList());
+		return activities.stream().map(Activitie::copy).collect(Collectors.toList());
 
 	}
 
 	public List<TrainingPlan> getTrainingPlans() {
 		// return copy of trainingPlans using streams, and using clone method
-		return trainingPlans.stream().map(TrainingPlan::clone).collect(Collectors.toList());
+		return trainingPlans.stream().map(TrainingPlan::copy).collect(Collectors.toList());
 	}
 
 	public void seTrainingPlans(List<TrainingPlan> trainingPlans) {
 		// return copy of trainingPlans using streams, and using clone method
-		this.trainingPlans = trainingPlans.stream().map(TrainingPlan::clone).collect(Collectors.toList());
+		this.trainingPlans = trainingPlans.stream().map(TrainingPlan::copy).collect(Collectors.toList());
 	}
 
 }

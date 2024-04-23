@@ -36,7 +36,7 @@ public class DistanceAndElevationActivity extends Activitie {
 	}
 
 	@Override
-	public DistanceAndElevationActivity clone() {
+	public DistanceAndElevationActivity copy() {
 
 		return new DistanceAndElevationActivity(this.getDurationInMinutes(), this.getAverageHeartRate(), this.distance,
 				this.elevationGain, this.getDescription());

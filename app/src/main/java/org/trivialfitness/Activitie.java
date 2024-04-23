@@ -22,7 +22,7 @@ public abstract class Activitie implements Serializable {
 		this.description = "";
 	}
 
-	public abstract Activitie clone();
+	public abstract Activitie copy();
 
 	public abstract double calculateCalories(User user);
 

@@ -36,7 +36,7 @@ public class WeightedRepetitionActivity extends Activitie {
 	}
 
 	@Override
-	public WeightedRepetitionActivity clone() {
+	public WeightedRepetitionActivity copy() {
 		return new WeightedRepetitionActivity(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions,
 				this.weight, this.getDescription());
 	}

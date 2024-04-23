@@ -23,7 +23,7 @@ public class RepetitionActivity extends Activitie {
 	}
 
 	@Override
-	public RepetitionActivity clone() {
+	public RepetitionActivity copy() {
 		return new RepetitionActivity(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions,
 				this.getDescription());
 	}

@@ -23,7 +23,7 @@ public class DistanceActivity extends Activitie {
 	}
 
 	@Override
-	public DistanceActivity clone() {
+	public DistanceActivity copy() {
 		return new DistanceActivity(this.getDurationInMinutes(), this.getAverageHeartRate(), this.distance,
 				this.getDescription());
 	}

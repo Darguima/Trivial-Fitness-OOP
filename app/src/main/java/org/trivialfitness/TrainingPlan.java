@@ -23,7 +23,7 @@ public class TrainingPlan implements Serializable {
 	}
 
 	public void addActivity(Activitie activity) {
-		this.activities.add(activity.clone());
+		this.activities.add(activity.copy());
 	}
 
 	public LocalDate getDate() {
@@ -36,15 +36,15 @@ public class TrainingPlan implements Serializable {
 
 	public List<Activitie> getActivities() {
 
-		return activities.stream().map(Activitie::clone).collect(Collectors.toList());
+		return activities.stream().map(Activitie::copy).collect(Collectors.toList());
 	}
 
 	public void setActivities(List<Activitie> activities) {
 
-		this.activities = activities.stream().map(Activitie::clone).collect(Collectors.toList());
+		this.activities = activities.stream().map(Activitie::copy).collect(Collectors.toList());
 	}
 
-	public TrainingPlan clone() {
+	public TrainingPlan copy() {
 
 		TrainingPlan trainingPlan = new TrainingPlan(this.date);
 		trainingPlan.setActivities(this.activities);
