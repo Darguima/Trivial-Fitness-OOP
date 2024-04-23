@@ -1,53 +1,53 @@
 package org.trivialfitness;
+
 import java.io.Serializable;
 
-
 public abstract class Activitie implements Serializable {
-    private int durationInMinutes; // duration in minutes 
-    private int averageHeartRate; // average heart rate in bpm
-    private String description;  // description of the activity
 
+	private int durationInMinutes; // duration in minutes
 
-    public Activitie(int durationInMinutes, int averageHeartRate, String description) {
-        this.durationInMinutes = durationInMinutes;
-        this.averageHeartRate = averageHeartRate;
-        this.description = description;
-    }
+	private int averageHeartRate; // average heart rate in bpm
 
-    public Activitie () {
-        this.durationInMinutes = 0;
-        this.averageHeartRate = 0;
-        this.description = "";
-    }
+	private String description; // description of the activity
 
-    public abstract Activitie clone();
+	public Activitie(int durationInMinutes, int averageHeartRate, String description) {
+		this.durationInMinutes = durationInMinutes;
+		this.averageHeartRate = averageHeartRate;
+		this.description = description;
+	}
 
+	public Activitie() {
+		this.durationInMinutes = 0;
+		this.averageHeartRate = 0;
+		this.description = "";
+	}
 
-  
-    public abstract double calculateCalories(User user);
+	public abstract Activitie clone();
 
-    
-    public int getDurationInMinutes() {
-        return this.durationInMinutes;
-    }
+	public abstract double calculateCalories(User user);
 
-    public void setDurationInMinutes(int durationInMinutes) {
-        this.durationInMinutes = durationInMinutes;
-    }
+	public int getDurationInMinutes() {
+		return this.durationInMinutes;
+	}
 
-    public int getAverageHeartRate() {
-        return this.averageHeartRate;
-    }
+	public void setDurationInMinutes(int durationInMinutes) {
+		this.durationInMinutes = durationInMinutes;
+	}
 
-    public void setAverageHeartRate(int averageHeartRate) {
-        this.averageHeartRate = averageHeartRate;
-    }
+	public int getAverageHeartRate() {
+		return this.averageHeartRate;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setAverageHeartRate(int averageHeartRate) {
+		this.averageHeartRate = averageHeartRate;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }
