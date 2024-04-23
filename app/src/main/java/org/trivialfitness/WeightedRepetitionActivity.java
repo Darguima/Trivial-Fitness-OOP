@@ -46,4 +46,5 @@ public class WeightedRepetitionActivity extends Activitie {
 
 		return (repetitions * weight * 0.03) * user.calculateFitnessMultiplier();
 	}
+
 }
