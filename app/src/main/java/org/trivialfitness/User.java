@@ -16,11 +16,13 @@ public abstract class User {
 
 	private int averageHeartRate;
 
+	private double weight;
+
 	private List<Activitie> activities;
 
 	private List<TrainingPlan> trainingPlans;
 
-	public User(String userId, String name, String address, String email, int averageHeartRate) {
+	public User(String userId, String name, String address, String email, int averageHeartRate, double weight) {
 		this.userId = userId;
 		this.name = name;
 		this.address = address;
@@ -28,6 +30,7 @@ public abstract class User {
 		this.averageHeartRate = averageHeartRate;
 		this.activities = new ArrayList<>();
 		this.trainingPlans = new ArrayList<>();
+		this.weight = weight;
 	}
 
 	public User() {
@@ -38,6 +41,7 @@ public abstract class User {
 		this.averageHeartRate = 0;
 		this.activities = new ArrayList<>();
 		this.trainingPlans = new ArrayList<>();
+		this.weight = 0;
 	}
 
 	public abstract double calculateFitnessMultiplier();
@@ -65,6 +69,10 @@ public abstract class User {
 
 	public int getAverageHeartRate() {
 		return averageHeartRate;
+	}
+
+	public double getWeight() {
+		return weight;
 	}
 
 	public List<Activitie> getActivities() {

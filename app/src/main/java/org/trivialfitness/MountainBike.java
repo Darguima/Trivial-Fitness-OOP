@@ -1,19 +1,21 @@
 package org.trivialfitness;
 
-public class DistanceAndElevationActivity extends Activitie {
+// bicicleta de montanha
+
+public class MountainBike extends Activitie {
 
 	private double distance; // distance in kilometers
 
 	private double elevationGain; // elevation gain in meters
 
-	public DistanceAndElevationActivity(int durationInMinutes, int averageHeartRate, double distance,
-			double elevationGain, String description) {
+	public MountainBike(int durationInMinutes, int averageHeartRate, double distance, double elevationGain,
+			String description) {
 		super(durationInMinutes, averageHeartRate, description);
 		this.distance = distance;
 		this.elevationGain = elevationGain;
 	}
 
-	public DistanceAndElevationActivity() {
+	public MountainBike() {
 		super();
 		this.distance = 0;
 		this.elevationGain = 0;
@@ -36,9 +38,9 @@ public class DistanceAndElevationActivity extends Activitie {
 	}
 
 	@Override
-	public DistanceAndElevationActivity copy() {
+	public MountainBike copy() {
 
-		return new DistanceAndElevationActivity(this.getDurationInMinutes(), this.getAverageHeartRate(), this.distance,
+		return new MountainBike(this.getDurationInMinutes(), this.getAverageHeartRate(), this.distance,
 				this.elevationGain, this.getDescription());
 	}
 

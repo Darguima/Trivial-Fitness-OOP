@@ -1,19 +1,18 @@
 package org.trivialfitness;
 
-public class WeightedRepetitionActivity extends Activitie {
+public class BenchPress extends Activitie {
 
 	private int repetitions; // number of repetitions
 
 	private double weight; // weight in kilograms
 
-	public WeightedRepetitionActivity(int durationInMinutes, int averageHeartRate, int repetitions, double weight,
-			String description) {
+	public BenchPress(int durationInMinutes, int averageHeartRate, int repetitions, double weight, String description) {
 		super(durationInMinutes, averageHeartRate, description);
 		this.repetitions = repetitions;
 		this.weight = weight;
 	}
 
-	public WeightedRepetitionActivity() {
+	public BenchPress() {
 		super();
 		this.repetitions = 0;
 		this.weight = 0;
@@ -36,9 +35,9 @@ public class WeightedRepetitionActivity extends Activitie {
 	}
 
 	@Override
-	public WeightedRepetitionActivity copy() {
-		return new WeightedRepetitionActivity(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions,
-				this.weight, this.getDescription());
+	public BenchPress copy() {
+		return new BenchPress(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions, this.weight,
+				this.getDescription());
 	}
 
 	@Override

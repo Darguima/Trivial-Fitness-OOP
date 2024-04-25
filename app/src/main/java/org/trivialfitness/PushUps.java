@@ -1,15 +1,16 @@
 package org.trivialfitness;
 
-public class RepetitionActivity extends Activitie {
+// flexoes
+public class PushUps extends Activitie {
 
 	private int repetitions; // number of repetitions
 
-	public RepetitionActivity(int durationInMinutes, int averageHeartRate, int repetitions, String description) {
+	public PushUps(int durationInMinutes, int averageHeartRate, int repetitions, String description) {
 		super(durationInMinutes, averageHeartRate, description);
 		this.repetitions = repetitions;
 	}
 
-	public RepetitionActivity() {
+	public PushUps() {
 		super();
 		this.repetitions = 0;
 	}
@@ -23,8 +24,8 @@ public class RepetitionActivity extends Activitie {
 	}
 
 	@Override
-	public RepetitionActivity copy() {
-		return new RepetitionActivity(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions,
+	public PushUps copy() {
+		return new PushUps(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions,
 				this.getDescription());
 	}
 

@@ -1,15 +1,16 @@
 package org.trivialfitness;
 
-public class DistanceActivity extends Activitie {
+// esta atividade representa canoagem
+public class Rowing extends Activitie {
 
 	private double distance; // distance in kilometers
 
-	public DistanceActivity(int durationInMinutes, int averageHeartRate, double distance, String description) {
+	public Rowing(int durationInMinutes, int averageHeartRate, double distance, String description) {
 		super(durationInMinutes, averageHeartRate, description);
 		this.distance = distance;
 	}
 
-	public DistanceActivity() {
+	public Rowing() {
 		super();
 		this.distance = 0;
 	}
@@ -23,8 +24,8 @@ public class DistanceActivity extends Activitie {
 	}
 
 	@Override
-	public DistanceActivity copy() {
-		return new DistanceActivity(this.getDurationInMinutes(), this.getAverageHeartRate(), this.distance,
+	public Rowing copy() {
+		return new Rowing(this.getDurationInMinutes(), this.getAverageHeartRate(), this.distance,
 				this.getDescription());
 	}
 
