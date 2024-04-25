@@ -6,10 +6,6 @@ public class AmateurUser extends User {
 		super(userId, name, address, email, averageHeartRate, weight);
 	}
 
-	public AmateurUser() {
-		super();
-	}
-
 	@Override
 	public double calculateFitnessMultiplier() {
 

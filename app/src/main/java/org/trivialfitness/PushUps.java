@@ -5,8 +5,8 @@ public class PushUps extends Activity {
 
 	private int repetitions; // number of repetitions
 
-	public PushUps(int durationInMinutes, int averageHeartRate, int repetitions, String description) {
-		super(durationInMinutes, averageHeartRate, description);
+	public PushUps(int durationInMinutes, int averageHeartRate, int repetitions) {
+		super(durationInMinutes, averageHeartRate);
 		this.repetitions = repetitions;
 	}
 
@@ -25,8 +25,7 @@ public class PushUps extends Activity {
 
 	@Override
 	public PushUps copy() {
-		return new PushUps(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions,
-				this.getDescription());
+		return new PushUps(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions);
 	}
 
 	@Override

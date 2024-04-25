@@ -7,10 +7,6 @@ public class ProfessionalUser extends User {
 		super(userId, name, address, email, averageHeartRate, weight);
 	}
 
-	public ProfessionalUser() {
-		super();
-	}
-
 	@Override
 	public double calculateFitnessMultiplier() {
 		double baseMultiplier = 1.2;

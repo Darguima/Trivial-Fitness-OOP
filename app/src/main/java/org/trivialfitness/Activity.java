@@ -8,18 +8,16 @@ public abstract class Activity implements Serializable {
 
 	private int averageHeartRate; // average heart rate in bpm
 
-	private String description; // description of the Activity
-
-	public Activity(int durationInMinutes, int averageHeartRate, String description) {
+	public Activity(int durationInMinutes, int averageHeartRate) {
 		this.durationInMinutes = durationInMinutes;
 		this.averageHeartRate = averageHeartRate;
-		this.description = description;
+
 	}
 
 	public Activity() {
 		this.durationInMinutes = 0;
 		this.averageHeartRate = 0;
-		this.description = "";
+
 	}
 
 	public abstract Activity copy();
@@ -40,14 +38,6 @@ public abstract class Activity implements Serializable {
 
 	public void setAverageHeartRate(int averageHeartRate) {
 		this.averageHeartRate = averageHeartRate;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 }

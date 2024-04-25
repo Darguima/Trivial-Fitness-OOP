@@ -8,9 +8,8 @@ public class MountainBike extends Activity {
 
 	private double elevationGain; // elevation gain in meters
 
-	public MountainBike(int durationInMinutes, int averageHeartRate, double distance, double elevationGain,
-			String description) {
-		super(durationInMinutes, averageHeartRate, description);
+	public MountainBike(int durationInMinutes, int averageHeartRate, double distance, double elevationGain) {
+		super(durationInMinutes, averageHeartRate);
 		this.distance = distance;
 		this.elevationGain = elevationGain;
 	}
@@ -41,7 +40,7 @@ public class MountainBike extends Activity {
 	public MountainBike copy() {
 
 		return new MountainBike(this.getDurationInMinutes(), this.getAverageHeartRate(), this.distance,
-				this.elevationGain, this.getDescription());
+				this.elevationGain);
 	}
 
 	@Override

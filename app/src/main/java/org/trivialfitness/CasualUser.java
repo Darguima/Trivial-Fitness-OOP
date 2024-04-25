@@ -7,11 +7,6 @@ public class CasualUser extends User {
 
 	}
 
-	public CasualUser() {
-		super();
-
-	}
-
 	@Override
 	public double calculateFitnessMultiplier() {
 		double baseMultiplier = 0.75;

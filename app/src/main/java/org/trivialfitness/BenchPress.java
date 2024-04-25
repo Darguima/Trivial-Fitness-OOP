@@ -6,8 +6,8 @@ public class BenchPress extends Activity {
 
 	private double weight; // weight in kilograms
 
-	public BenchPress(int durationInMinutes, int averageHeartRate, int repetitions, double weight, String description) {
-		super(durationInMinutes, averageHeartRate, description);
+	public BenchPress(int durationInMinutes, int averageHeartRate, int repetitions, double weight) {
+		super(durationInMinutes, averageHeartRate);
 		this.repetitions = repetitions;
 		this.weight = weight;
 	}
@@ -36,8 +36,7 @@ public class BenchPress extends Activity {
 
 	@Override
 	public BenchPress copy() {
-		return new BenchPress(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions, this.weight,
-				this.getDescription());
+		return new BenchPress(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions, this.weight);
 	}
 
 	@Override

@@ -5,8 +5,8 @@ public class Rowing extends Activity {
 
 	private double distance; // distance in kilometers
 
-	public Rowing(int durationInMinutes, int averageHeartRate, double distance, String description) {
-		super(durationInMinutes, averageHeartRate, description);
+	public Rowing(int durationInMinutes, int averageHeartRate, double distance) {
+		super(durationInMinutes, averageHeartRate);
 		this.distance = distance;
 	}
 
@@ -25,8 +25,7 @@ public class Rowing extends Activity {
 
 	@Override
 	public Rowing copy() {
-		return new Rowing(this.getDurationInMinutes(), this.getAverageHeartRate(), this.distance,
-				this.getDescription());
+		return new Rowing(this.getDurationInMinutes(), this.getAverageHeartRate(), this.distance);
 	}
 
 	@Override
