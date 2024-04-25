@@ -31,10 +31,10 @@ public class PushUps extends Activitie {
 
 	@Override
 	public double calculateCalories(User user) {
-     
-        double caloriesPerRep = 0.11;
+
+		double caloriesPerRep = 0.11;
 		double weightLifted = user.getWeight() * 0.64;
-        return repetitions * weightLifted*caloriesPerRep * user.calculateFitnessMultiplier();
-    }
+		return repetitions * weightLifted * caloriesPerRep * user.calculateFitnessMultiplier();
+	}
 
 }
