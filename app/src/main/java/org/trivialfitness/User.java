@@ -18,7 +18,7 @@ public abstract class User {
 
 	private double weight;
 
-	private List<Activitie> activities;
+	private List<Activity> Activitys;
 
 	private List<TrainingPlan> trainingPlans;
 
@@ -28,7 +28,7 @@ public abstract class User {
 		this.address = address;
 		this.email = email;
 		this.averageHeartRate = averageHeartRate;
-		this.activities = new ArrayList<>();
+		this.Activitys = new ArrayList<>();
 		this.trainingPlans = new ArrayList<>();
 		this.weight = weight;
 	}
@@ -39,15 +39,15 @@ public abstract class User {
 		this.address = "";
 		this.email = "";
 		this.averageHeartRate = 0;
-		this.activities = new ArrayList<>();
+		this.Activitys = new ArrayList<>();
 		this.trainingPlans = new ArrayList<>();
 		this.weight = 0;
 	}
 
 	public abstract double calculateFitnessMultiplier();
 
-	public void addActivity(Activitie activity) {
-		activities.add(activity.copy());
+	public void addActivity(Activity activity) {
+		Activitys.add(activity.copy());
 	}
 
 	// Getters
@@ -75,9 +75,9 @@ public abstract class User {
 		return weight;
 	}
 
-	public List<Activitie> getActivities() {
-		// return copy of activities using streams, and using clone method
-		return activities.stream().map(Activitie::copy).collect(Collectors.toList());
+	public List<Activity> getActivitys() {
+		// return copy of Activitys using streams, and using clone method
+		return Activitys.stream().map(Activity::copy).collect(Collectors.toList());
 
 	}
 

@@ -2,27 +2,27 @@ package org.trivialfitness;
 
 import java.io.Serializable;
 
-public abstract class Activitie implements Serializable {
+public abstract class Activity implements Serializable {
 
 	private int durationInMinutes; // duration in minutes
 
 	private int averageHeartRate; // average heart rate in bpm
 
-	private String description; // description of the activity
+	private String description; // description of the Activity
 
-	public Activitie(int durationInMinutes, int averageHeartRate, String description) {
+	public Activity(int durationInMinutes, int averageHeartRate, String description) {
 		this.durationInMinutes = durationInMinutes;
 		this.averageHeartRate = averageHeartRate;
 		this.description = description;
 	}
 
-	public Activitie() {
+	public Activity() {
 		this.durationInMinutes = 0;
 		this.averageHeartRate = 0;
 		this.description = "";
 	}
 
-	public abstract Activitie copy();
+	public abstract Activity copy();
 
 	public abstract double calculateCalories(User user);
 

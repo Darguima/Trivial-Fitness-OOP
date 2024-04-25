@@ -10,20 +10,20 @@ public class TrainingPlan implements Serializable {
 
 	private LocalDate date;
 
-	private List<Activitie> activities;
+	private List<Activity> Activitys;
 
 	public TrainingPlan(LocalDate date) {
 		this.date = date;
-		this.activities = new ArrayList<>();
+		this.Activitys = new ArrayList<>();
 	}
 
 	public TrainingPlan() {
 		this.date = LocalDate.now();
-		this.activities = new ArrayList<>();
+		this.Activitys = new ArrayList<>();
 	}
 
-	public void addActivity(Activitie activity) {
-		this.activities.add(activity.copy());
+	public void addActivity(Activity activity) {
+		this.Activitys.add(activity.copy());
 	}
 
 	public LocalDate getDate() {
@@ -34,20 +34,20 @@ public class TrainingPlan implements Serializable {
 		this.date = date;
 	}
 
-	public List<Activitie> getActivities() {
+	public List<Activity> getActivitys() {
 
-		return activities.stream().map(Activitie::copy).collect(Collectors.toList());
+		return Activitys.stream().map(Activity::copy).collect(Collectors.toList());
 	}
 
-	public void setActivities(List<Activitie> activities) {
+	public void setActivitys(List<Activity> Activitys) {
 
-		this.activities = activities.stream().map(Activitie::copy).collect(Collectors.toList());
+		this.Activitys = Activitys.stream().map(Activity::copy).collect(Collectors.toList());
 	}
 
 	public TrainingPlan copy() {
 
 		TrainingPlan trainingPlan = new TrainingPlan(this.date);
-		trainingPlan.setActivities(this.activities);
+		trainingPlan.setActivitys(this.Activitys);
 		return trainingPlan;
 	}
 

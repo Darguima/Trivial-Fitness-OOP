@@ -1,6 +1,6 @@
 package org.trivialfitness;
 
-public class BenchPress extends Activitie {
+public class BenchPress extends Activity {
 
 	private int repetitions; // number of repetitions
 

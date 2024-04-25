@@ -1,7 +1,7 @@
 package org.trivialfitness;
 
 // flexoes
-public class PushUps extends Activitie {
+public class PushUps extends Activity {
 
 	private int repetitions; // number of repetitions
 

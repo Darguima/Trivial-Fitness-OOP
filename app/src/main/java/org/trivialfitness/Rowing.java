@@ -1,7 +1,7 @@
 package org.trivialfitness;
 
 // esta atividade representa canoagem
-public class Rowing extends Activitie {
+public class Rowing extends Activity {
 
 	private double distance; // distance in kilometers
 

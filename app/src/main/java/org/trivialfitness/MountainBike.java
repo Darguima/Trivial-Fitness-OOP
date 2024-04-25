@@ -2,7 +2,7 @@ package org.trivialfitness;
 
 // bicicleta de montanha
 
-public class MountainBike extends Activitie {
+public class MountainBike extends Activity {
 
 	private double distance; // distance in kilometers
 
