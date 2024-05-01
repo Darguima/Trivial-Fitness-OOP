@@ -57,7 +57,7 @@ public class TrainingPlan implements Serializable {
 			// if the activity has a null date we will check if it is before the current
 			// date
 			if (activity.getDate() == null && activity.dayIsBefore(datebefore, nowDate)) {
-				user.addActivity(activity, nowDate);
+				user.addTrainingPlanActivityToUser(user, activity, nowDate);
 			}
 		}
 	}

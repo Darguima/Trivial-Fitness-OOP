@@ -39,6 +39,10 @@ public abstract class User {
 
 	public abstract double calculateFitnessMultiplier();
 
+	public void addTrainingPlanActivityToUser(User user, Activity activity, LocalDate nowDate) {
+		pastActivities.add(activity.copy(nowDate));
+	}
+
 	public void addActivity(Activity activity, LocalDate nowdate) {
 		if (activity.isCompleted(nowdate)) {
 			pastActivities.add(activity.copy(nowdate));
