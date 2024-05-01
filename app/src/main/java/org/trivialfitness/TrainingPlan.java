@@ -54,7 +54,9 @@ public class TrainingPlan implements Serializable {
 	// function dayIsBeforeCurrentDay
 	public void addTrainingPlanActivityToUser(User user, LocalDate datebefore, LocalDate nowDate) {
 		for (Activity activity : this.activities) {
-			if (activity.dayIsBefore(datebefore, nowDate)) {
+			// if the activity has a null date we will check if it is before the current
+			// date
+			if (activity.getDate() == null && activity.dayIsBefore(datebefore, nowDate)) {
 				user.addActivity(activity, nowDate);
 			}
 		}
