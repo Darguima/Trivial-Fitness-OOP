@@ -1,5 +1,6 @@
 package org.trivialfitness;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 public class BenchPress extends Activity {
@@ -15,11 +16,18 @@ public class BenchPress extends Activity {
 		this.weight = weight;
 	}
 
-	public BenchPress(LocalDate date) {
+	public BenchPress(LocalDate date, int durationInMinutes) {
 		// Scheduled Activity constructor
-		super(date);
+		super(date, durationInMinutes);
 		this.repetitions = 0;
 		this.weight = 0;
+	}
+
+	public BenchPress(DayOfWeek day, int repetitions, double weight) {
+		// Training Plan Activity constructor
+		super(day);
+		this.repetitions = repetitions; // random value
+		this.weight = weight; // random value
 	}
 
 	public int getRepetitions() {
@@ -39,19 +47,24 @@ public class BenchPress extends Activity {
 	}
 
 	@Override
-	public BenchPress copy() {
-		if (this.isCompleted()) {
+	public BenchPress copy(LocalDate datenow) {
+		if (this.isCompleted(datenow)) {
 			return new BenchPress(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions,
 					this.weight, this.getDate());
 		}
 		else {
-			return new BenchPress(this.getDate());
+			if (this.getDate() != null) {
+				return new BenchPress(this.getDate(), this.getDurationInMinutes());
+			}
+			else {
+				return new BenchPress(this.getDay(), this.getRepetitions(), this.getWeight());
+			}
 		}
 	}
 
 	@Override
-	public double calculateCalories(User user) {
-		if (!this.isCompleted()) {
+	public double calculateCalories(User user, LocalDate datenow) {
+		if (!this.isCompleted(datenow)) {
 			return 0;
 		}
 

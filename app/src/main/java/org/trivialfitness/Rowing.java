@@ -1,5 +1,6 @@
 package org.trivialfitness;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 // esta atividade representa canoagem
@@ -13,10 +14,16 @@ public class Rowing extends Activity {
 		this.distance = distance;
 	}
 
-	public Rowing(LocalDate date) {
+	public Rowing(LocalDate date, double distance, int durationInMinutes) {
 		// Scheduled Activity constructor
-		super(date);
-		this.distance = 0;
+		super(date, durationInMinutes);
+		this.distance = distance;
+	}
+
+	public Rowing(DayOfWeek day, double distance) {
+		// Training Plan Activity constructor
+		super(day);
+		this.distance = distance; // random value
 	}
 
 	public double getDistance() {
@@ -28,19 +35,27 @@ public class Rowing extends Activity {
 	}
 
 	@Override
-	public Rowing copy() {
+	public Rowing copy(LocalDate datenow) {
 
-		if (this.isCompleted()) {
+		if (this.isCompleted(datenow)) {
 			return new Rowing(this.getDurationInMinutes(), this.getAverageHeartRate(), this.distance, this.getDate());
 		}
 		else {
-			return new Rowing(this.getDate());
+			if (this.getDate() != null) {
+				return new Rowing(this.getDate(), this.distance, this.getDurationInMinutes());
+			}
+			else {
+				return new Rowing(this.getDay(), this.getDistance());
+			}
 		}
 	}
 
+	// checking if the day of the activity is before the current day and if so, we set the
+	// activity to completed and return true
+
 	@Override
-	public double calculateCalories(User user) {
-		if (!this.isCompleted()) {
+	public double calculateCalories(User user, LocalDate datenow) {
+		if (!this.isCompleted(datenow)) {
 			return 0;
 		}
 

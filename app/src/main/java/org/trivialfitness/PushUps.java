@@ -1,5 +1,6 @@
 package org.trivialfitness;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 // flexoes
@@ -13,10 +14,16 @@ public class PushUps extends Activity {
 		this.repetitions = repetitions;
 	}
 
-	public PushUps(LocalDate date) {
+	public PushUps(LocalDate date, int durationInMinutes) {
 		// Scheduled Activity constructor
-		super(date);
+		super(date, durationInMinutes);
 		this.repetitions = 0;
+	}
+
+	public PushUps(DayOfWeek day, int repetitions) {
+		// Training Plan Activity constructor
+		super(day);
+		this.repetitions = repetitions; // random value
 	}
 
 	public int getRepetitions() {
@@ -28,20 +35,25 @@ public class PushUps extends Activity {
 	}
 
 	@Override
-	public PushUps copy() {
-		if (this.isCompleted()) {
+	public PushUps copy(LocalDate datenow) {
+		if (this.isCompleted(datenow)) {
 			return new PushUps(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions,
 					this.getDate());
 		}
 		else {
-			return new PushUps(this.getDate());
+			if (this.getDate() != null) {
+				return new PushUps(this.getDate(), this.getDurationInMinutes());
+			}
+			else {
+				return new PushUps(this.getDay(), this.getRepetitions());
+			}
 		}
 	}
 
 	@Override
-	public double calculateCalories(User user) {
+	public double calculateCalories(User user, LocalDate datenow) {
 
-		if (!this.isCompleted()) {
+		if (!this.isCompleted(datenow)) {
 			return 0;
 		}
 

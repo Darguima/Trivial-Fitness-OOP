@@ -22,8 +22,8 @@ public class TrainingPlan implements Serializable {
 		this.activities = new ArrayList<>();
 	}
 
-	public void addActivity(Activity activity) {
-		this.activities.add(activity.copy());
+	public void addActivity(Activity activity, LocalDate datenow) {
+		this.activities.add(activity.copy(datenow));
 	}
 
 	public LocalDate getDate() {
@@ -34,21 +34,30 @@ public class TrainingPlan implements Serializable {
 		this.date = date;
 	}
 
-	public List<Activity> getActivitys() {
-
-		return activities.stream().map(Activity::copy).collect(Collectors.toList());
+	public List<Activity> getActivities(LocalDate datenow) {
+		return activities.stream().map(activity -> activity.copy(datenow)).collect(Collectors.toList());
 	}
 
-	public void setActivitys(List<Activity> Activitys) {
+	public void setActivitys(List<Activity> activities, LocalDate datenow) {
 
-		this.activities = Activitys.stream().map(Activity::copy).collect(Collectors.toList());
+		this.activities = activities.stream().map(activity -> activity.copy(datenow)).collect(Collectors.toList());
 	}
 
-	public TrainingPlan copy() {
+	public TrainingPlan copy(LocalDate datenow) {
 
 		TrainingPlan trainingPlan = new TrainingPlan(this.date);
-		trainingPlan.setActivitys(this.activities);
+		trainingPlan.setActivitys(this.activities, datenow);
 		return trainingPlan;
+	}
+
+	// functiion that ads training plan activities to the user's activities, using the
+	// function dayIsBeforeCurrentDay
+	public void addTrainingPlanActivityToUser(User user, LocalDate datebefore, LocalDate nowDate) {
+		for (Activity activity : this.activities) {
+			if (activity.dayIsBefore(datebefore, nowDate)) {
+				user.addActivity(activity, nowDate);
+			}
+		}
 	}
 
 }

@@ -1,5 +1,6 @@
 package org.trivialfitness;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,12 +39,12 @@ public abstract class User {
 
 	public abstract double calculateFitnessMultiplier();
 
-	public void addActivity(Activity activity) {
-		if (activity.isCompleted()) {
-			pastActivities.add(activity.copy());
+	public void addActivity(Activity activity, LocalDate nowdate) {
+		if (activity.isCompleted(nowdate)) {
+			pastActivities.add(activity.copy(nowdate));
 		}
 		else {
-			scheduledActivities.add(activity.copy());
+			scheduledActivities.add(activity.copy(nowdate));
 		}
 	}
 
@@ -72,29 +73,36 @@ public abstract class User {
 		return weight;
 	}
 
-	public List<Activity> getPastActivities() {
+	public List<Activity> getPastActivities(LocalDate nowdate) {
+		// nowdate is the current date, because users can forward the date in order to
+		// commplete activities and it has to be saved.
 		// return copy of Past Activities using streams, and using clone method
-		return pastActivities.stream().map(Activity::copy).collect(Collectors.toList());
+		return pastActivities.stream().map(activity -> activity.copy(nowdate)).collect(Collectors.toList());
 
 	}
 
-	public void getScheduledActivities(List<Activity> Scheduledactivities) {
+	public void getScheduledActivities(List<Activity> Scheduledactivities, LocalDate nowdate) {
 		// return copy of Scheduled Activities using streams, and using clone method
-		this.scheduledActivities = scheduledActivities.stream().map(Activity::copy).collect(Collectors.toList());
+		this.scheduledActivities = scheduledActivities.stream()
+			.map(activity -> activity.copy(nowdate))
+			.collect(Collectors.toList());
+
 	}
 
-	public List<TrainingPlan> getTrainingPlans() {
+	public List<TrainingPlan> getTrainingPlans(LocalDate nowdate) {
 		// return copy of trainingPlans using streams, and using clone method
-		return trainingPlans.stream().map(TrainingPlan::copy).collect(Collectors.toList());
+		return trainingPlans.stream().map(trainingPlans -> trainingPlans.copy(nowdate)).collect(Collectors.toList());
 	}
 
-	public void seTrainingPlans(List<TrainingPlan> trainingPlans) {
+	public void seTrainingPlans(List<TrainingPlan> trainingPlans, LocalDate nowdate) {
 		// return copy of trainingPlans using streams, and using clone method
-		this.trainingPlans = trainingPlans.stream().map(TrainingPlan::copy).collect(Collectors.toList());
+		this.trainingPlans = trainingPlans.stream()
+			.map(trainingPlan -> trainingPlan.copy(nowdate))
+			.collect(Collectors.toList());
 	}
 
-	public void addTrainingPlan(TrainingPlan trainingPlan) {
-		trainingPlans.add(trainingPlan.copy());
+	public void addTrainingPlan(TrainingPlan trainingPlan, LocalDate nowdate) {
+		trainingPlans.add(trainingPlan.copy(nowdate));
 	}
 
 }

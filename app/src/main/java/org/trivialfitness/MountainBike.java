@@ -1,5 +1,6 @@
 package org.trivialfitness;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 // bicicleta de montanha
@@ -18,11 +19,18 @@ public class MountainBike extends Activity {
 		this.elevationGain = elevationGain;
 	}
 
-	public MountainBike(LocalDate date) {
+	public MountainBike(LocalDate date, int durationInMinutes) {
 		// Scheduled Activity constructor
-		super(date);
+		super(date, durationInMinutes);
 		this.distance = 0;
 		this.elevationGain = 0;
+	}
+
+	public MountainBike(DayOfWeek day, double distance, double elevationGain) {
+		// Training Plan Activity constructor
+		super(day);
+		this.distance = distance; // random value
+		this.elevationGain = elevationGain; // random value
 	}
 
 	public double getDistance() {
@@ -42,21 +50,26 @@ public class MountainBike extends Activity {
 	}
 
 	@Override
-	public MountainBike copy() {
+	public MountainBike copy(LocalDate datenow) {
 
-		if (this.isCompleted()) {
+		if (this.isCompleted(datenow)) {
 			return new MountainBike(this.getDurationInMinutes(), this.getAverageHeartRate(), this.distance,
 					this.elevationGain, this.getDate());
 		}
 		else {
-			return new MountainBike(this.getDate());
+			if (this.getDate() != null) {
+				return new MountainBike(this.getDate(), this.getDurationInMinutes());
+			}
+			else {
+				return new MountainBike(this.getDay(), this.getDistance(), this.getElevationGain());
+			}
 		}
 	}
 
 	@Override
-	public double calculateCalories(User user) {
+	public double calculateCalories(User user, LocalDate datenow) {
 
-		if (!this.isCompleted()) {
+		if (!this.isCompleted(datenow)) {
 			return 0;
 		}
 
