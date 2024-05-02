@@ -109,4 +109,15 @@ public abstract class User {
 		trainingPlans.add(trainingPlan.copy(nowdate));
 	}
 
+	// check if scheduled activities are completed and move them to past activities
+	public void checkScheduledActivities(LocalDate nowdate) {
+		for (Activity activity : scheduledActivities) {
+			if (activity.isCompleted(nowdate)) {
+				activity.scheduledToCompleted();
+				pastActivities.add(activity.copy(nowdate));
+				scheduledActivities.remove(activity);
+			}
+		}
+	}
+
 }
