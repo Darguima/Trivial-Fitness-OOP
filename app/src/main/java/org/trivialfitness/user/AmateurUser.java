@@ -16,9 +16,11 @@ public class AmateurUser extends User {
 
 	@Override
 	public AmateurUser copy() {
-		AmateurUser user = new AmateurUser(this.getUserId(), this.getName(), this.getAddress(), this.getEmail(), this.getWeight());
+		AmateurUser user = new AmateurUser(this.getUserId(), this.getName(), this.getAddress(), this.getEmail(),
+				this.getWeight());
 		user.setPastActivities(this.getPastActivities());
 		user.setTrainingPlans(this.getTrainingPlans());
 		return user;
 	}
+
 }

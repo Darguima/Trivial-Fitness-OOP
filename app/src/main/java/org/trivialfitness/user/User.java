@@ -99,6 +99,5 @@ public abstract class User {
 	}
 
 	public abstract User copy();
-		
 
 }

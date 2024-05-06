@@ -17,7 +17,8 @@ public class CasualUser extends User {
 
 	@Override
 	public CasualUser copy() {
-		CasualUser user = new CasualUser(this.getUserId(), this.getName(), this.getAddress(), this.getEmail(), this.getWeight());
+		CasualUser user = new CasualUser(this.getUserId(), this.getName(), this.getAddress(), this.getEmail(),
+				this.getWeight());
 		user.setPastActivities(this.getPastActivities());
 		user.setTrainingPlans(this.getTrainingPlans());
 		return user;

@@ -17,7 +17,8 @@ public class ProfessionalUser extends User {
 
 	@Override
 	public ProfessionalUser copy() {
-		ProfessionalUser user = new ProfessionalUser(this.getUserId(), this.getName(), this.getAddress(), this.getEmail(), this.getWeight());
+		ProfessionalUser user = new ProfessionalUser(this.getUserId(), this.getName(), this.getAddress(),
+				this.getEmail(), this.getWeight());
 		user.setPastActivities(this.getPastActivities());
 		user.setTrainingPlans(this.getTrainingPlans());
 		return user;
