@@ -32,7 +32,7 @@ public class App {
 					+ user.calculateFitnessMultiplier() + " fitness multiplier and a average heart rate of "
 					+ user.getAverageHeartRate() + " bpm;\n");
 
-			TrainingPlan trainingPlan = new TrainingPlan(LocalDate.now(), LocalDate.now().plusDays(365 / i));
+			TrainingPlan trainingPlan = new TrainingPlan(appState.getCurrentDate(), appState.getCurrentDate().plusDays(365 / i));
 
 			for (int a = 0; a < activities.size(); a++) {
 				Activity activity = activities.get(a);
