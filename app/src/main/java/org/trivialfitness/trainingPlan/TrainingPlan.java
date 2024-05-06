@@ -58,7 +58,8 @@ public class TrainingPlan implements Serializable {
 
 		// For each complete week just add the activities and decrease a week to vars
 		LocalDate currentLoopDate = startingDate;
-		for (; daysDifference >= 7; daysDifference -= 7, currentLoopDate = currentLoopDate.plusDays(7)) {
+		for (; daysDifference >= 7 && currentLoopDate
+			.isBefore(this.endingDate); daysDifference -= 7, currentLoopDate = currentLoopDate.plusDays(7)) {
 			for (TrainingPlanActivity activity : activities) {
 				// How many days to shift from the weekDay of startingDate
 				int weekDaysShift = (activity.getWeekDay().getValue() - currentLoopDate.getDayOfWeek().getValue() + 7)
@@ -67,7 +68,7 @@ public class TrainingPlan implements Serializable {
 				// Calculate the release date
 				LocalDate releaseDate = currentLoopDate.plusDays(weekDaysShift);
 
-				if (releaseDate.isAfter(endingDate)) {
+				if (releaseDate.isAfter(this.endingDate)) {
 					continue;
 				}
 
@@ -88,7 +89,7 @@ public class TrainingPlan implements Serializable {
 
 			LocalDate releaseDate = currentLoopDate.plusDays(weekDaysShift);
 
-			if (releaseDate.isAfter(endingDate)) {
+			if (releaseDate.isAfter(this.endingDate)) {
 				continue;
 			}
 

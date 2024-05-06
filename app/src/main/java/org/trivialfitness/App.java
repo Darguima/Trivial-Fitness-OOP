@@ -1,6 +1,5 @@
 package org.trivialfitness;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.trivialfitness.activity.*;
@@ -11,6 +10,11 @@ import org.trivialfitness.user.*;
 public class App {
 
 	public static void main(String[] args) {
+		int initialAmountUsers = 10;
+		int planMaxDurationDays = 365;
+		int advancingDays = 50;
+
+
 		AppState appState = new AppState();
 		System.out.println("Today is " + appState.getCurrentDate() + ";");
 
@@ -23,7 +27,7 @@ public class App {
 		System.out.println("PushUps with " + pushUps.getRepetitions() + " repetitions is present on the list of "
 				+ activities.size() + " exercises;");
 
-		for (int i = 1; i < 2; i++) {
+		for (int i = 1; i <= initialAmountUsers; i++) {
 			System.out.println("\n=====================\nCreating user " + i + ";\n=====================\n");
 
 			User user = new ProfessionalUser("user_" + i, "User_" + i, "Rua " + i, i + "email@mail.mail", i);
@@ -32,7 +36,8 @@ public class App {
 					+ user.calculateFitnessMultiplier() + " fitness multiplier and a average heart rate of "
 					+ user.getAverageHeartRate() + " bpm;\n");
 
-			TrainingPlan trainingPlan = new TrainingPlan(appState.getCurrentDate(), appState.getCurrentDate().plusDays(365 / i));
+			TrainingPlan trainingPlan = new TrainingPlan(appState.getCurrentDate(),
+					appState.getCurrentDate().plusDays(planMaxDurationDays / i));
 
 			for (int a = 0; a < activities.size(); a++) {
 				Activity activity = activities.get(a);
@@ -61,12 +66,12 @@ public class App {
 		System.out.println("\nToday is " + appState.getCurrentDate() + ";");
 		System.out
 			.println("This are the first user past activities: " + appState.getUsers().get(0).getPastActivities());
-		System.out.println("\n\t-> Gonna add 25 days to the app time;");
+		System.out.println("\n\t-> Gonna add " + advancingDays + " days to the app time;");
 
-		appState.advanceDays(25);
+		appState.advanceDays(advancingDays);
 		System.out.println("\nToday is " + appState.getCurrentDate() + ";");
 
-		User user = appState.getUser("user_1");
+		User user = appState.getUser("user_10000");
 		System.out.println("This are now the first user past activities: ");
 		List<PastActivity> pastActivities = user.getPastActivities();
 		for (PastActivity pastActivity : pastActivities) {
