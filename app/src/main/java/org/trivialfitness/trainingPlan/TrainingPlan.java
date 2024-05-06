@@ -1,6 +1,7 @@
 package org.trivialfitness.trainingPlan;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,7 +52,7 @@ public class TrainingPlan implements Serializable {
 	}
 
 	public List<PastActivity> getActivitiesBetweenDates(LocalDate startingDate, LocalDate endingDate) {
-		int daysDifference = (int) startingDate.until(endingDate).getDays();
+		long daysDifference = ChronoUnit.DAYS.between(startingDate, endingDate);
 
 		List<PastActivity> pastActivities = new ArrayList<>();
 
