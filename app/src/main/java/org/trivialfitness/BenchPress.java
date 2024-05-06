@@ -9,23 +9,31 @@ public class BenchPress extends Activity {
 
 	private double weight; // weight in kilograms
 
-	public BenchPress(int durationInMinutes, int averageHeartRate, int repetitions, double weight, LocalDate date) {
-		// Finished Activity constructor
-		super(durationInMinutes, averageHeartRate, date);
+	/**
+	 * Create a finished BenchPress Activity
+	 */
+	public BenchPress(int durationInMinutes, LocalDate realizationDate, int averageHeartRate, int repetitions,
+			double weight) {
+		super(durationInMinutes, realizationDate, averageHeartRate);
 		this.repetitions = repetitions;
 		this.weight = weight;
 	}
 
-	public BenchPress(LocalDate date, int durationInMinutes) {
-		// Scheduled Activity constructor
-		super(date, durationInMinutes);
-		this.repetitions = 0;
-		this.weight = 0;
+	/**
+	 * Create an individual scheduled Bench Press Activity
+	 */
+	public BenchPress(int durationInMinutes, LocalDate realizationDate) {
+		super(durationInMinutes, realizationDate);
+		this.repetitions = -1;
+		this.weight = -1;
 	}
 
-	public BenchPress(DayOfWeek day, int repetitions, double weight) {
+	/**
+	 * Create a Training Plan weekly scheduled Bench Press Activity
+	 */
+	public BenchPress(DayOfWeek weekDay, int repetitions, double weight) {
 		// Training Plan Activity constructor
-		super(day);
+		super(weekDay);
 		this.repetitions = repetitions; // random value
 		this.weight = weight; // random value
 	}
@@ -47,14 +55,14 @@ public class BenchPress extends Activity {
 	}
 
 	@Override
-	public BenchPress copy(LocalDate datenow) {
-		if (this.isCompleted(datenow)) {
-			return new BenchPress(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions,
-					this.weight, this.getDate());
+	public BenchPress copy(LocalDate dateNow) {
+		if (this.isCompleted(dateNow)) {
+			return new BenchPress(this.getDurationInMinutes(), this.getDate(), this.getAverageHeartRate(),
+					this.repetitions, this.weight);
 		}
 		else {
 			if (this.getDate() != null) {
-				return new BenchPress(this.getDate(), this.getDurationInMinutes());
+				return new BenchPress(this.getDurationInMinutes(), this.getDate());
 			}
 			else {
 				return new BenchPress(this.getDay(), this.getRepetitions(), this.getWeight());
@@ -63,8 +71,8 @@ public class BenchPress extends Activity {
 	}
 
 	@Override
-	public double calculateCalories(User user, LocalDate datenow) {
-		if (!this.isCompleted(datenow)) {
+	public double calculateCalories(User user, LocalDate dateNow) {
+		if (!this.isCompleted(dateNow)) {
 			return 0;
 		}
 

@@ -11,24 +11,30 @@ public class MountainBike extends Activity {
 
 	private double elevationGain; // elevation gain in meters
 
-	public MountainBike(int durationInMinutes, int averageHeartRate, double distance, double elevationGain,
-			LocalDate date) {
-		// Finished Activity constructor
-		super(durationInMinutes, averageHeartRate, date);
+	/**
+	 * Create a finished Mountain Bike Activity
+	 */
+	public MountainBike(int durationInMinutes, LocalDate realizationDate, int averageHeartRate, double distance,
+			double elevationGain) {
+		super(durationInMinutes, realizationDate, averageHeartRate);
 		this.distance = distance;
 		this.elevationGain = elevationGain;
 	}
 
-	public MountainBike(LocalDate date, int durationInMinutes) {
-		// Scheduled Activity constructor
-		super(date, durationInMinutes);
-		this.distance = 0;
-		this.elevationGain = 0;
+	/**
+	 * Create an individual scheduled Mountain Bike Activity
+	 */
+	public MountainBike(int durationInMinutes, LocalDate realizationDate) {
+		super(durationInMinutes, realizationDate);
+		this.distance = -1;
+		this.elevationGain = -1;
 	}
 
-	public MountainBike(DayOfWeek day, double distance, double elevationGain) {
-		// Training Plan Activity constructor
-		super(day);
+	/**
+	 * Create a Training Plan weekly scheduled Mountain Bike Activity
+	 */
+	public MountainBike(DayOfWeek weekDay, double distance, double elevationGain) {
+		super(weekDay);
 		this.distance = distance; // random value
 		this.elevationGain = elevationGain; // random value
 	}
@@ -50,15 +56,15 @@ public class MountainBike extends Activity {
 	}
 
 	@Override
-	public MountainBike copy(LocalDate datenow) {
+	public MountainBike copy(LocalDate dateNow) {
 
-		if (this.isCompleted(datenow)) {
-			return new MountainBike(this.getDurationInMinutes(), this.getAverageHeartRate(), this.distance,
-					this.elevationGain, this.getDate());
+		if (this.isCompleted(dateNow)) {
+			return new MountainBike(this.getDurationInMinutes(), this.getDate(), this.getAverageHeartRate(),
+					this.distance, this.elevationGain);
 		}
 		else {
 			if (this.getDate() != null) {
-				return new MountainBike(this.getDate(), this.getDurationInMinutes());
+				return new MountainBike(this.getDurationInMinutes(), this.getDate());
 			}
 			else {
 				return new MountainBike(this.getDay(), this.getDistance(), this.getElevationGain());
@@ -67,9 +73,9 @@ public class MountainBike extends Activity {
 	}
 
 	@Override
-	public double calculateCalories(User user, LocalDate datenow) {
+	public double calculateCalories(User user, LocalDate dateNow) {
 
-		if (!this.isCompleted(datenow)) {
+		if (!this.isCompleted(dateNow)) {
 			return 0;
 		}
 

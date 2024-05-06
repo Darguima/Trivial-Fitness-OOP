@@ -3,26 +3,31 @@ package org.trivialfitness;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
-// flexoes
 public class PushUps extends Activity {
 
 	private int repetitions; // number of repetitions
 
-	public PushUps(int durationInMinutes, int averageHeartRate, int repetitions, LocalDate date) {
-		// Finished Activity constructor
-		super(durationInMinutes, averageHeartRate, date);
+	/**
+	 * Create a finished PushUps Activity
+	 */
+	public PushUps(int durationInMinutes, LocalDate realizationDate, int averageHeartRate, int repetitions) {
+		super(durationInMinutes, realizationDate, averageHeartRate);
 		this.repetitions = repetitions;
 	}
 
-	public PushUps(LocalDate date, int durationInMinutes) {
-		// Scheduled Activity constructor
-		super(date, durationInMinutes);
-		this.repetitions = 0;
+	/**
+	 * Create an individual scheduled PushUps Activity
+	 */
+	public PushUps(int durationInMinutes, LocalDate realizationDate) {
+		super(durationInMinutes, realizationDate);
+		this.repetitions = -1;
 	}
 
-	public PushUps(DayOfWeek day, int repetitions) {
-		// Training Plan Activity constructor
-		super(day);
+	/**
+	 * Create a Training Plan weekly scheduled PushUps Activity
+	 */
+	public PushUps(DayOfWeek weekDay, int repetitions) {
+		super(weekDay);
 		this.repetitions = repetitions; // random value
 	}
 
@@ -35,14 +40,14 @@ public class PushUps extends Activity {
 	}
 
 	@Override
-	public PushUps copy(LocalDate datenow) {
-		if (this.isCompleted(datenow)) {
-			return new PushUps(this.getDurationInMinutes(), this.getAverageHeartRate(), this.repetitions,
-					this.getDate());
+	public PushUps copy(LocalDate dateNow) {
+		if (this.isCompleted(dateNow)) {
+			return new PushUps(this.getDurationInMinutes(), this.getDate(), this.getAverageHeartRate(),
+					this.repetitions);
 		}
 		else {
 			if (this.getDate() != null) {
-				return new PushUps(this.getDate(), this.getDurationInMinutes());
+				return new PushUps(this.getDurationInMinutes(), this.getDate());
 			}
 			else {
 				return new PushUps(this.getDay(), this.getRepetitions());
@@ -51,9 +56,9 @@ public class PushUps extends Activity {
 	}
 
 	@Override
-	public double calculateCalories(User user, LocalDate datenow) {
+	public double calculateCalories(User user, LocalDate dateNow) {
 
-		if (!this.isCompleted(datenow)) {
+		if (!this.isCompleted(dateNow)) {
 			return 0;
 		}
 

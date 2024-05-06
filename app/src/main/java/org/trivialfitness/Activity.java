@@ -6,44 +6,52 @@ import java.time.LocalDate;
 
 public abstract class Activity implements Serializable {
 
-	private int durationInMinutes; // duration in minutes
+	private int durationInMinutes;
 
-	private int averageHeartRate; // average heart rate in bpm
+	private int averageHeartRate;
 
-	private LocalDate date; // date of the activity
+	private LocalDate date; // date of the realization of the activity
 
-	private DayOfWeek day; // weekday (1-7, 1 = Monday, 7 = Sunday)
+	private DayOfWeek weekDay; // weekday (1-7, 1 = Monday, 7 = Sunday)
 
-	public Activity(int durationInMinutes, int averageHeartRate, LocalDate date) {
-		// Finished Activity constructor
+	/**
+	 * Create a finished Activity
+	 */
+	public Activity(int durationInMinutes, LocalDate realizationDate, int averageHeartRate) {
 		this.durationInMinutes = durationInMinutes;
 		this.averageHeartRate = averageHeartRate;
-		this.date = date;
-		this.day = date.getDayOfWeek();
-
+		this.date = realizationDate;
+		this.weekDay = realizationDate.getDayOfWeek();
 	}
 
-	public Activity(LocalDate date, int durationInMinutes) {
-		// Scheduled Activity constructor, user can set the duration
+	/**
+	 * Create an individual scheduled Activity
+	 */
+	public Activity(int durationInMinutes, LocalDate realizationDate) {
 		this.durationInMinutes = durationInMinutes;
-		this.averageHeartRate = 0;
-		this.date = date;
-		this.day = date.getDayOfWeek();
+		this.date = realizationDate;
+		this.weekDay = realizationDate.getDayOfWeek();
 
+		// Activity is not completed yet
+		this.averageHeartRate = -1;
 	}
 
-	public Activity(DayOfWeek day) {
+	/**
+	 * Create a Training Plan weekly scheduled Activity
+	 */
+	public Activity(DayOfWeek weekDay) {
 		// Training Plan Activity constructor
-		this.durationInMinutes = 60; // random value
-		this.averageHeartRate = 0; // 0 because it is a training plan activity
-		this.date = null; // date is null because it is a training plan activity and it
-							// can be made in any date
-		this.day = day;
+		this.weekDay = weekDay;
+
+		// Activity is not completed yet
+		this.durationInMinutes = -1;
+		this.averageHeartRate = -1;
+		this.date = null;
 	}
 
-	public abstract Activity copy(LocalDate datenow);
+	public abstract Activity copy(LocalDate comparisonDate);
 
-	public abstract double calculateCalories(User user, LocalDate datenow);
+	public abstract double calculateCalories(User user, LocalDate comparisonDate);
 
 	public abstract void scheduledToCompleted();
 
@@ -69,46 +77,49 @@ public abstract class Activity implements Serializable {
 	}
 
 	public LocalDate getDate() {
-		return date;
+		return this.date;
 	}
 
 	public DayOfWeek getDay() {
-		return day;
+		return this.weekDay;
 	}
 
 	public void setDate(LocalDate date) {
 		this.date = date;
-		this.day = date.getDayOfWeek();
+		this.weekDay = date.getDayOfWeek();
 	}
 
-	public boolean isCompleted(LocalDate datenow) {
+	public boolean isCompleted(LocalDate comparisonDate) {
 		// returns true if the activity is completed.
 
-		return this.date != null && this.date.isBefore(datenow);
+		return this.date != null && this.date.isBefore(comparisonDate);
 	}
 
-	public boolean dayIsBefore(LocalDate datebefore, LocalDate datenow) {
+	public boolean dayIsBefore(LocalDate dateBefore, LocalDate dateNow) {
 		// Find the next occurrence of the day of the week of the activity after
 		// 'datebefore'
-		LocalDate nextThisDay = nextOccurrenceOfDay(this.getDay(), datebefore);
+		LocalDate nextThisDay = nextOccurrenceOfWeekDay(this.getDay(), dateBefore);
 
-		// Verify if the next occurrence of the day of the week of the activity is before
-		// or exactly on 'datenow'
-		if (!nextThisDay.isAfter(datenow)) {
+		// Verify if the next occurrence of the day of the week of the activity is
+		// before
+		// or exactly on 'dateNow'
+		if (!nextThisDay.isAfter(dateNow)) {
 			// If so, the activity is completed
 			// Set the date of the activity to the next occurrence of the day of the week
-			// of the activity after 'datenow'
+			// of the activity after 'dateNow'
 			this.setDate(nextThisDay);
 			return true;
 		}
 		return false;
 	}
 
-	// Helper method to find the next occurrence of a day of the week after a given date
-	private LocalDate nextOccurrenceOfDay(DayOfWeek day, LocalDate after) {
-		int daysToAdd = (day.getValue() - after.getDayOfWeek().getValue() + 7) % 7;
+	/**
+	 * Helper method to find the next occurrence of a day of the week after a given date
+	 */
+	private LocalDate nextOccurrenceOfWeekDay(DayOfWeek weekDay, LocalDate initialDate) {
+		int daysToAdd = (weekDay.getValue() - initialDate.getDayOfWeek().getValue() + 7) % 7;
 		daysToAdd = daysToAdd == 0 ? 7 : daysToAdd;
-		return after.plusDays(daysToAdd);
+		return initialDate.plusDays(daysToAdd);
 	}
 
 }

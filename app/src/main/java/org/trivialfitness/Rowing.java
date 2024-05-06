@@ -3,26 +3,31 @@ package org.trivialfitness;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
-// esta atividade representa canoagem
 public class Rowing extends Activity {
 
 	private double distance; // distance in kilometers
 
-	public Rowing(int durationInMinutes, int averageHeartRate, double distance, LocalDate date) {
-		// Finished Activity constructor
-		super(durationInMinutes, averageHeartRate, date);
+	/**
+	 * Create a finished Rowing Activity
+	 */
+	public Rowing(int durationInMinutes, LocalDate realizationDate, int averageHeartRate, double distance) {
+		super(durationInMinutes, realizationDate, averageHeartRate);
 		this.distance = distance;
 	}
 
-	public Rowing(LocalDate date, double distance, int durationInMinutes) {
-		// Scheduled Activity constructor
-		super(date, durationInMinutes);
-		this.distance = distance;
+	/**
+	 * Create an individual scheduled Rowing Activity
+	 */
+	public Rowing(int durationInMinutes, LocalDate realizationDate) {
+		super(durationInMinutes, realizationDate);
+		this.distance = -1;
 	}
 
-	public Rowing(DayOfWeek day, double distance) {
-		// Training Plan Activity constructor
-		super(day);
+	/**
+	 * Create a Training Plan weekly scheduled Rowing Activity
+	 */
+	public Rowing(DayOfWeek weekDay, double distance) {
+		super(weekDay);
 		this.distance = distance; // random value
 	}
 
@@ -35,14 +40,14 @@ public class Rowing extends Activity {
 	}
 
 	@Override
-	public Rowing copy(LocalDate datenow) {
+	public Rowing copy(LocalDate dateNow) {
 
-		if (this.isCompleted(datenow)) {
-			return new Rowing(this.getDurationInMinutes(), this.getAverageHeartRate(), this.distance, this.getDate());
+		if (this.isCompleted(dateNow)) {
+			return new Rowing(this.getDurationInMinutes(), this.getDate(), this.getAverageHeartRate(), this.distance);
 		}
 		else {
 			if (this.getDate() != null) {
-				return new Rowing(this.getDate(), this.distance, this.getDurationInMinutes());
+				return new Rowing(this.getDurationInMinutes(), this.getDate());
 			}
 			else {
 				return new Rowing(this.getDay(), this.getDistance());
@@ -50,12 +55,13 @@ public class Rowing extends Activity {
 		}
 	}
 
-	// checking if the day of the activity is before the current day and if so, we set the
+	// checking if the day of the activity is before the current day and if so, we
+	// set the
 	// activity to completed and return true
 
 	@Override
-	public double calculateCalories(User user, LocalDate datenow) {
-		if (!this.isCompleted(datenow)) {
+	public double calculateCalories(User user, LocalDate dateNow) {
+		if (!this.isCompleted(dateNow)) {
 			return 0;
 		}
 
