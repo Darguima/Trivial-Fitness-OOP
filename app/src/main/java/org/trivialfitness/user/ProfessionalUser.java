@@ -1,9 +1,9 @@
-package org.trivialfitness;
+package org.trivialfitness.user;
 
 public class ProfessionalUser extends User {
 
 	public ProfessionalUser(String userId, String name, String address, String email, double weight) {
-		super(userId, name, address, email, weight);
+		super("Professional User", userId, name, address, email, weight);
 	}
 
 	@Override

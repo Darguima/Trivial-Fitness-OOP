@@ -1,14 +1,13 @@
-package org.trivialfitness;
+package org.trivialfitness.user;
 
 public class AmateurUser extends User {
 
 	public AmateurUser(String userId, String name, String address, String email, double weight) {
-		super(userId, name, address, email, weight);
+		super("Amateur User", userId, name, address, email, weight);
 	}
 
 	@Override
 	public double calculateFitnessMultiplier() {
-
 		double baseMultiplier = 1.0;
 		double heartRateEffect = (75 - super.getAverageHeartRate()) / 50.0;
 		double weightEffect = this.getWeight() / 100.0;

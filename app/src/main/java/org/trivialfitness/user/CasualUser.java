@@ -1,10 +1,9 @@
-package org.trivialfitness;
+package org.trivialfitness.user;
 
 public class CasualUser extends User {
 
 	public CasualUser(String userId, String name, String address, String email, double weight) {
-		super(userId, name, address, email, weight);
-
+		super("Casual User", userId, name, address, email, weight);
 	}
 
 	@Override
