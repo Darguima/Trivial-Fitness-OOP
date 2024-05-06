@@ -1,12 +1,13 @@
 package org.trivialfitness.state;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.trivialfitness.user.User;
 
-public class AppState {
+public class AppState implements Serializable {
 
 	private LocalDate now;
 
