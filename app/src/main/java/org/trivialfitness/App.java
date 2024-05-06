@@ -14,7 +14,6 @@ public class App {
 		int planMaxDurationDays = 365;
 		int advancingDays = 50;
 
-
 		AppState appState = new AppState();
 		System.out.println("Today is " + appState.getCurrentDate() + ";");
 
