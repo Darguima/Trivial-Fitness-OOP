@@ -11,7 +11,7 @@ public class MountainBike extends Activity {
 	private double elevationGain;
 
 	public MountainBike(double distance, double elevationGain) {
-		super("Mountain Bike", ActivityType.ALTIMETRY_AND_DISTANCE);
+		super("Mountain Bike", ActivityType.ALTIMETRY_AND_DISTANCE, true);
 		this.distanceKm = distance;
 		this.elevationGain = elevationGain;
 	}

@@ -9,7 +9,7 @@ public class BenchPress extends Activity {
 	private int weight;
 
 	public BenchPress(int repetitions, int weight) {
-		super("Bench Press", ActivityType.REPETITIONS_WITH_WEIGHT);
+		super("Bench Press", ActivityType.REPETITIONS_WITH_WEIGHT, false);
 		this.repetitions = repetitions;
 		this.weight = weight;
 	}

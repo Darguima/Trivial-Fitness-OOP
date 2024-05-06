@@ -8,7 +8,7 @@ public class Rowing extends Activity {
 	private int distanceKm;
 
 	public Rowing(int distance) {
-		super("Rowing", ActivityType.DISTANCE);
+		super("Rowing", ActivityType.DISTANCE, true);
 		this.distanceKm = distance;
 	}
 

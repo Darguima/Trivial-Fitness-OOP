@@ -16,9 +16,12 @@ public abstract class Activity implements Serializable {
 
 	private String name;
 
-	public Activity(String name, ActivityType activityType) {
+	private boolean hard;
+
+	public Activity(String name, ActivityType activityType, boolean hard) {
 		this.name = name;
 		this.activityType = activityType;
+		this.hard = hard;
 	}
 
 	public ActivityType getActivityType() {
@@ -33,6 +36,10 @@ public abstract class Activity implements Serializable {
 
 	public String getActivityName() {
 		return this.name;
+	}
+
+	public boolean isHard() {
+		return hard;
 	}
 
 	public abstract double calculateCalories(User user);

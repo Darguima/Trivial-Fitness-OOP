@@ -7,7 +7,7 @@ public class PushUps extends Activity {
 	private int repetitions;
 
 	public PushUps(int repetitions) {
-		super("PushUps", ActivityType.REPETITIONS);
+		super("PushUps", ActivityType.REPETITIONS, false);
 		this.repetitions = repetitions;
 	}
 
