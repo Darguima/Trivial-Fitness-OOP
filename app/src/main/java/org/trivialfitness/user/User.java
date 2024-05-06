@@ -1,6 +1,7 @@
 package org.trivialfitness.user;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,7 +77,7 @@ public abstract class User implements Serializable {
 	}
 
 	public void addPastActivity(PastActivity pastActivity) {
-		averageHeartRateSum += pastActivity.getAverageHeartRate();	
+		averageHeartRateSum += pastActivity.getAverageHeartRate();
 		pastActivities.add(pastActivity.copy());
 	}
 
@@ -98,6 +99,14 @@ public abstract class User implements Serializable {
 		this.trainingPlans = trainingPlans.stream()
 			.map(trainingPlan -> trainingPlan.copy())
 			.collect(Collectors.toList());
+	}
+
+	public void updateUserOnTimeChange(LocalDate previousDate, LocalDate currentDate) {
+		for (TrainingPlan trainingPlan : trainingPlans) {
+			List<PastActivity> pastPlanActivities = trainingPlan.getActivitiesBetweenDates(previousDate, currentDate);
+
+			this.pastActivities.addAll(pastPlanActivities);
+		}
 	}
 
 	public abstract User copy();
