@@ -75,6 +75,7 @@ public abstract class User {
 	}
 
 	public void addPastActivity(PastActivity pastActivity) {
+		averageHeartRateSum += pastActivity.getAverageHeartRate();	
 		pastActivities.add(pastActivity.copy());
 	}
 
