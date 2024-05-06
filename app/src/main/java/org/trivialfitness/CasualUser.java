@@ -2,8 +2,8 @@ package org.trivialfitness;
 
 public class CasualUser extends User {
 
-	public CasualUser(String userId, String name, String address, String email, int averageHeartRate, double weight) {
-		super(userId, name, address, email, averageHeartRate, weight);
+	public CasualUser(String userId, String name, String address, String email, double weight) {
+		super(userId, name, address, email, weight);
 
 	}
 

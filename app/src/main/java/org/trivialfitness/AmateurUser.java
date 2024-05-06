@@ -2,8 +2,8 @@ package org.trivialfitness;
 
 public class AmateurUser extends User {
 
-	public AmateurUser(String userId, String name, String address, String email, int averageHeartRate, double weight) {
-		super(userId, name, address, email, averageHeartRate, weight);
+	public AmateurUser(String userId, String name, String address, String email, double weight) {
+		super(userId, name, address, email, weight);
 	}
 
 	@Override
