@@ -50,7 +50,8 @@ public class App {
 
 			user.addTrainingPlan(trainingPlan);
 			System.out.println("\nThe user '" + user.getName() + "' has a training plan that starts at "
-					+ user.getTrainingPlans().get(0).getStartingDate() + ";");
+					+ user.getTrainingPlans().get(0).getStartingDate() + " and ends at "
+					+ user.getTrainingPlans().get(0).getEndingDate() + ";");
 
 			appState.addUser(user);
 		}
