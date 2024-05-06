@@ -3,24 +3,16 @@ package org.trivialfitness;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.trivialfitness.activity.Activity;
-import org.trivialfitness.activity.BenchPress;
-import org.trivialfitness.activity.MountainBike;
-import org.trivialfitness.activity.PushUps;
-import org.trivialfitness.activity.Rowing;
-import org.trivialfitness.trainingPlan.TrainingPlan;
-import org.trivialfitness.trainingPlan.TrainingPlanActivity;
-import org.trivialfitness.user.ProfessionalUser;
+import org.trivialfitness.activity.*;
+import org.trivialfitness.state.AppState;
+import org.trivialfitness.trainingPlan.*;
+import org.trivialfitness.user.*;
 
 public class App {
 
 	public static void main(String[] args) {
-		ProfessionalUser userDwarf = new ProfessionalUser("abaixo_os_anoes", "Não Anão", "Rua onde não moram anões",
-				"anao_branco@chama_anao.verde", 75);
-
-		System.out.println("\nThe user '" + userDwarf.getName() + "' is a " + userDwarf.getUserType() + " with a "
-				+ userDwarf.calculateFitnessMultiplier() + " fitness multiplier and a average heart rate of "
-				+ userDwarf.getAverageHeartRate() + " bpm;\n");
+		AppState appState = new AppState();
+		System.out.println("Today is " + appState.getCurrentDate() + ";");
 
 		PushUps pushUps = new PushUps(10);
 		BenchPress benchPress = new BenchPress(10, 100);
@@ -28,36 +20,59 @@ public class App {
 		Rowing rowing = new Rowing(10);
 		List<Activity> activities = List.of(pushUps, benchPress, mountainBike, rowing);
 
-		System.out.println("The exercise PushUps with " + pushUps.getRepetitions() + " repetitions burned "
-				+ pushUps.calculateCalories(userDwarf) + " calories;");
-		System.out.println("The exercise BenchPress with " + benchPress.getRepetitions() + " repetitions and "
-				+ benchPress.getWeight() + "kg buerned " + benchPress.calculateCalories(userDwarf) + " calories;");
+		System.out.println("PushUps with " + pushUps.getRepetitions() + " repetitions is present on the list of "
+				+ activities.size() + " exercises;");
 
-		System.out.println("The exercise MountainBike with " + mountainBike.getDistanceKm() + "km, "
-				+ mountainBike.getElevationGain() + "m buerned " + mountainBike.calculateCalories(userDwarf)
-				+ " calories;");
+		for (int i = 1; i < 2; i++) {
+			System.out.println("\n=====================\nCreating user " + i + ";\n=====================\n");
 
-		System.out.println("The exercise Rowing with " + rowing.getDistanceKm() + "km buerned "
-				+ rowing.calculateCalories(userDwarf) + " calories;");
+			User user = new ProfessionalUser("user_" + i, "User_" + i, "Rua " + i, i + "email@mail.mail", i);
 
-		TrainingPlan trainingPlan = new TrainingPlan(LocalDate.now(), LocalDate.now().plusDays(7));
+			System.out.println("\nThe user '" + user.getName() + "' is a " + user.getUserType() + " with a "
+					+ user.calculateFitnessMultiplier() + " fitness multiplier and a average heart rate of "
+					+ user.getAverageHeartRate() + " bpm;\n");
 
-		for (int i = 0; i < activities.size(); i++) {
-			Activity activity = activities.get(i);
-			trainingPlan.addActivity(new TrainingPlanActivity(activity, LocalDate.now().plusDays(i).getDayOfWeek()));
+			TrainingPlan trainingPlan = new TrainingPlan(LocalDate.now(), LocalDate.now().plusDays(365 / i));
+
+			for (int a = 0; a < activities.size(); a++) {
+				Activity activity = activities.get(a);
+				trainingPlan.addActivity(
+						new TrainingPlanActivity(activity, appState.getCurrentDate().plusDays((a * i)).getDayOfWeek()));
+			}
+
+			System.out.println("\nTraining Plan from " + trainingPlan.getStartingDate() + " to "
+					+ trainingPlan.getEndingDate() + " with " + trainingPlan.getActivities().size() + " exercises:\n");
+
+			for (TrainingPlanActivity trainingPlanActivity : trainingPlan.getActivities()) {
+				System.out.println("\t" + trainingPlanActivity.activity.getActivityName() + " on "
+						+ trainingPlanActivity.weekDay + ";");
+			}
+
+			user.addTrainingPlan(trainingPlan);
+			System.out.println("\nThe user '" + user.getName() + "' has a training plan that starts at "
+					+ user.getTrainingPlans().get(0).getStartingDate() + ";");
+
+			appState.addUser(user);
 		}
 
-		System.out.println("\nTraining Plan from " + trainingPlan.getStartingDate() + " to "
-				+ trainingPlan.getEndingDate() + " with " + trainingPlan.getActivities().size() + " exercises:\n");
+		System.out.println("\n=====================\nEnd\n=====================\n");
 
-		for (TrainingPlanActivity trainingPlanActivity : trainingPlan.getActivities()) {
-			System.out.println("\t" + trainingPlanActivity.activity.getActivityName() + " on "
-					+ trainingPlanActivity.weekDay + ";");
+		System.out.println("\nToday is " + appState.getCurrentDate() + ";");
+		System.out
+			.println("This are the first user past activities: " + appState.getUsers().get(0).getPastActivities());
+		System.out.println("\n\t-> Gonna add 25 days to the app time;");
+
+		appState.advanceDays(25);
+		System.out.println("\nToday is " + appState.getCurrentDate() + ";");
+
+		User user = appState.getUser("user_1");
+		System.out.println("This are now the first user past activities: ");
+		List<PastActivity> pastActivities = user.getPastActivities();
+		for (PastActivity pastActivity : pastActivities) {
+			System.out
+				.println("\t" + pastActivity.getActivity().getActivityName() + " on " + pastActivity.getDate() + ";");
 		}
 
-		userDwarf.addTrainingPlan(trainingPlan);
-		System.out.println("\nThe user '" + userDwarf.getName() + "' has a training plan that starts at "
-				+ userDwarf.getTrainingPlans().get(0).getStartingDate() + ";");
 	}
 
 }
