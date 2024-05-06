@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.trivialfitness.activity.Activity;
 import org.trivialfitness.trainingPlan.TrainingPlan;
 
 public abstract class User {
