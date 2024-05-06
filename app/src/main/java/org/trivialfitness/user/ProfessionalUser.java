@@ -15,4 +15,12 @@ public class ProfessionalUser extends User {
 		return Math.max(baseMultiplier, baseMultiplier + heartRateEffect + weightEffect);
 	}
 
+	@Override
+	public ProfessionalUser copy() {
+		ProfessionalUser user = new ProfessionalUser(this.getUserId(), this.getName(), this.getAddress(), this.getEmail(), this.getWeight());
+		user.setPastActivities(this.getPastActivities());
+		user.setTrainingPlans(this.getTrainingPlans());
+		return user;
+	}
+
 }

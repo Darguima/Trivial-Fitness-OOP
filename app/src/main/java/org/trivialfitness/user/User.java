@@ -78,6 +78,12 @@ public abstract class User {
 		pastActivities.add(pastActivity.copy());
 	}
 
+	public void setPastActivities(List<PastActivity> pastActivities) {
+		this.pastActivities = pastActivities.stream()
+			.map(pastActivity -> pastActivity.copy())
+			.collect(Collectors.toList());
+	}
+
 	public List<TrainingPlan> getTrainingPlans() {
 		return trainingPlans.stream().map(trainingPlans -> trainingPlans.copy()).collect(Collectors.toList());
 	}
@@ -85,5 +91,14 @@ public abstract class User {
 	public void addTrainingPlan(TrainingPlan trainingPlan) {
 		trainingPlans.add(trainingPlan.copy());
 	}
+
+	public void setTrainingPlans(List<TrainingPlan> trainingPlans) {
+		this.trainingPlans = trainingPlans.stream()
+			.map(trainingPlan -> trainingPlan.copy())
+			.collect(Collectors.toList());
+	}
+
+	public abstract User copy();
+		
 
 }
