@@ -15,6 +15,14 @@ public class TrainingPlanActivity {
 		this.weekDay = weekDay;
 	}
 
+	public Activity getActivity() {
+		return activity.copy();
+	}
+
+	public DayOfWeek getWeekDay() {
+		return weekDay;
+	}
+
 	public TrainingPlanActivity copy() {
 		return new TrainingPlanActivity(this.activity, this.weekDay);
 	}
