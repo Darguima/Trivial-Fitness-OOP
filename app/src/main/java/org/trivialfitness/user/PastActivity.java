@@ -1,10 +1,11 @@
 package org.trivialfitness.user;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import org.trivialfitness.activity.Activity;
 
-public class PastActivity {
+public class PastActivity implements Serializable {
 
 	public Activity activity;
 

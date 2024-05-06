@@ -1,10 +1,11 @@
 package org.trivialfitness.trainingPlan;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
 
 import org.trivialfitness.activity.Activity;
 
-public class TrainingPlanActivity {
+public class TrainingPlanActivity implements Serializable {
 
 	public Activity activity;
 
