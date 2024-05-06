@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class TrainingPlan implements Serializable {
 
 	private LocalDate startingDate;
+
 	private LocalDate endingDate;
 
 	private List<Activity> activities;
@@ -61,8 +62,9 @@ public class TrainingPlan implements Serializable {
 	}
 
 	/**
-	 * Add training plan activities to the user's activities, using the function dayIsBeforeCurrentDay
-	*/
+	 * Add training plan activities to the user's activities, using the function
+	 * dayIsBeforeCurrentDay
+	 */
 	public void addTrainingPlanActivityToUser(User user, LocalDate dateBefore, LocalDate nowDate) {
 		for (Activity activity : this.activities) {
 			// if the activity has a null date we will check if it is before the current
