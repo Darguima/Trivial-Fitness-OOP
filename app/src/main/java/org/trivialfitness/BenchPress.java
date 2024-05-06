@@ -9,9 +9,7 @@ public class BenchPress extends Activity {
 
 	private double weight; // weight in kilograms
 
-	/**
-	 * Create a finished BenchPress Activity
-	 */
+	/** Create a finished BenchPress Activity */
 	public BenchPress(int durationInMinutes, LocalDate realizationDate, int averageHeartRate, int repetitions,
 			double weight) {
 		super(durationInMinutes, realizationDate, averageHeartRate);
@@ -19,18 +17,14 @@ public class BenchPress extends Activity {
 		this.weight = weight;
 	}
 
-	/**
-	 * Create an individual scheduled Bench Press Activity
-	 */
+	/** Create an individual scheduled Bench Press Activity */
 	public BenchPress(int durationInMinutes, LocalDate realizationDate) {
 		super(durationInMinutes, realizationDate);
 		this.repetitions = -1;
 		this.weight = -1;
 	}
 
-	/**
-	 * Create a Training Plan weekly scheduled Bench Press Activity
-	 */
+	/** Create a Training Plan weekly scheduled Bench Press Activity */
 	public BenchPress(DayOfWeek weekDay, int repetitions, double weight) {
 		// Training Plan Activity constructor
 		super(weekDay);

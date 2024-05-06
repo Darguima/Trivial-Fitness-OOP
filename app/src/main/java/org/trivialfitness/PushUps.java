@@ -7,25 +7,19 @@ public class PushUps extends Activity {
 
 	private int repetitions; // number of repetitions
 
-	/**
-	 * Create a finished PushUps Activity
-	 */
+	/** Create a finished PushUps Activity */
 	public PushUps(int durationInMinutes, LocalDate realizationDate, int averageHeartRate, int repetitions) {
 		super(durationInMinutes, realizationDate, averageHeartRate);
 		this.repetitions = repetitions;
 	}
 
-	/**
-	 * Create an individual scheduled PushUps Activity
-	 */
+	/** Create an individual scheduled PushUps Activity */
 	public PushUps(int durationInMinutes, LocalDate realizationDate) {
 		super(durationInMinutes, realizationDate);
 		this.repetitions = -1;
 	}
 
-	/**
-	 * Create a Training Plan weekly scheduled PushUps Activity
-	 */
+	/** Create a Training Plan weekly scheduled PushUps Activity */
 	public PushUps(DayOfWeek weekDay, int repetitions) {
 		super(weekDay);
 		this.repetitions = repetitions; // random value

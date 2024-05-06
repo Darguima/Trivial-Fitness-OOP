@@ -14,9 +14,7 @@ public abstract class Activity implements Serializable {
 
 	private DayOfWeek weekDay; // weekday (1-7, 1 = Monday, 7 = Sunday)
 
-	/**
-	 * Create a finished Activity
-	 */
+	/** Create a finished Activity */
 	public Activity(int durationInMinutes, LocalDate realizationDate, int averageHeartRate) {
 		this.durationInMinutes = durationInMinutes;
 		this.averageHeartRate = averageHeartRate;
@@ -24,9 +22,7 @@ public abstract class Activity implements Serializable {
 		this.weekDay = realizationDate.getDayOfWeek();
 	}
 
-	/**
-	 * Create an individual scheduled Activity
-	 */
+	/** Create an individual scheduled Activity */
 	public Activity(int durationInMinutes, LocalDate realizationDate) {
 		this.durationInMinutes = durationInMinutes;
 		this.date = realizationDate;
@@ -36,9 +32,7 @@ public abstract class Activity implements Serializable {
 		this.averageHeartRate = -1;
 	}
 
-	/**
-	 * Create a Training Plan weekly scheduled Activity
-	 */
+	/** Create a Training Plan weekly scheduled Activity */
 	public Activity(DayOfWeek weekDay) {
 		// Training Plan Activity constructor
 		this.weekDay = weekDay;

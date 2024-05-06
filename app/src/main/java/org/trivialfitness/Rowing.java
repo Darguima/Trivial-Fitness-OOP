@@ -7,25 +7,19 @@ public class Rowing extends Activity {
 
 	private double distance; // distance in kilometers
 
-	/**
-	 * Create a finished Rowing Activity
-	 */
+	/** Create a finished Rowing Activity */
 	public Rowing(int durationInMinutes, LocalDate realizationDate, int averageHeartRate, double distance) {
 		super(durationInMinutes, realizationDate, averageHeartRate);
 		this.distance = distance;
 	}
 
-	/**
-	 * Create an individual scheduled Rowing Activity
-	 */
+	/** Create an individual scheduled Rowing Activity */
 	public Rowing(int durationInMinutes, LocalDate realizationDate) {
 		super(durationInMinutes, realizationDate);
 		this.distance = -1;
 	}
 
-	/**
-	 * Create a Training Plan weekly scheduled Rowing Activity
-	 */
+	/** Create a Training Plan weekly scheduled Rowing Activity */
 	public Rowing(DayOfWeek weekDay, double distance) {
 		super(weekDay);
 		this.distance = distance; // random value

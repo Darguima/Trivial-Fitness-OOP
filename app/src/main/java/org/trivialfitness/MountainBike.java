@@ -11,9 +11,7 @@ public class MountainBike extends Activity {
 
 	private double elevationGain; // elevation gain in meters
 
-	/**
-	 * Create a finished Mountain Bike Activity
-	 */
+	/** Create a finished Mountain Bike Activity */
 	public MountainBike(int durationInMinutes, LocalDate realizationDate, int averageHeartRate, double distance,
 			double elevationGain) {
 		super(durationInMinutes, realizationDate, averageHeartRate);
@@ -21,18 +19,14 @@ public class MountainBike extends Activity {
 		this.elevationGain = elevationGain;
 	}
 
-	/**
-	 * Create an individual scheduled Mountain Bike Activity
-	 */
+	/** Create an individual scheduled Mountain Bike Activity */
 	public MountainBike(int durationInMinutes, LocalDate realizationDate) {
 		super(durationInMinutes, realizationDate);
 		this.distance = -1;
 		this.elevationGain = -1;
 	}
 
-	/**
-	 * Create a Training Plan weekly scheduled Mountain Bike Activity
-	 */
+	/** Create a Training Plan weekly scheduled Mountain Bike Activity */
 	public MountainBike(DayOfWeek weekDay, double distance, double elevationGain) {
 		super(weekDay);
 		this.distance = distance; // random value
