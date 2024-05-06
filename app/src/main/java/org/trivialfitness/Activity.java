@@ -91,7 +91,7 @@ public abstract class Activity implements Serializable {
 
 	public boolean dayIsBefore(LocalDate dateBefore, LocalDate dateNow) {
 		// Find the next occurrence of the day of the week of the activity after
-		// 'datebefore'
+		// 'dateBefore'
 		LocalDate nextThisDay = nextOccurrenceOfWeekDay(this.getDay(), dateBefore);
 
 		// Verify if the next occurrence of the day of the week of the activity is
