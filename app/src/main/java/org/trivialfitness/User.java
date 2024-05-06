@@ -15,7 +15,7 @@ public abstract class User {
 
 	private String email;
 
-	private int averageHeartRate;
+	private int averageHeartRateSum;
 
 	private double weight;
 
@@ -25,12 +25,11 @@ public abstract class User {
 
 	private List<TrainingPlan> trainingPlans;
 
-	public User(String userId, String name, String address, String email, int averageHeartRate, double weight) {
+	public User(String userId, String name, String address, String email, double weight) {
 		this.userId = userId;
 		this.name = name;
 		this.address = address;
 		this.email = email;
-		this.averageHeartRate = averageHeartRate;
 		this.pastActivities = new ArrayList<>();
 		this.scheduledActivities = new ArrayList<>();
 		this.trainingPlans = new ArrayList<>();
@@ -43,12 +42,13 @@ public abstract class User {
 		pastActivities.add(activity.copy(nowDate));
 	}
 
-	public void addActivity(Activity activity, LocalDate nowdate) {
-		if (activity.isCompleted(nowdate)) {
-			pastActivities.add(activity.copy(nowdate));
+	public void addActivity(Activity activity, LocalDate nowDate) {
+		if (activity.isCompleted(nowDate)) {
+			this.averageHeartRateSum += activity.getAverageHeartRate();
+			pastActivities.add(activity.copy(nowDate));
 		}
 		else {
-			scheduledActivities.add(activity.copy(nowdate));
+			scheduledActivities.add(activity.copy(nowDate));
 		}
 	}
 
@@ -70,51 +70,51 @@ public abstract class User {
 	}
 
 	public int getAverageHeartRate() {
-		return averageHeartRate;
+		return averageHeartRateSum / pastActivities.size();
 	}
 
 	public double getWeight() {
 		return weight;
 	}
 
-	public List<Activity> getPastActivities(LocalDate nowdate) {
-		// nowdate is the current date, because users can forward the date in order to
+	public List<Activity> getPastActivities(LocalDate nowDate) {
+		// nowDate is the current date, because users can forward the date in order to
 		// commplete activities and it has to be saved.
 		// return copy of Past Activities using streams, and using clone method
-		return pastActivities.stream().map(activity -> activity.copy(nowdate)).collect(Collectors.toList());
+		return pastActivities.stream().map(activity -> activity.copy(nowDate)).collect(Collectors.toList());
 
 	}
 
-	public void getScheduledActivities(List<Activity> Scheduledactivities, LocalDate nowdate) {
+	public void getScheduledActivities(List<Activity> Scheduledactivities, LocalDate nowDate) {
 		// return copy of Scheduled Activities using streams, and using clone method
 		this.scheduledActivities = scheduledActivities.stream()
-			.map(activity -> activity.copy(nowdate))
+			.map(activity -> activity.copy(nowDate))
 			.collect(Collectors.toList());
 
 	}
 
-	public List<TrainingPlan> getTrainingPlans(LocalDate nowdate) {
+	public List<TrainingPlan> getTrainingPlans(LocalDate nowDate) {
 		// return copy of trainingPlans using streams, and using clone method
-		return trainingPlans.stream().map(trainingPlans -> trainingPlans.copy(nowdate)).collect(Collectors.toList());
+		return trainingPlans.stream().map(trainingPlans -> trainingPlans.copy(nowDate)).collect(Collectors.toList());
 	}
 
-	public void seTrainingPlans(List<TrainingPlan> trainingPlans, LocalDate nowdate) {
+	public void seTrainingPlans(List<TrainingPlan> trainingPlans, LocalDate nowDate) {
 		// return copy of trainingPlans using streams, and using clone method
 		this.trainingPlans = trainingPlans.stream()
-			.map(trainingPlan -> trainingPlan.copy(nowdate))
+			.map(trainingPlan -> trainingPlan.copy(nowDate))
 			.collect(Collectors.toList());
 	}
 
-	public void addTrainingPlan(TrainingPlan trainingPlan, LocalDate nowdate) {
-		trainingPlans.add(trainingPlan.copy(nowdate));
+	public void addTrainingPlan(TrainingPlan trainingPlan, LocalDate nowDate) {
+		trainingPlans.add(trainingPlan.copy(nowDate));
 	}
 
 	// check if scheduled activities are completed and move them to past activities
-	public void checkScheduledActivities(LocalDate nowdate) {
+	public void checkScheduledActivities(LocalDate nowDate) {
 		for (Activity activity : scheduledActivities) {
-			if (activity.isCompleted(nowdate)) {
+			if (activity.isCompleted(nowDate)) {
 				activity.scheduledToCompleted();
-				pastActivities.add(activity.copy(nowdate));
+				pastActivities.add(activity.copy(nowDate));
 				scheduledActivities.remove(activity);
 			}
 		}
