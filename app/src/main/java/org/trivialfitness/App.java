@@ -70,7 +70,7 @@ public class App {
 		appState.advanceDays(advancingDays);
 		System.out.println("\nToday is " + appState.getCurrentDate() + ";");
 
-		User user = appState.getUser("user_10000");
+		User user = appState.getUser("user_" + initialAmountUsers);
 		System.out.println("This are now the first user past activities: ");
 		List<PastActivity> pastActivities = user.getPastActivities();
 		for (PastActivity pastActivity : pastActivities) {
