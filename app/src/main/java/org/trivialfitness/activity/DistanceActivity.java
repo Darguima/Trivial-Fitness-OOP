@@ -32,4 +32,9 @@ public abstract class DistanceActivity extends Activity {
 		return (distanceKm * caloriesPerDistanceKm) * user.calculateFitnessMultiplier();
 	}
 
+	@Override
+	public String getActivityAttributesString() {
+		return distanceKm + " Km of distance";
+	}
+
 }

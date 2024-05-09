@@ -34,4 +34,9 @@ public abstract class DistanceAltimetryActivity extends DistanceActivity {
 		return (heightMt * caloriesPerHeightMt) * user.calculateFitnessMultiplier() + prevCalories;
 	}
 
+	@Override
+	public String getActivityAttributesString() {
+		return super.getActivityAttributesString() + " and " + heightMt + " Mt of elevation gain";
+	}
+
 }

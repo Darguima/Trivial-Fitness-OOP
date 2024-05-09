@@ -26,8 +26,9 @@ public class App {
 		Rowing rowing = new Rowing(10);
 		List<Activity> activities = List.of(pushUps, benchPress, mountainBike, rowing);
 
-		System.out.println("\nPushUps with " + pushUps.getRepetitions() + " repetitions is present on the list of "
-				+ activities.size() + " exercises;");
+		System.out
+			.println("\nActivity " + mountainBike.getActivityName() + " with " + mountainBike.getActivityAttributesString()
+					+ " is present on the list of " + activities.size() + " exercises;");
 
 		for (int i = 1; i <= initialAmountUsers; i++) {
 			System.out.println("\n=====================\nCreating user " + i + ";\n=====================\n");

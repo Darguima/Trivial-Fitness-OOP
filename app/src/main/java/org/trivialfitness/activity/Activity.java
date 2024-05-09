@@ -32,6 +32,8 @@ public abstract class Activity implements Serializable {
 
 	public abstract double calculateCalories(User user);
 
+	public abstract String getActivityAttributesString();
+
 	public abstract Activity copy();
 
 }
