@@ -17,13 +17,16 @@ public class App {
 		AppState appState = new AppState();
 		System.out.println("Today is " + appState.getCurrentDate() + ";");
 
+		System.out.println("\nAvailable activities types are: " + appState.getAvailableActivitiesTypesNames());
+		System.out.println("Available activities are: " + appState.getAvailableActivitiesNames());
+
 		PushUps pushUps = new PushUps(10);
 		BenchPress benchPress = new BenchPress(10, 100);
 		MountainBike mountainBike = new MountainBike(10, 100);
 		Rowing rowing = new Rowing(10);
 		List<Activity> activities = List.of(pushUps, benchPress, mountainBike, rowing);
 
-		System.out.println("PushUps with " + pushUps.getRepetitions() + " repetitions is present on the list of "
+		System.out.println("\nPushUps with " + pushUps.getRepetitions() + " repetitions is present on the list of "
 				+ activities.size() + " exercises;");
 
 		for (int i = 1; i <= initialAmountUsers; i++) {

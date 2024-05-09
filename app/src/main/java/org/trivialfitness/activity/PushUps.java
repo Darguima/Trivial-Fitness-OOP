@@ -2,17 +2,10 @@ package org.trivialfitness.activity;
 
 import org.trivialfitness.user.User;
 
-public class PushUps extends Activity {
-
-	private int repetitions;
+public class PushUps extends RepetitionsActivity {
 
 	public PushUps(int repetitions) {
-		super("PushUps", ActivityType.REPETITIONS, false);
-		this.repetitions = repetitions;
-	}
-
-	public int getRepetitions() {
-		return repetitions;
+		super("Push Ups", false, repetitions, 0.11);
 	}
 
 	@Override
@@ -22,9 +15,10 @@ public class PushUps extends Activity {
 
 	@Override
 	public double calculateCalories(User user) {
-		double caloriesPerRep = 0.11;
+		double prevCalories = super.calculateCalories(user);
 		double weightLifted = user.getWeight() * 0.64;
-		return repetitions * weightLifted * caloriesPerRep * user.calculateFitnessMultiplier();
+
+		return prevCalories * weightLifted * user.calculateFitnessMultiplier();
 	}
 
 }

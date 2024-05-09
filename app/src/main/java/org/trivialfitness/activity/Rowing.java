@@ -1,29 +1,15 @@
 package org.trivialfitness.activity;
 
-import org.trivialfitness.user.User;
+public class Rowing extends DistanceActivity {
 
-public class Rowing extends Activity {
-
-	/** Distance traveled in Km */
-	private int distanceKm;
-
-	public Rowing(int distance) {
-		super("Rowing", ActivityType.DISTANCE, true);
-		this.distanceKm = distance;
-	}
-
-	public double getDistanceKm() {
-		return distanceKm;
+	public Rowing(int distanceKm) {
+		super("Rowing", true, distanceKm, 32);
+		this.distanceKm = distanceKm;
 	}
 
 	@Override
 	public Rowing copy() {
 		return new Rowing(this.distanceKm);
-	}
-
-	@Override
-	public double calculateCalories(User user) {
-		return (distanceKm * 32) * user.calculateFitnessMultiplier();
 	}
 
 }
