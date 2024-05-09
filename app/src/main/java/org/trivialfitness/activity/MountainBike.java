@@ -1,40 +1,14 @@
 package org.trivialfitness.activity;
 
-import org.trivialfitness.user.User;
+public class MountainBike extends DistanceAltimetryActivity {
 
-public class MountainBike extends Activity {
-
-	/** Distance traveled in Km */
-	private double distanceKm;
-
-	/** Elevation gains in meters */
-	private double elevationGain;
-
-	public MountainBike(double distance, double elevationGain) {
-		super("Mountain Bike", ActivityType.ALTIMETRY_AND_DISTANCE, true);
-		this.distanceKm = distance;
-		this.elevationGain = elevationGain;
-	}
-
-	public double getDistanceKm() {
-		return distanceKm;
-	}
-
-	public double getElevationGain() {
-		return elevationGain;
+	public MountainBike(int distanceKm, int heightMt) {
+		super("Mountain Bike", true, distanceKm, 50, heightMt, 10);
 	}
 
 	@Override
 	public MountainBike copy() {
-		return new MountainBike(this.distanceKm, this.elevationGain);
-	}
-
-	@Override
-	public double calculateCalories(User user) {
-		double baseCalories = (distanceKm * 50 + elevationGain * 10);
-		double heartRateAdjustment = Math.max(user.getAverageHeartRate() / 100.0, 0.05);
-
-		return baseCalories * heartRateAdjustment * user.calculateFitnessMultiplier();
+		return new MountainBike(getDistanceKm(), getHeightMt());
 	}
 
 }
