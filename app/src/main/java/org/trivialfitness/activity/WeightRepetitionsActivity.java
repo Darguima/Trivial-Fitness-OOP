@@ -34,4 +34,9 @@ public abstract class WeightRepetitionsActivity extends RepetitionsActivity {
 		return (prevCalories + (weightKg * caloriesPerWeightKg)) * user.calculateFitnessMultiplier();
 	}
 
+	@Override
+	public String getActivityAttributesString() {
+		return super.getActivityAttributesString() + " with " + weightKg + " Kg";
+	}
+
 }

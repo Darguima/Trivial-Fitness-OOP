@@ -32,4 +32,9 @@ public abstract class RepetitionsActivity extends Activity {
 		return (repetitions * caloriesPerRepetition) * user.calculateFitnessMultiplier();
 	}
 
+	@Override
+	public String getActivityAttributesString() {
+		return repetitions + " repetitions";
+	}
+
 }
