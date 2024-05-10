@@ -5,6 +5,7 @@ import java.util.List;
 import org.trivialfitness.state.AppState;
 import org.trivialfitness.trainingPlan.*;
 import org.trivialfitness.user.*;
+import org.trivialfitness.activity.activityType.*;
 import org.trivialfitness.activity.*;
 import org.trivialfitness.view.*;
 

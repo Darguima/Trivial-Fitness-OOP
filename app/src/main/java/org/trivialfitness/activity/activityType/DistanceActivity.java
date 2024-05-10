@@ -1,10 +1,10 @@
-package org.trivialfitness.activity;
+package org.trivialfitness.activity.activityType;
 
 import org.trivialfitness.user.User;
 
 public abstract class DistanceActivity extends Activity {
 
-	int distanceKm;
+	protected int distanceKm;
 
 	double caloriesPerDistanceKm;
 

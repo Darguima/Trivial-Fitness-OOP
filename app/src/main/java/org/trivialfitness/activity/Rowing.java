@@ -1,5 +1,7 @@
 package org.trivialfitness.activity;
 
+import org.trivialfitness.activity.activityType.DistanceActivity;
+
 public class Rowing extends DistanceActivity {
 
 	public Rowing(int distanceKm) {
@@ -9,7 +11,7 @@ public class Rowing extends DistanceActivity {
 
 	@Override
 	public Rowing copy() {
-		return new Rowing(this.distanceKm);
+		return new Rowing(this.getDistanceKm());
 	}
 
 }
