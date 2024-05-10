@@ -235,6 +235,13 @@ public class View {
 			clearConsole();
 			showMessage("Invalid date format. Adding activity failed.");
 			return;
+
+		}
+
+		if (date.isAfter(controller.getTime())) {
+			clearConsole();
+			showMessage("Are you a time traveler? You can't add activities in the future. Adding activity failed.");
+			return;
 		}
 		String duration = getUserInput("Enter the duration of the activity in minutes: ");
 		int durationValue;

@@ -129,6 +129,10 @@ public class AppController {
 
 	}
 
+	public LocalDate getTime() {
+		return appState.getCurrentDate();
+	}
+
 }
 
 /*
