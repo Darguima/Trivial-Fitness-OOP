@@ -7,8 +7,8 @@ public class JumpingJacks extends RepetitionsActivity {
 	}
 
 	@Override
-	public PushUps copy() {
-		return new PushUps(this.repetitions);
+	public JumpingJacks copy() {
+		return new JumpingJacks(this.repetitions);
 	}
 
 }

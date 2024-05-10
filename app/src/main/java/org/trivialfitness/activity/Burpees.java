@@ -7,8 +7,8 @@ public class Burpees extends RepetitionsActivity {
 	}
 
 	@Override
-	public PushUps copy() {
-		return new PushUps(this.repetitions);
+	public Burpees copy() {
+		return new Burpees(this.repetitions);
 	}
 
 }
