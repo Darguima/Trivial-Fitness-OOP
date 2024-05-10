@@ -6,7 +6,7 @@ import org.trivialfitness.user.User;
 public class Deadlift extends WeightRepetitionsActivity {
 
     public Deadlift(int repetitions, int weightKg) {
-        super("Deadlift", "Repetitions with Weight", true, repetitions, 1.0, weightKg, 0.02);
+        super("Deadlift", "Repetitions with Weight", true, repetitions, 0.75, weightKg, 0.02);
     }
 
     @Override
@@ -17,7 +17,7 @@ public class Deadlift extends WeightRepetitionsActivity {
     @Override
     public double calculateCalories(User user) {
         double prevCalories = super.calculateCalories(user);
-        double weightLifted = getWeightKg() * 0.75; // Utilizando 75% do peso para simular esforço
+        double weightLifted = getWeightKg();
 
         return prevCalories * weightLifted * user.calculateFitnessMultiplier();
     }

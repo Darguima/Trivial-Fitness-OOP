@@ -16,6 +16,6 @@ public class Swimming extends DistanceActivity {
 
     @Override
     public double calculateCalories(User user) {
-        return 40 * user.calculateFitnessMultiplier(); 
+        return super.calculateCalories(user);
     }
 }

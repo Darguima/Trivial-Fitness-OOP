@@ -4,7 +4,7 @@ import org.trivialfitness.user.User;
 
 public abstract class DistanceActivity extends Activity {
 
-	protected int distanceKm;
+	int distanceKm;
 
 	double caloriesPerDistanceKm;
 

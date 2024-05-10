@@ -6,7 +6,6 @@ public class Rowing extends DistanceActivity {
 
 	public Rowing(int distanceKm) {
 		super("Rowing", true, distanceKm, 32);
-		this.distanceKm = distanceKm;
 	}
 
 	@Override

@@ -8,15 +8,10 @@ import org.trivialfitness.view.View;
 
 import java.util.List;
 
-import org.trivialfitness.activity.Activity;
-import org.trivialfitness.activity.BenchPress;
-import org.trivialfitness.activity.MountainBike;
-import org.trivialfitness.activity.PushUps;
-import org.trivialfitness.activity.Rowing;
+import org.trivialfitness.activity.*;
+import org.trivialfitness.activity.activityType.*;
+
 import org.trivialfitness.state.AppState;
-//import org.trivialfitness.trainingPlan.TrainingPlan;
-import org.trivialfitness.trainingPlan.TrainingPlan;
-import org.trivialfitness.trainingPlan.TrainingPlanActivity;
 
 public class AppController {
 

@@ -16,7 +16,6 @@ public class Boxing extends RepetitionsActivity {
 
     @Override
     public double calculateCalories(User user) {
-        double prevCalories = super.calculateCalories(user);
-        return prevCalories * user.calculateFitnessMultiplier(); 
+        return super.calculateCalories(user);
     }
 }

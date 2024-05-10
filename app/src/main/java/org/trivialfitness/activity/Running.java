@@ -16,8 +16,6 @@ public class Running extends DistanceActivity {
 
     @Override
     public double calculateCalories(User user) {
-        double prevCalories = super.calculateCalories(user);
-        // Não considerando o peso do user
-        return prevCalories * user.calculateFitnessMultiplier();
+        return super.calculateCalories(user);
     }
 }
