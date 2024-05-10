@@ -7,8 +7,8 @@ public class Scissors extends RepetitionsActivity {
 	}
 
 	@Override
-	public PushUps copy() {
-		return new PushUps(this.repetitions);
+	public Scissors copy() {
+		return new Scissors(this.repetitions);
 	}
 
 }

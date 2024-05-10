@@ -6,6 +6,7 @@ import org.trivialfitness.state.AppState;
 import org.trivialfitness.trainingPlan.*;
 import org.trivialfitness.user.*;
 import org.trivialfitness.activity.*;
+import org.trivialfitness.view.*;
 
 public class App {
 
@@ -82,6 +83,8 @@ public class App {
 				.println("\t" + pastActivity.getActivity().getActivityName() + " on " + pastActivity.getDate() + ";");
 		}
 
+		View view = new View(appState);
+		view.run();
 	}
 
 }
