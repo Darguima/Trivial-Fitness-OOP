@@ -42,6 +42,8 @@ application {
 // Formatting code while developing
 tasks.named<JavaExec>("run") {
     dependsOn("format")
+    standardInput = System.`in`
+
 }
 
 tasks.named("compileJava") {

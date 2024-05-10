@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.trivialfitness.activity.*;
 import org.trivialfitness.user.User;
+import java.util.stream.Collectors;
 
 public class AppState implements Serializable {
 
@@ -22,6 +23,11 @@ public class AppState implements Serializable {
 		users = new ArrayList<>();
 	}
 
+	public AppState(AppState appState) {
+		now = appState.now;
+		users = appState.users.stream().map(User::copy).collect(Collectors.toList());
+	}
+
 	public LocalDate getCurrentDate() {
 		return now;
 	}
@@ -33,8 +39,14 @@ public class AppState implements Serializable {
 		users.forEach(user -> user.updateUserOnTimeChange(startingDate, now));
 	}
 
-	public void addUser(User user) {
-		users.add(user.copy());
+	public boolean addUser(User user) {
+		if (users.stream().anyMatch(u -> u.getUserId().equals(user.getUserId()))) {
+			return false;
+		}
+		else {
+			users.add(user);
+			return true;
+		}
 	}
 
 	public List<User> getUsers() {
