@@ -2,10 +2,12 @@ package org.trivialfitness.controler;
 
 import org.trivialfitness.user.AmateurUser;
 import org.trivialfitness.user.CasualUser;
+import org.trivialfitness.user.PastActivity;
 import org.trivialfitness.user.ProfessionalUser;
 import org.trivialfitness.user.User;
 import org.trivialfitness.view.View;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.trivialfitness.activity.Activity;
@@ -84,6 +86,47 @@ public class AppController {
 
 	public void logout() {
 		currentUser = null;
+	}
+
+	public String viewPastActivities() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Past activities:\n");
+		for (int i = 0; i < currentUser.getPastActivities().size(); i++) {
+			sb.append("\t" + currentUser.getPastActivities().get(i).getActivity().getActivityName() + " on "
+					+ currentUser.getPastActivities().get(i).getDate() + ";\n");
+		}
+		return sb.toString();
+
+	}
+
+	public List<String> getAvailableActivitiesTypesNames() {
+		List<String> activityType = List.of("Distance", "Distance and Altimetry", "Repetitions",
+				"Repetitions with Weight");
+		return activityType;
+	}
+
+	public List<String> getActivitiesFromSpecificType(int type) {
+		return appState.getActivitiesFromSpecificType(type);
+	}
+
+	public String addNewDistanceActivity(int activity, int average_heart_rate_value, int durationValue, LocalDate date,
+			int distanceValue) {
+		// getting the activity name from the hashmap that contains the distance
+		// activities (number 1 )
+		String activityName = appState.getActivityDistanceName(activity);
+		// we only have rowing att the moment
+		System.out.println("Activity name: " + activityName);
+		System.out.println("Distance value: " + distanceValue);
+		switch (activityName) {
+			case "Rowing":
+				Rowing rowing = new Rowing(distanceValue);
+				PastActivity pastActivity = new PastActivity(rowing, average_heart_rate_value, durationValue, date, 0);
+				currentUser.addPastActivity(pastActivity);
+				return "Activity added successfully.";
+			default:
+				return "Activity not found.";
+		}
+
 	}
 
 }

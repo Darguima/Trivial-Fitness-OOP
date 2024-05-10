@@ -2,7 +2,8 @@ package org.trivialfitness.view;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import org.trivialfitness.controler.AppController;
 import org.trivialfitness.state.AppState;
 
@@ -49,10 +50,12 @@ public class View {
 						handleRegister();
 						break;
 					case "0":
+						clearConsole();
 						System.out.println("Thanks for using Trivial Fitness! We hope to see you soon.");
 						wantsToExit = true;
 						break;
 					default:
+						clearConsole();
 						System.out.println("Invalid option. Please try again.");
 				}
 			}
@@ -62,10 +65,10 @@ public class View {
 						// handleViewTrainingPlans();
 						break;
 					case "2":
-						// handleViewActivities();
+						handleViewPastActivities();
 						break;
 					case "3":
-						// handleAddNewActivity();
+						handleAddNewActivity();
 						break;
 					case "4":
 						// handleAddNewTrainingPlan();
@@ -106,8 +109,8 @@ public class View {
 	public void showStartMenu() {
 		System.out.println("\n1. Login");
 		System.out.println("2. Register");
-		System.out.println("0. Exit");
-		System.out.println("Choose an option: ");
+		System.out.println("0. Exit\n");
+		System.out.print("Choose an option: ");
 	}
 
 	public void showUserMenu() {
@@ -115,8 +118,8 @@ public class View {
 		System.out.println("2. View Activities");
 		System.out.println("3. Add New Activity");
 		System.out.println("4. Add New Training Plan");
-		System.out.println("0. Logout");
-		System.out.println("Choose an option: ");
+		System.out.println("0. Logout\n");
+		System.out.print("Choose an option: ");
 	}
 
 	public void showError(String message) {
@@ -185,6 +188,228 @@ public class View {
 		clearConsole();
 		showMessage(message);
 	}
+
+	public void handleViewPastActivities() {
+		clearConsole();
+		String activities_String = controller.viewPastActivities();
+		showMessage(activities_String);
+		showMessage("Press any key to continue...");
+		scanner.nextLine();
+		clearConsole();
+
+	}
+
+	public void handleAddNewActivity() {
+		clearConsole();
+		int size = 0;
+
+		for (String activityTypeName : controller.getAvailableActivitiesTypesNames()) {
+			size++;
+
+			showMessage(size + ". " + activityTypeName);
+		}
+		showMessage("");
+		String activity_type_choose = getUserInput("Choose an activity type: ");
+		int activity_type;
+		try {
+			activity_type = Integer.parseInt(activity_type_choose);
+		}
+		catch (NumberFormatException e) {
+			clearConsole();
+			showMessage("Invalid activity type. Adding activity failed.");
+			return;
+		}
+		if (activity_type < 1 || activity_type > size) {
+			clearConsole();
+			showMessage("Invalid activity type. Adding activity failed.");
+			return;
+		}
+		clearConsole();
+
+		String activityDate = getUserInput("Enter the date of the activity (yyyy-MM-dd): ");
+		LocalDate date = null;
+		try {
+			date = LocalDate.parse(activityDate);
+		}
+		catch (DateTimeParseException e) {
+			clearConsole();
+			showMessage("Invalid date format. Adding activity failed.");
+			return;
+		}
+		String duration = getUserInput("Enter the duration of the activity in minutes: ");
+		int durationValue;
+		try {
+			durationValue = Integer.parseInt(duration);
+		}
+		catch (NumberFormatException e) {
+			clearConsole();
+			showMessage("Invalid duration value. Adding activity failed.");
+			return;
+		}
+
+		String average_heart_rate = getUserInput("Enter the average heart rate of the activity: ");
+		int average_heart_rate_value;
+		try {
+			average_heart_rate_value = Integer.parseInt(average_heart_rate);
+		}
+		catch (NumberFormatException e) {
+			clearConsole();
+			showMessage("Invalid heart rate value. Adding activity failed.");
+			return;
+		}
+		clearConsole();
+
+		int option = 0;
+		for (String activityName : controller.getActivitiesFromSpecificType(activity_type)) {
+			option++;
+			showMessage(option + ". " + activityName);
+		}
+		showMessage("");
+		String activity_choose = getUserInput("Choose an activity: ");
+		int activity;
+		try {
+			activity = Integer.parseInt(activity_choose);
+		}
+		catch (NumberFormatException e) {
+			clearConsole();
+			showMessage("Invalid activity. Adding activity failed.");
+			return;
+		}
+
+		if (activity < 1 || activity > option) {
+			clearConsole();
+			showMessage("Invalid activity. Adding activity failed.");
+			return;
+		}
+
+		switch (activity_type) {
+			case 1:
+				// String distance = getUserInput("Enter the distance of the activity in
+				// km: ");
+				// double distanceValue;
+				// try {
+				// distanceValue = Double.parseDouble(distance);
+				// }
+				// catch (NumberFormatException e) {
+				// clearConsole();
+				// showMessage("Invalid distance value. Adding activity failed.");
+				// return;
+				// }
+				// controller.addNewActivity(activity, average_heart_rate_value,
+				// durationValue, date, 0);
+				handle_new_distance_activity(activity, average_heart_rate_value, durationValue, date);
+				break;
+			case 2:
+				// handle_new_distance_and_altimetry_activity(activity,average_heart_rate_value,durationValue,date);
+				break;
+			case 3:
+				// handle_new_repetitions_activity(activity, average_heart_rate_value,
+				// durationValue, date);
+				break;
+			case 4:
+				// handle_new_weight_repetitions_activity(activity,
+				// average_heart_rate_value, durationValue, date);
+				break;
+			default:
+				clearConsole();
+				showMessage("Invalid activity type. Adding activity failed.");
+				return;
+		}
+
+	}
+
+	public void handle_new_distance_activity(int activity, int average_heart_rate_value, int durationValue,
+			LocalDate date) {
+		String distance = getUserInput("Enter the distance of the activity in km: ");
+		int distanceValue;
+		try {
+			distanceValue = Integer.parseInt(distance);
+		}
+		catch (NumberFormatException e) {
+			clearConsole();
+			showMessage("Invalid distance value. Adding activity failed.");
+			return;
+		}
+		// int activity, int average_heart_rate_value, int durationValue, LocalDate date,
+		// int distanceValue
+		String message = controller.addNewDistanceActivity(--activity, average_heart_rate_value, durationValue, date,
+				distanceValue);
+		clearConsole();
+		showMessage(message);
+	}
+
+	// public void handle_new_distance_and_altimetry_activity(int activity, int
+	// average_heart_rate_value,
+	// int durationValue, LocalDate date) {
+	// String distance = getUserInput("Enter the distance of the activity in km: ");
+	// int distanceValue;
+	// try {
+	// distanceValue = Integer.parseInt(distance);
+	// }
+	// catch (NumberFormatException e) {
+	// clearConsole();
+	// showMessage("Invalid distance value. Adding activity failed.");
+	// return;
+	// }
+	// String altimetry = getUserInput("Enter the altimetry of the activity in meters: ");
+	// int altimetryValue;
+	// try {
+	// altimetryValue = Integer.parseInt(altimetry);
+	// }
+	// catch (NumberFormatException e) {
+	// clearConsole();
+	// showMessage("Invalid altimetry value. Adding activity failed.");
+	// return;
+	// }
+	// // controller.addNewDistanceAltimetryActivity(--activity,
+	// // average_heart_rate_value, durationValue, date, distanceValue, altimetryValue);
+	// }
+
+	// public void handle_new_repetitions_activity(int activity, int
+	// average_heart_rate_value, int durationValue,
+	// LocalDate date) {
+	// String repetitions = getUserInput("Enter the number of repetitions of the activity:
+	// ");
+	// int repetitionsValue;
+	// try {
+	// repetitionsValue = Integer.parseInt(repetitions);
+	// }
+	// catch (NumberFormatException e) {
+	// clearConsole();
+	// showMessage("Invalid repetitions value. Adding activity failed.");
+	// return;
+	// }
+	// // controller.addNewRepetitionsActivity(--activity, average_heart_rate_value,
+	// // durationValue, date, repetitionsValue);
+	// }
+
+	// public void handle_new_weight_repetitions_activity(int activity, int
+	// average_heart_rate_value, int durationValue,
+	// LocalDate date) {
+	// String repetitions = getUserInput("Enter the number of repetitions of the activity:
+	// ");
+	// int repetitionsValue;
+	// try {
+	// repetitionsValue = Integer.parseInt(repetitions);
+	// }
+	// catch (NumberFormatException e) {
+	// clearConsole();
+	// showMessage("Invalid repetitions value. Adding activity failed.");
+	// return;
+	// }
+	// String weight = getUserInput("Enter the weight of the activity in kg: ");
+	// int weightValue;
+	// try {
+	// weightValue = Integer.parseInt(weight);
+	// }
+	// catch (NumberFormatException e) {
+	// clearConsole();
+	// showMessage("Invalid weight value. Adding activity failed.");
+	// return;
+	// }
+	// // controller.addNewWeightRepetitionsActivity(--activity,
+	// // average_heart_rate_value, durationValue, date, repetitionsValue, weightValue);
+	// }
 
 	public void clearConsole() {
 		try {
