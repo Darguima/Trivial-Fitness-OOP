@@ -117,7 +117,7 @@ public class AppController {
 	}
 
 	public List<String> getActivitiesFromSpecificType(int type) {
-		return appState.getActivitiesFromSpecificType(type);
+		return appState.getActivitiesFromSpecificType(type - 1);
 	}
 
 	public String addNewDistanceActivity(int activity, int average_heart_rate_value, int durationValue, LocalDate date,
