@@ -233,14 +233,6 @@ public class Handlers {
 
 	}
 
-	/*
-	 * addNewActivity(int average_heart_rate_value, int durationValue, int distanceValue,
-	 * int altimetryValue, int repetitions, int weightValue, LocalDate date, String
-	 * activityName,String activityType)
-	 *
-	 *
-	 */
-
 	public void handle_new_distance_activity(int activity, int average_heart_rate_value, int durationValue,
 			LocalDate date, AppController controller) {
 		clearConsole();

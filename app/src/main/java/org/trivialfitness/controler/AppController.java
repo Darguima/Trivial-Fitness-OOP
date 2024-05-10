@@ -119,10 +119,6 @@ public class AppController {
 		return appState.getActivitiesFromSpecificType(type - 1);
 	}
 
-	// creating a generic addnewactivity method to avoid code duplication
-	// the method receives the the average heart rate, the duration, the date, the
-	// repetitions, the weight, the distance, the altimetry and the activity name
-	// and returns a string with the result of the operation
 	public String addNewActivity(int average_heart_rate_value, int durationValue, int distanceValue, int altimetryValue,
 			int repetitions, int weightValue, LocalDate date, String activityName, String activityType) {
 
@@ -131,7 +127,6 @@ public class AppController {
 		if (activityCreator == null) {
 			return "Activity not found.";
 		}
-		// seeing activity type to check which method to call
 		if (activityType.equals("Distance")) {
 			Activity newActivity = activityCreator.apply(distanceValue, 0);
 			pastActivity = new PastActivity(newActivity, average_heart_rate_value, durationValue, date, 0);
@@ -160,80 +155,6 @@ public class AppController {
 			return "Activity not found.";
 		}
 	}
-
-	// public String addNewDistanceActivity(int activity, int average_heart_rate_value,
-	// int durationValue, LocalDate date,
-	// int distanceValue, String activityName) {
-
-	// PastActivity pastActivity;
-	// BiFunction<Integer, Integer, Activity> activityCreator =
-	// appState.getActivityCreator(activityName);
-	// if (activityCreator == null) {
-	// return "Activity not found.";
-	// }
-	// Activity newActivity = activityCreator.apply(distanceValue, 0);
-	// pastActivity = new PastActivity(newActivity, average_heart_rate_value,
-	// durationValue, date, 0);
-	// currentUser.addPastActivity(pastActivity);
-	// return "Activity added successfully.";
-
-	// }
-
-	// public String addNewDistanceAltimetryActivity(int activity, int
-	// average_heart_rate_value, int durationValue,
-	// LocalDate date, int distanceValue, int altimetryValue, String activityName) {
-
-	// PastActivity pastActivity;
-
-	// BiFunction<Integer, Integer, Activity> activityCreator =
-	// appState.getActivityCreator(activityName);
-	// if (activityCreator == null) {
-	// return "Activity not found.";
-	// }
-	// Activity newActivity = activityCreator.apply(distanceValue, altimetryValue);
-	// pastActivity = new PastActivity(newActivity, average_heart_rate_value,
-	// durationValue, date, 0);
-	// currentUser.addPastActivity(pastActivity);
-	// return "Activity added successfully.";
-
-	// }
-
-	// public String addNewRepetitionActivity(int activity, int average_heart_rate_value,
-	// int durationValue,
-	// LocalDate date, int repetitions, String activityName) {
-
-	// PastActivity pastActivity;
-
-	// BiFunction<Integer, Integer, Activity> activityCreator =
-	// appState.getActivityCreator(activityName);
-	// if (activityCreator == null) {
-	// return "Activity not found.";
-	// }
-	// Activity newActivity = activityCreator.apply(repetitions, 0);
-	// pastActivity = new PastActivity(newActivity, average_heart_rate_value,
-	// durationValue, date, 0);
-	// currentUser.addPastActivity(pastActivity);
-	// return "Activity added successfully.";
-	// }
-
-	// public String addNewWeightRepetitionsActivity(int activity, int
-	// average_heart_rate_value, int durationValue,
-	// LocalDate date, int repetitions, int weightValue, String activityName) {
-
-	// PastActivity pastActivity;
-
-	// BiFunction<Integer, Integer, Activity> activityCreator =
-	// appState.getActivityCreator(activityName);
-	// if (activityCreator == null) {
-	// return "Activity not found.";
-	// }
-	// Activity newActivity = activityCreator.apply(repetitions, weightValue);
-	// pastActivity = new PastActivity(newActivity, average_heart_rate_value,
-	// durationValue, date, 0);
-	// currentUser.addPastActivity(pastActivity);
-	// return "Activity added successfully.";
-
-	// }
 
 	public LocalDate getTime() {
 		return appState.getCurrentDate();
