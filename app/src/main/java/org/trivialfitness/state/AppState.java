@@ -4,12 +4,15 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.HashMap;
 
 import org.trivialfitness.activity.*;
 import org.trivialfitness.user.User;
 import java.util.stream.Collectors;
 import java.util.Arrays;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class AppState implements Serializable {
 
@@ -32,6 +35,40 @@ public class AppState implements Serializable {
 		now = appState.now;
 		users = appState.users.stream().map(User::copy).collect(Collectors.toList());
 
+	}
+
+	// private BiFunction initializeActivityCreators() {
+	// // activityCreators = new HashMap<>();
+	// // activityCreators.put("Rowing", (distance, something) -> new Rowing(distance));
+	// // activityCreators.put("Mountain Bike", (distance, altimetry) -> new
+	// MountainBike(distance, altimetry));
+	// // activityCreators.put("Push Ups", (repetitions, something) -> new
+	// PushUps(repetitions));
+	// // activityCreators.put("Burpees", (repetitions, something) -> new
+	// Burpees(repetitions));
+	// // activityCreators.put("Scissors", (repetitions, something) -> new
+	// Scissors(repetitions));
+	// // activityCreators.put("Squats", (repetitions, something) -> new
+	// Squats(repetitions));
+	// // activityCreators.put("Jumping Jacks", (repetitions, something) -> new
+	// JumpingJacks(repetitions));
+	// // activityCreators.put("Bench Press", (repetitions, weight) -> new
+	// BenchPress(repetitions, weight));
+	// }
+
+	// creating a map of activity creators and returning it
+
+	public Map<String, BiFunction<Integer, Integer, Activity>> initializeActivityCreators() {
+		Map<String, BiFunction<Integer, Integer, Activity>> activityCreators = new HashMap<>();
+		activityCreators.put("Rowing", (distance, something) -> new Rowing(distance));
+		activityCreators.put("Mountain Bike", (distance, altimetry) -> new MountainBike(distance, altimetry));
+		activityCreators.put("Push Ups", (repetitions, something) -> new PushUps(repetitions));
+		activityCreators.put("Burpees", (repetitions, something) -> new Burpees(repetitions));
+		activityCreators.put("Scissors", (repetitions, something) -> new Scissors(repetitions));
+		activityCreators.put("Squats", (repetitions, something) -> new Squats(repetitions));
+		activityCreators.put("Jumping Jacks", (repetitions, something) -> new JumpingJacks(repetitions));
+		activityCreators.put("Bench Press", (repetitions, weight) -> new BenchPress(repetitions, weight));
+		return activityCreators;
 	}
 
 	public LocalDate getCurrentDate() {
@@ -64,7 +101,7 @@ public class AppState implements Serializable {
 	}
 
 	public List<String> getAvailableActivitiesTypesNames() {
-		return availableActivities.stream().map(Activity::getActivityTypeName).distinct().toList();
+		return availableActivities.stream().map(Activity::getActivityTypeName).distinct().collect(Collectors.toList());
 	}
 
 	public List<String> getAvailableActivitiesNames() {
@@ -92,6 +129,11 @@ public class AppState implements Serializable {
 
 	public String getActivityRepetitionWeightName(int activity) {
 		return activityNamesByType.get(3).get(activity);
+	}
+
+	public BiFunction<Integer, Integer, Activity> getActivityCreator(String activityName) {
+		Map<String, BiFunction<Integer, Integer, Activity>> activityCreators = initializeActivityCreators();
+		return activityCreators.get(activityName);
 	}
 
 }

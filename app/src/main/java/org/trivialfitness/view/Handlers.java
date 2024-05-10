@@ -233,6 +233,14 @@ public class Handlers {
 
 	}
 
+	/*
+	 * addNewActivity(int average_heart_rate_value, int durationValue, int distanceValue,
+	 * int altimetryValue, int repetitions, int weightValue, LocalDate date, String
+	 * activityName,String activityType)
+	 *
+	 *
+	 */
+
 	public void handle_new_distance_activity(int activity, int average_heart_rate_value, int durationValue,
 			LocalDate date, AppController controller) {
 		clearConsole();
@@ -248,8 +256,8 @@ public class Handlers {
 			showMessage("Invalid distance value. Adding activity failed.");
 			return;
 		}
-		String message = controller.addNewDistanceActivity(--activity, average_heart_rate_value, durationValue, date,
-				distanceValue, activityName);
+		String message = controller.addNewActivity(average_heart_rate_value, durationValue, distanceValue, 0, 0, 0,
+				date, activityName, "Distance");
 		clearConsole();
 		showMessage(message);
 	}
@@ -279,8 +287,8 @@ public class Handlers {
 			showMessage("Invalid altimetry value. Adding activity failed.");
 			return;
 		}
-		String message = controller.addNewDistanceAltimetryActivity(--activity, average_heart_rate_value, durationValue,
-				date, distanceValue, altimetryValue, activityName);
+		String message = controller.addNewActivity(average_heart_rate_value, durationValue, distanceValue,
+				altimetryValue, 0, 0, date, activityName, "DistanceAltimetry");
 		clearConsole();
 		showMessage(message);
 	}
@@ -300,8 +308,8 @@ public class Handlers {
 			showMessage("Invalid repetitions value. Adding activity failed.");
 			return;
 		}
-		String message = controller.addNewRepetitionActivity(--activity, average_heart_rate_value, durationValue, date,
-				repetitionsValue, activityName);
+		String message = controller.addNewActivity(average_heart_rate_value, durationValue, 0, 0, repetitionsValue, 0,
+				date, activityName, "Repetition");
 		clearConsole();
 		showMessage(message);
 	}
@@ -331,8 +339,8 @@ public class Handlers {
 			showMessage("Invalid weight value. Adding activity failed.");
 			return;
 		}
-		String message = controller.addNewWeightRepetitionsActivity(--activity, average_heart_rate_value, durationValue,
-				date, repetitionsValue, weightValue, activityName);
+		String message = controller.addNewActivity(average_heart_rate_value, durationValue, 0, 0, repetitionsValue,
+				weightValue, date, activityName, "RepetitionWeight");
 		clearConsole();
 		showMessage(message);
 

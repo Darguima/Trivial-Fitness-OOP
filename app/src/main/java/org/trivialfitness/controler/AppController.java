@@ -7,10 +7,10 @@ import org.trivialfitness.user.ProfessionalUser;
 import org.trivialfitness.user.User;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.BiFunction;
 
 import org.trivialfitness.activity.*;
 import org.trivialfitness.state.AppState;
-import org.trivialfitness.trainingPlan.TrainingPlan;
 import org.trivialfitness.trainingPlan.TrainingPlanActivity;
 
 public class AppController {
@@ -36,9 +36,6 @@ public class AppController {
 			return "User not found. Please try again.";
 		}
 	}
-
-	// String userType, String userId, String name, String address, String email, double
-	// weight
 
 	public boolean checkIfUserExists(String userId) {
 		return appState.getUser(userId) != null;
@@ -111,8 +108,10 @@ public class AppController {
 	}
 
 	public List<String> getAvailableActivitiesTypesNames() {
-		List<String> activityType = List.of("Distance", "Distance and Altimetry", "Repetitions",
-				"Repetitions with Weight");
+
+		List<String> activityType = appState.getAvailableActivitiesTypesNames();
+
+		activityType.sort(null);
 		return activityType;
 	}
 
@@ -120,97 +119,121 @@ public class AppController {
 		return appState.getActivitiesFromSpecificType(type - 1);
 	}
 
-	public String addNewDistanceActivity(int activity, int average_heart_rate_value, int durationValue, LocalDate date,
-			int distanceValue, String activityName) {
+	// creating a generic addnewactivity method to avoid code duplication
+	// the method receives the the average heart rate, the duration, the date, the
+	// repetitions, the weight, the distance, the altimetry and the activity name
+	// and returns a string with the result of the operation
+	public String addNewActivity(int average_heart_rate_value, int durationValue, int distanceValue, int altimetryValue,
+			int repetitions, int weightValue, LocalDate date, String activityName, String activityType) {
 
 		PastActivity pastActivity;
-
-		switch (activityName) {
-			case "Rowing":
-				Rowing rowing = new Rowing(distanceValue);
-				pastActivity = new PastActivity(rowing, average_heart_rate_value, durationValue, date, 0);
-				currentUser.addPastActivity(pastActivity);
-				return "Activity added successfully.";
-			default:
-				return "Activity not found.";
+		BiFunction<Integer, Integer, Activity> activityCreator = appState.getActivityCreator(activityName);
+		if (activityCreator == null) {
+			return "Activity not found.";
 		}
-
-	}
-
-	public String addNewDistanceAltimetryActivity(int activity, int average_heart_rate_value, int durationValue,
-			LocalDate date, int distanceValue, int altimetryValue, String activityName) {
-
-		PastActivity pastActivity;
-
-		switch (activityName) {
-			case "Mountain Bike":
-				MountainBike mountainBike = new MountainBike(distanceValue, altimetryValue);
-				pastActivity = new PastActivity(mountainBike, average_heart_rate_value, durationValue, date, 0);
-				currentUser.addPastActivity(pastActivity);
-				return "Activity added successfully.";
-			default:
-				return "Activity not found.";
+		// seeing activity type to check which method to call
+		if (activityType.equals("Distance")) {
+			Activity newActivity = activityCreator.apply(distanceValue, 0);
+			pastActivity = new PastActivity(newActivity, average_heart_rate_value, durationValue, date, 0);
+			currentUser.addPastActivity(pastActivity);
+			return "Activity added successfully.";
 		}
-
-	}
-
-	public String addNewRepetitionActivity(int activity, int average_heart_rate_value, int durationValue,
-			LocalDate date, int repetitions, String activityName) {
-
-		PastActivity pastActivity;
-
-		switch (activityName) {
-			case "Push Ups":
-				PushUps pushUps = new PushUps(repetitions);
-				pastActivity = new PastActivity(pushUps, average_heart_rate_value, durationValue, date, 0);
-				currentUser.addPastActivity(pastActivity);
-				return "Activity added successfully.";
-
-			case "Jumping Jacks":
-				JumpingJacks jumpingJacks = new JumpingJacks(repetitions);
-				pastActivity = new PastActivity(jumpingJacks, average_heart_rate_value, durationValue, date, 0);
-				currentUser.addPastActivity(pastActivity);
-				return "Activity added successfully.";
-
-			case "Scissors":
-				Scissors scissors = new Scissors(repetitions);
-				pastActivity = new PastActivity(scissors, average_heart_rate_value, durationValue, date, 0);
-				currentUser.addPastActivity(pastActivity);
-				return "Activity added successfully.";
-
-			case "Squats":
-				Squats squats = new Squats(repetitions);
-				pastActivity = new PastActivity(squats, average_heart_rate_value, durationValue, date, 0);
-				currentUser.addPastActivity(pastActivity);
-				return "Activity added successfully.";
-
-			case "Burpees":
-				Burpees burpees = new Burpees(repetitions);
-				pastActivity = new PastActivity(burpees, average_heart_rate_value, durationValue, date, 0);
-				currentUser.addPastActivity(pastActivity);
-				return "Activity added successfully.";
-
-			default:
-				return "Activity not found.";
+		else if (activityType.equals("DistanceAltimetry")) {
+			Activity newActivity = activityCreator.apply(distanceValue, altimetryValue);
+			pastActivity = new PastActivity(newActivity, average_heart_rate_value, durationValue, date, 0);
+			currentUser.addPastActivity(pastActivity);
+			return "Activity added successfully.";
+		}
+		else if (activityType.equals("Repetition")) {
+			Activity newActivity = activityCreator.apply(repetitions, 0);
+			pastActivity = new PastActivity(newActivity, average_heart_rate_value, durationValue, date, 0);
+			currentUser.addPastActivity(pastActivity);
+			return "Activity added successfully.";
+		}
+		else if (activityType.equals("RepetitionWeight")) {
+			Activity newActivity = activityCreator.apply(repetitions, weightValue);
+			pastActivity = new PastActivity(newActivity, average_heart_rate_value, durationValue, date, 0);
+			currentUser.addPastActivity(pastActivity);
+			return "Activity added successfully.";
+		}
+		else {
+			return "Activity not found.";
 		}
 	}
 
-	public String addNewWeightRepetitionsActivity(int activity, int average_heart_rate_value, int durationValue,
-			LocalDate date, int repetitions, int weightValue, String activityName) {
+	// public String addNewDistanceActivity(int activity, int average_heart_rate_value,
+	// int durationValue, LocalDate date,
+	// int distanceValue, String activityName) {
 
-		PastActivity pastActivity;
+	// PastActivity pastActivity;
+	// BiFunction<Integer, Integer, Activity> activityCreator =
+	// appState.getActivityCreator(activityName);
+	// if (activityCreator == null) {
+	// return "Activity not found.";
+	// }
+	// Activity newActivity = activityCreator.apply(distanceValue, 0);
+	// pastActivity = new PastActivity(newActivity, average_heart_rate_value,
+	// durationValue, date, 0);
+	// currentUser.addPastActivity(pastActivity);
+	// return "Activity added successfully.";
 
-		switch (activityName) {
-			case "Bench Press":
-				BenchPress benchPress = new BenchPress(repetitions, weightValue);
-				pastActivity = new PastActivity(benchPress, average_heart_rate_value, durationValue, date, 0);
-				currentUser.addPastActivity(pastActivity);
-				return "Activity added successfully.";
-			default:
-				return "Activity not found.";
-		}
+	// }
 
-	}
+	// public String addNewDistanceAltimetryActivity(int activity, int
+	// average_heart_rate_value, int durationValue,
+	// LocalDate date, int distanceValue, int altimetryValue, String activityName) {
+
+	// PastActivity pastActivity;
+
+	// BiFunction<Integer, Integer, Activity> activityCreator =
+	// appState.getActivityCreator(activityName);
+	// if (activityCreator == null) {
+	// return "Activity not found.";
+	// }
+	// Activity newActivity = activityCreator.apply(distanceValue, altimetryValue);
+	// pastActivity = new PastActivity(newActivity, average_heart_rate_value,
+	// durationValue, date, 0);
+	// currentUser.addPastActivity(pastActivity);
+	// return "Activity added successfully.";
+
+	// }
+
+	// public String addNewRepetitionActivity(int activity, int average_heart_rate_value,
+	// int durationValue,
+	// LocalDate date, int repetitions, String activityName) {
+
+	// PastActivity pastActivity;
+
+	// BiFunction<Integer, Integer, Activity> activityCreator =
+	// appState.getActivityCreator(activityName);
+	// if (activityCreator == null) {
+	// return "Activity not found.";
+	// }
+	// Activity newActivity = activityCreator.apply(repetitions, 0);
+	// pastActivity = new PastActivity(newActivity, average_heart_rate_value,
+	// durationValue, date, 0);
+	// currentUser.addPastActivity(pastActivity);
+	// return "Activity added successfully.";
+	// }
+
+	// public String addNewWeightRepetitionsActivity(int activity, int
+	// average_heart_rate_value, int durationValue,
+	// LocalDate date, int repetitions, int weightValue, String activityName) {
+
+	// PastActivity pastActivity;
+
+	// BiFunction<Integer, Integer, Activity> activityCreator =
+	// appState.getActivityCreator(activityName);
+	// if (activityCreator == null) {
+	// return "Activity not found.";
+	// }
+	// Activity newActivity = activityCreator.apply(repetitions, weightValue);
+	// pastActivity = new PastActivity(newActivity, average_heart_rate_value,
+	// durationValue, date, 0);
+	// currentUser.addPastActivity(pastActivity);
+	// return "Activity added successfully.";
+
+	// }
 
 	public LocalDate getTime() {
 		return appState.getCurrentDate();
