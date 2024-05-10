@@ -97,4 +97,17 @@ public class AppState implements Serializable {
 
 	}
 
+	public String getActivityDistanceAltimetryName(int activity) {
+		return activityNamesByType.get(2).get(activity);
+
+	}
+
+	public String getActivityRepetitionName(int activity) {
+		return activityNamesByType.get(3).get(activity);
+	}
+
+	public String getActivityRepetitionWeightName(int activity) {
+		return activityNamesByType.get(4).get(activity);
+	}
+
 }
