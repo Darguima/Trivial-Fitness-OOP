@@ -313,7 +313,8 @@ public class View {
 	public void handle_new_distance_activity(int activity, int average_heart_rate_value, int durationValue,
 			LocalDate date) {
 		clearConsole();
-		showMessage("Activity: " + controller.getActivityDistanceName(--activity));
+		String activityName = controller.getActivityDistanceName(--activity);
+		showMessage("Activity: " + activityName);
 		String distance = getUserInput("Enter the distance of the activity in km: ");
 		int distanceValue;
 		try {
@@ -325,7 +326,7 @@ public class View {
 			return;
 		}
 		String message = controller.addNewDistanceActivity(--activity, average_heart_rate_value, durationValue, date,
-				distanceValue);
+				distanceValue, activityName);
 		clearConsole();
 		showMessage(message);
 	}
@@ -333,7 +334,8 @@ public class View {
 	public void handle_new_distance_and_altimetry_activity(int activity, int average_heart_rate_value,
 			int durationValue, LocalDate date) {
 		clearConsole();
-		showMessage("Activity: " + controller.getActivityDistanceAltimetryName(--activity));
+		String activityName = controller.getActivityDistanceAltimetryName(--activity);
+		showMessage("Activity: " + activityName);
 		String distance = getUserInput("Enter the distance of the activity in km: ");
 		int distanceValue;
 		try {
@@ -355,7 +357,7 @@ public class View {
 			return;
 		}
 		String message = controller.addNewDistanceAltimetryActivity(--activity, average_heart_rate_value, durationValue,
-				date, distanceValue, altimetryValue);
+				date, distanceValue, altimetryValue, activityName);
 		clearConsole();
 		showMessage(message);
 	}
@@ -363,7 +365,8 @@ public class View {
 	public void handle_new_repetitions_activity(int activity, int average_heart_rate_value, int durationValue,
 			LocalDate date) {
 		clearConsole();
-		showMessage("Activity: " + controller.getActivityRepetitionName(--activity));
+		String activityName = controller.getActivityRepetitionName(--activity);
+		showMessage("Activity: " + activityName);
 		String repetitions = getUserInput("Enter the number of repetitions of the activity: ");
 		int repetitionsValue;
 		try {
@@ -375,7 +378,7 @@ public class View {
 			return;
 		}
 		String message = controller.addNewRepetitionActivity(--activity, average_heart_rate_value, durationValue, date,
-				repetitionsValue);
+				repetitionsValue, activityName);
 		clearConsole();
 		showMessage(message);
 	}
@@ -383,8 +386,8 @@ public class View {
 	public void handle_new_weight_repetitions_activity(int activity, int average_heart_rate_value, int durationValue,
 			LocalDate date) {
 		clearConsole();
-
-		showMessage("Activity: " + controller.getActivityRepetitionWeightName(--activity));
+		String activityName = controller.getActivityRepetitionWeightName(--activity);
+		showMessage("Activity: " + activityName);
 		String repetitions = getUserInput("Enter the number of repetitions of the activity:");
 		int repetitionsValue;
 		try {
@@ -406,7 +409,7 @@ public class View {
 			return;
 		}
 		String message = controller.addNewWeightRepetitionsActivity(--activity, average_heart_rate_value, durationValue,
-				date, repetitionsValue, weightValue);
+				date, repetitionsValue, weightValue, activityName);
 		clearConsole();
 		showMessage(message);
 

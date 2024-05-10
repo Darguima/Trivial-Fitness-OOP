@@ -86,8 +86,10 @@ public class AppController {
 		sb.append("Past activities:\n");
 		for (int i = 0; i < currentUser.getPastActivities().size(); i++) {
 			sb.append("\t" + currentUser.getPastActivities().get(i).getActivity().getActivityName() + " on "
-					+ currentUser.getPastActivities().get(i).getDate() + ";\n");
+					+ currentUser.getPastActivities().get(i).getDate() + " <-> "
+					+ currentUser.getPastActivities().get(i).getActivity().getActivityAttributesString() + ";\n");
 		}
+
 		return sb.toString();
 
 	}
@@ -103,14 +105,14 @@ public class AppController {
 	}
 
 	public String addNewDistanceActivity(int activity, int average_heart_rate_value, int durationValue, LocalDate date,
-			int distanceValue) {
+			int distanceValue, String activityName) {
 
-		String activityName = appState.getActivityDistanceName(activity);
+		PastActivity pastActivity;
 
 		switch (activityName) {
 			case "Rowing":
 				Rowing rowing = new Rowing(distanceValue);
-				PastActivity pastActivity = new PastActivity(rowing, average_heart_rate_value, durationValue, date, 0);
+				pastActivity = new PastActivity(rowing, average_heart_rate_value, durationValue, date, 0);
 				currentUser.addPastActivity(pastActivity);
 				return "Activity added successfully.";
 			default:
@@ -120,15 +122,14 @@ public class AppController {
 	}
 
 	public String addNewDistanceAltimetryActivity(int activity, int average_heart_rate_value, int durationValue,
-			LocalDate date, int distanceValue, int altimetryValue) {
+			LocalDate date, int distanceValue, int altimetryValue, String activityName) {
 
-		String activityName = appState.getActivityDistanceAltimetryName(activity);
+		PastActivity pastActivity;
 
 		switch (activityName) {
 			case "Mountain Bike":
 				MountainBike mountainBike = new MountainBike(distanceValue, altimetryValue);
-				PastActivity pastActivity = new PastActivity(mountainBike, average_heart_rate_value, durationValue,
-						date, 0);
+				pastActivity = new PastActivity(mountainBike, average_heart_rate_value, durationValue, date, 0);
 				currentUser.addPastActivity(pastActivity);
 				return "Activity added successfully.";
 			default:
@@ -138,9 +139,8 @@ public class AppController {
 	}
 
 	public String addNewRepetitionActivity(int activity, int average_heart_rate_value, int durationValue,
-			LocalDate date, int repetitions) {
+			LocalDate date, int repetitions, String activityName) {
 
-		String activityName = appState.getActivityRepetitionName(activity);
 		PastActivity pastActivity;
 
 		switch (activityName) {
@@ -180,9 +180,8 @@ public class AppController {
 	}
 
 	public String addNewWeightRepetitionsActivity(int activity, int average_heart_rate_value, int durationValue,
-			LocalDate date, int repetitions, int weightValue) {
+			LocalDate date, int repetitions, int weightValue, String activityName) {
 
-		String activityName = appState.getActivityRepetitionWeightName(activity);
 		PastActivity pastActivity;
 
 		switch (activityName) {
