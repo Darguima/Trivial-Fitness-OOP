@@ -62,7 +62,7 @@ public class View {
 			else {
 				switch (option) {
 					case "1":
-						// handleViewTrainingPlans();
+						handleViewTrainingPlans();
 						break;
 					case "2":
 						handleViewPastActivities();
@@ -313,7 +313,7 @@ public class View {
 	public void handle_new_distance_activity(int activity, int average_heart_rate_value, int durationValue,
 			LocalDate date) {
 		clearConsole();
-		String activityName = controller.getActivityDistanceName(--activity);
+		String activityName = controller.activityDistanceName(--activity);
 		showMessage("Activity: " + activityName);
 		String distance = getUserInput("Enter the distance of the activity in km: ");
 		int distanceValue;
@@ -334,7 +334,7 @@ public class View {
 	public void handle_new_distance_and_altimetry_activity(int activity, int average_heart_rate_value,
 			int durationValue, LocalDate date) {
 		clearConsole();
-		String activityName = controller.getActivityDistanceAltimetryName(--activity);
+		String activityName = controller.activityDistanceAltimetryName(--activity);
 		showMessage("Activity: " + activityName);
 		String distance = getUserInput("Enter the distance of the activity in km: ");
 		int distanceValue;
@@ -365,7 +365,7 @@ public class View {
 	public void handle_new_repetitions_activity(int activity, int average_heart_rate_value, int durationValue,
 			LocalDate date) {
 		clearConsole();
-		String activityName = controller.getActivityRepetitionName(--activity);
+		String activityName = controller.activityRepetitionName(--activity);
 		showMessage("Activity: " + activityName);
 		String repetitions = getUserInput("Enter the number of repetitions of the activity: ");
 		int repetitionsValue;
@@ -386,7 +386,7 @@ public class View {
 	public void handle_new_weight_repetitions_activity(int activity, int average_heart_rate_value, int durationValue,
 			LocalDate date) {
 		clearConsole();
-		String activityName = controller.getActivityRepetitionWeightName(--activity);
+		String activityName = controller.activityRepetitionWeightName(--activity);
 		showMessage("Activity: " + activityName);
 		String repetitions = getUserInput("Enter the number of repetitions of the activity:");
 		int repetitionsValue;
@@ -413,6 +413,15 @@ public class View {
 		clearConsole();
 		showMessage(message);
 
+	}
+
+	public void handleViewTrainingPlans() {
+		clearConsole();
+		String trainingPlans_String = controller.viewTrainingPlans();
+		showMessage(trainingPlans_String);
+		showMessage("Press any key to continue...");
+		scanner.nextLine();
+		clearConsole();
 	}
 
 	public void clearConsole() {

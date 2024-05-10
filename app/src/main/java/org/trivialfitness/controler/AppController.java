@@ -94,6 +94,22 @@ public class AppController {
 
 	}
 
+	public String viewTrainingPlans() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Training plans:\n");
+		for (int i = 0; i < currentUser.getTrainingPlans().size(); i++) {
+			sb.append("Training plan from " + currentUser.getTrainingPlans().get(i).getStartingDate() + " to "
+					+ currentUser.getTrainingPlans().get(i).getEndingDate() + " with "
+					+ currentUser.getTrainingPlans().get(i).getActivities().size() + " exercises:\n");
+			for (TrainingPlanActivity trainingPlanActivity : currentUser.getTrainingPlans().get(i).getActivities()) {
+				sb.append("\t" + trainingPlanActivity.activity.getActivityName() + " on " + trainingPlanActivity.weekDay
+						+ ";\n");
+			}
+		}
+
+		return sb.toString();
+	}
+
 	public List<String> getAvailableActivitiesTypesNames() {
 		List<String> activityType = List.of("Distance", "Distance and Altimetry", "Repetitions",
 				"Repetitions with Weight");
@@ -200,19 +216,19 @@ public class AppController {
 		return appState.getCurrentDate();
 	}
 
-	public String getActivityRepetitionWeightName(int activity) {
+	public String activityRepetitionWeightName(int activity) {
 		return appState.getActivityRepetitionWeightName(activity);
 	}
 
-	public String getActivityRepetitionName(int activity) {
+	public String activityRepetitionName(int activity) {
 		return appState.getActivityRepetitionName(activity);
 	}
 
-	public String getActivityDistanceAltimetryName(int activity) {
+	public String activityDistanceAltimetryName(int activity) {
 		return appState.getActivityDistanceAltimetryName(activity);
 	}
 
-	public String getActivityDistanceName(int activity) {
+	public String activityDistanceName(int activity) {
 		return appState.getActivityDistanceName(activity);
 	}
 
