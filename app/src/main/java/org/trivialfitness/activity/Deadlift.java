@@ -1,7 +1,6 @@
 package org.trivialfitness.activity;
 
 import org.trivialfitness.activity.activityType.WeightRepetitionsActivity;
-import org.trivialfitness.user.User;
 
 public class Deadlift extends WeightRepetitionsActivity {
 
