@@ -4,12 +4,13 @@ import org.trivialfitness.activity.activityType.DistanceActivity;
 
 public class Surfing extends DistanceActivity {
 
-    public Surfing(int distanceKm) {
-        super("Surfing", "Water", true, distanceKm, 12);
-    }
+	public Surfing(int distanceKm) {
+		super("Surfing", "Water", true, distanceKm, 12);
+	}
 
-    @Override
-    public Surfing copy() {
-        return new Surfing(getDistanceKm());
-    }
+	@Override
+	public Surfing copy() {
+		return new Surfing(getDistanceKm());
+	}
+
 }

@@ -5,17 +5,17 @@ import org.trivialfitness.user.User;
 
 public class Walking extends DistanceActivity {
 
-    public Walking(int distanceKm) {
-        super("Walking", "Distance", true, distanceKm, 8);
-    }
+	public Walking(int distanceKm) {
+		super("Walking", "Distance", true, distanceKm, 8);
+	}
 
-    @Override
-    public Walking copy() {
-        return new Walking(getDistanceKm());
-    }
+	@Override
+	public Walking copy() {
+		return new Walking(getDistanceKm());
+	}
 
-    @Override
-    public double calculateCalories(User user) {
-        return super.calculateCalories(user);
-    }
+	public double calculateCalories(User user) {
+		return super.calculateCalories(user);
+	}
+
 }

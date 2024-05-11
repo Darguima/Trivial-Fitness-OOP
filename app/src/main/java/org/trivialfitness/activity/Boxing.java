@@ -5,17 +5,17 @@ import org.trivialfitness.user.User;
 
 public class Boxing extends RepetitionsActivity {
 
-    public Boxing(int repetitions) {
-        super("Boxing", "Repetitions", true, repetitions, 0.25);
-    }
+	public Boxing(int repetitions) {
+		super("Boxing", "Repetitions", true, repetitions, 0.25);
+	}
 
-    @Override
-    public Boxing copy() {
-        return new Boxing(getRepetitions());
-    }
+	@Override
+	public Boxing copy() {
+		return new Boxing(getRepetitions());
+	}
 
-    @Override
-    public double calculateCalories(User user) {
-        return super.calculateCalories(user);
-    }
+	public double calculateCalories(User user) {
+		return super.calculateCalories(user);
+	}
+
 }

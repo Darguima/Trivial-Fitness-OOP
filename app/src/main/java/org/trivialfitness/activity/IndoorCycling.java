@@ -4,13 +4,13 @@ import org.trivialfitness.activity.activityType.DistanceActivity;
 
 public class IndoorCycling extends DistanceActivity {
 
-    public IndoorCycling(int distanceKm) {
-        super("Indoor Cycling", "Distance", true, distanceKm, 8);
-    }
+	public IndoorCycling(int distanceKm) {
+		super("Indoor Cycling", "Distance", true, distanceKm, 8);
+	}
 
-    @Override
-    public IndoorCycling copy() {
-        return new IndoorCycling(getDistanceKm());
-    }
+	@Override
+	public IndoorCycling copy() {
+		return new IndoorCycling(getDistanceKm());
+	}
+
 }
- 
