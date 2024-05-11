@@ -1,5 +1,7 @@
 package org.trivialfitness.activity;
 
+import org.trivialfitness.activity.activityType.RepetitionsActivity;
+
 public class JumpingJacks extends RepetitionsActivity {
 
 	public JumpingJacks(int repetitions) {
@@ -8,7 +10,9 @@ public class JumpingJacks extends RepetitionsActivity {
 
 	@Override
 	public JumpingJacks copy() {
-		return new JumpingJacks(this.repetitions);
+
+		return new JumpingJacks(this.getRepetitions());
+
 	}
 
 }

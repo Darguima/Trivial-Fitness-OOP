@@ -1,4 +1,4 @@
-package org.trivialfitness.activity;
+package org.trivialfitness.activity.activityType;
 
 import org.trivialfitness.user.User;
 
@@ -10,17 +10,17 @@ public abstract class RepetitionsActivity extends Activity {
 
 	/** Constructor to implement others Activity Types */
 	public RepetitionsActivity(String activityName, String activityTypeName, boolean hard, int repetitions,
-			double caloriesRepetition) {
+			double caloriesPerRepetition) {
 		super(activityName, activityTypeName, hard);
 		this.repetitions = repetitions;
-		this.caloriesPerRepetition = caloriesRepetition;
+		this.caloriesPerRepetition = caloriesPerRepetition;
 	}
 
 	/** Constructor to implement final activities */
-	public RepetitionsActivity(String activityName, boolean hard, int repetitions, double caloriesRepetition) {
+	public RepetitionsActivity(String activityName, boolean hard, int repetitions, double caloriesPerRepetition) {
 		super(activityName, "Repetitions", hard);
 		this.repetitions = repetitions;
-		this.caloriesPerRepetition = caloriesRepetition;
+		this.caloriesPerRepetition = caloriesPerRepetition;
 	}
 
 	public int getRepetitions() {

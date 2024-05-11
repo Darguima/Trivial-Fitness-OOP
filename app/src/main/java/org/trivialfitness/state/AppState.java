@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-import org.trivialfitness.activity.*;
+import org.trivialfitness.activity.activityType.*;
 import org.trivialfitness.user.User;
 import java.util.stream.Collectors;
+import org.trivialfitness.activity.*;
+
 import java.util.function.BiFunction;
 
 public class AppState implements Serializable {
@@ -19,7 +21,10 @@ public class AppState implements Serializable {
 	private List<User> users;
 
 	private List<Activity> availableActivities = List.of(new BenchPress(0, 0), new MountainBike(0, 0), new PushUps(0),
-			new Burpees(0), new Scissors(0), new Squats(0), new JumpingJacks(0), new Rowing(0));
+
+			new Burpees(0), new Scissors(0), new Squats(0), new JumpingJacks(0), new Rowing(0), new BenchPress(0, 0),
+			new Climbing(0, 0), new Deadlift(0, 0), new IndoorCycling(0), new JumpRope(0), new OutdoorCycling(0, 0),
+			new Running(0), new Scissors(0), new Squats(0), new Surfing(0), new Swimming(0), new Weightlifting(0, 0));
 
 	private List<List<String>> activityNamesByType = List.of(List.of("Rowing"), List.of("Mountain Bike"),
 			List.of("Push Ups", "Burpees", "Scissors", "Squats", "Jumping Jacks"), List.of("Bench Press"));

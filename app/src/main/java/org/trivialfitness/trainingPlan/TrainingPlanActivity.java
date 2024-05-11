@@ -3,7 +3,7 @@ package org.trivialfitness.trainingPlan;
 import java.io.Serializable;
 import java.time.DayOfWeek;
 
-import org.trivialfitness.activity.Activity;
+import org.trivialfitness.activity.activityType.*;;
 
 public class TrainingPlanActivity implements Serializable {
 

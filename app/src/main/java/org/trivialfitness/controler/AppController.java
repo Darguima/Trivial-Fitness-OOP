@@ -10,7 +10,11 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 import org.trivialfitness.activity.*;
+
+import org.trivialfitness.activity.activityType.*;
+
 import org.trivialfitness.state.AppState;
+
 import org.trivialfitness.trainingPlan.TrainingPlanActivity;
 
 public class AppController {
@@ -177,9 +181,3 @@ public class AppController {
 	}
 
 }
-
-/*
-	
-
-
-*/

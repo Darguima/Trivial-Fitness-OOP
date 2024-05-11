@@ -3,7 +3,7 @@ package org.trivialfitness.user;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import org.trivialfitness.activity.Activity;
+import org.trivialfitness.activity.activityType.*;;
 
 public class PastActivity implements Serializable {
 
