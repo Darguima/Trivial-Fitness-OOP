@@ -55,6 +55,7 @@ public class TrainingPlan implements Serializable {
 		long daysDifference = ChronoUnit.DAYS.between(startingDate, endingDate);
 
 		List<PastActivity> pastActivities = new ArrayList<>();
+		int averageHeartRate = (int) (Math.random() * 50) + 100;
 
 		// For each complete week just add the activities and decrease a week to vars
 		LocalDate currentLoopDate = startingDate;
@@ -72,7 +73,7 @@ public class TrainingPlan implements Serializable {
 					continue;
 				}
 
-				pastActivities.add(new PastActivity(activity.getActivity(), 0, 0, releaseDate, 0));
+				pastActivities.add(new PastActivity(activity.getActivity(), averageHeartRate, 0, releaseDate, 0));
 			}
 		}
 

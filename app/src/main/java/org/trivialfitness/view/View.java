@@ -37,7 +37,7 @@ public class View {
 				handlers.showStartMenu();
 			}
 			else {
-				handlers.showUserMenu();
+				handlers.showUserMenu(controller);
 			}
 			option = handlers.getUserInput("");
 
@@ -82,12 +82,28 @@ public class View {
 						handlers.handleAdvanceTime(controller);
 						break;
 					case "7":
-						handlers.handle_check_distance_traveled(controller);
+						handlers.handle_check_distance_traveled(controller, true);
 						break;
 					case "8":
-						// handlers.handleViewAvailableActivities(controller);
+						handlers.handle_check_distance_traveled(controller, false);
 						break;
 					case "9":
+						handlers.handle_check_most_famous_activity_type(controller);
+						break;
+
+					case "10":
+						handlers.handle_check_status(controller);
+						break;
+
+					case "11":
+						handlers.handle_check_most_calories_burned(controller);
+						break;
+
+					case "12":
+						handlers.handle_check_user_with_most_activities(controller);
+						break;
+
+					case "13":
 						handlers.clearConsole();
 						handlers.handleSaveStatus(controller);
 						handlers.clearConsole();

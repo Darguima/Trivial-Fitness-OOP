@@ -34,11 +34,15 @@ public class AppController {
 	public String login(String userId) {
 		currentUser = appState.getUser(userId);
 		if (currentUser != null) {
-			return "Login successful. Welcome, " + currentUser.getName() + "!";
+			return "Login successful.\n";
 		}
 		else {
 			return "User not found. Please try again.";
 		}
+	}
+
+	public String getUserName() {
+		return currentUser.getName();
 	}
 
 	public boolean checkIfUserExists(String userId) {
@@ -230,8 +234,9 @@ public class AppController {
 		currentUser.addTrainingPlan(trainingPlan);
 	}
 
-	public String checkDistanceTraveled(LocalDate beginDate, LocalDate endDate) {
+	public String checkDistanceTraveled(LocalDate beginDate, LocalDate endDate, boolean isDistance) {
 		int distance = 0;
+		int altimetry = 0;
 		for (PastActivity activity : currentUser.getPastActivities()) {
 			if ((beginDate == null && endDate == null)
 					|| activity.getDate().isAfter(beginDate) && activity.getDate().isBefore(endDate)) {
@@ -240,12 +245,106 @@ public class AppController {
 				}
 				else if (activity.getActivity() instanceof DistanceAltimetryActivity) {
 					distance += ((DistanceAltimetryActivity) activity.getActivity()).getDistanceKm();
+					altimetry += ((DistanceAltimetryActivity) activity.getActivity()).getHeightMt();
 				}
 			}
 		}
 
-		return "Distance traveled from " + (beginDate == null ? "the beginning" : beginDate) + " to "
-				+ (endDate == null ? "now" : endDate) + ": " + distance + " km.";
+		if (isDistance) {
+			return "Total distance traveled between " + (beginDate == null ? "the beggining" : beginDate) + " and "
+					+ (endDate == null ? "now" : endDate) + " is " + distance + " km.";
+
+		}
+		else {
+
+			return "Total altimetry climbed between " + (beginDate == null ? "the beggining" : beginDate) + " and "
+					+ (endDate == null ? "now" : endDate) + " is " + altimetry + " mt.";
+		}
+
+	}
+
+	public String checkMostFamousActivityType() {
+		List<String> activityTypeNames = appState.getAvailableActivitiesTypesNames();
+		int[] activityType = new int[activityTypeNames.size()];
+		// cheking for all the users
+		for (User user : appState.getUsers()) {
+			for (PastActivity activity : user.getPastActivities()) {
+				activityType[activityTypeNames.indexOf(activity.getActivity().getActivityTypeName())] += 1;
+			}
+		}
+
+		int max = 0;
+		int index = 0;
+		for (int i = 0; i < activityType.length; i++) {
+			if (activityType[i] > max) {
+				max = activityType[i];
+				index = i;
+			}
+		}
+		return "Most famous activity type is " + appState.getAvailableActivitiesTypesNames().get(index) + " with " + max
+				+ " activities.";
+	}
+
+	public String checkUserStatus() {
+		int pastActivities = currentUser.getPastActivities().size();
+		int trainingPlans = currentUser.getTrainingPlans().size();
+		StringBuilder sb = new StringBuilder();
+		sb.append("User status:\n");
+		sb.append("\tNumber of past activities: " + pastActivities + ";\n");
+		sb.append("\tNumber of training plans: " + trainingPlans + ";\n");
+		double calories = 0;
+		for (PastActivity activity : currentUser.getPastActivities()) {
+			calories += activity.getActivity().calculateCalories(currentUser);
+		}
+		sb.append("\tTotal calories spent: " + calories + ";\n");
+		sb.append("\tAverage heart rate: " + currentUser.getAverageHeartRate() + ";\n");
+
+		return sb.toString();
+	}
+
+	public String checkMostCaloriesBurned(LocalDate beginDate, LocalDate endDate) {
+		double maxCalories = 0;
+		String maxCaloriesUser = "";
+		for (User user : appState.getUsers()) {
+			double calories = 0;
+			for (PastActivity activity : user.getPastActivities()) {
+				if ((beginDate == null && endDate == null)
+						|| activity.getDate().isAfter(beginDate) && activity.getDate().isBefore(endDate)) {
+					calories += activity.getActivity().calculateCalories(user);
+				}
+			}
+			if (calories > maxCalories) {
+				maxCalories = calories;
+				maxCaloriesUser = user.getName();
+			}
+		}
+
+		return "User " + maxCaloriesUser + " burned the most calories between "
+				+ (beginDate == null ? "the beggining" : beginDate) + " and " + (endDate == null ? "now" : endDate)
+				+ " with " + String.format("%.2f", maxCalories) + " calories.";
+
+	}
+
+	public String checkUserWithMostActivities(LocalDate beginDate, LocalDate endDate) {
+		int maxActivities = 0;
+		String maxActivitiesUser = "";
+		for (User user : appState.getUsers()) {
+			int activities = 0;
+			for (PastActivity activity : user.getPastActivities()) {
+				if ((beginDate == null && endDate == null)
+						|| activity.getDate().isAfter(beginDate) && activity.getDate().isBefore(endDate)) {
+					activities += 1;
+				}
+			}
+			if (activities > maxActivities) {
+				maxActivities = activities;
+				maxActivitiesUser = user.getName();
+			}
+		}
+
+		return "User " + maxActivitiesUser + " has the most activities between "
+				+ (beginDate == null ? "the beggining" : beginDate) + " and " + (endDate == null ? "now" : endDate)
+				+ " with " + maxActivities + " activities.";
 	}
 
 }

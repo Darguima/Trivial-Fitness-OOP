@@ -36,7 +36,8 @@ public class Handlers {
 		System.out.print("Choose an option: ");
 	}
 
-	public void showUserMenu() {
+	public void showUserMenu(AppController controller) {
+		System.out.println("\nWelcome, " + controller.getUserName());
 		System.out.println("\n1. View Training Plans");
 		System.out.println("2. View Activities");
 		System.out.println("3. Add New Activity");
@@ -44,8 +45,12 @@ public class Handlers {
 		System.out.println("5. Generate Training Plan");
 		System.out.println("6, Advance Time");
 		System.out.println("7. Check distance traveled");
-		System.out.println("8. View Progress");
-		System.out.println("9. Save");
+		System.out.println("8. Check altimetry total");
+		System.out.println("9. Check most famous activity type");
+		System.out.println("10. Check status");
+		System.out.println("11. Check User with most calories burned");
+		System.out.println("12. Check User with most activities done");
+		System.out.println("13. Save");
 		System.out.println("0. Logout\n");
 		System.out.print("Choose an option: ");
 	}
@@ -622,10 +627,9 @@ public class Handlers {
 		showMessage(message);
 	}
 
-	public void handle_check_distance_traveled(AppController controller) {
+	public void handle_check_distance_traveled(AppController controller, boolean distance) {
 		clearConsole();
-		// user can check betweeen dates or from foverer, if he enters enter in a date,
-		// then is dorever
+
 		String begin_date = getUserInput(
 				"Enter the beginning date of the period (yyyy-MM-dd) or press enter to check from the beginning: ");
 		LocalDate begin_date_value = null;
@@ -660,13 +664,123 @@ public class Handlers {
 			return;
 		}
 
-		String message = controller.checkDistanceTraveled(begin_date_value, end_date_value);
+		String message = controller.checkDistanceTraveled(begin_date_value, end_date_value, distance);
 		clearConsole();
 		showMessage(message);
 		showMessage("Press any key to continue...");
 		scanner.nextLine();
 		clearConsole();
 
+	}
+
+	public void handle_check_status(AppController controller) {
+		clearConsole();
+		String message = controller.checkUserStatus();
+		showMessage(message);
+		showMessage("Press any key to continue...");
+		scanner.nextLine();
+		clearConsole();
+	}
+
+	public void handle_check_most_famous_activity_type(AppController controller) {
+		clearConsole();
+		String message = controller.checkMostFamousActivityType();
+		showMessage(message);
+		showMessage("Press any key to continue...");
+		scanner.nextLine();
+		clearConsole();
+	}
+
+	public void handle_check_most_calories_burned(AppController controller) {
+		clearConsole();
+		// getting begin date and end date if nedded
+		String begin_date = getUserInput(
+				"Enter the beginning date of the period (yyyy-MM-dd) or press enter to check from the beginning: ");
+		LocalDate begin_date_value = null;
+		if (!begin_date.equals("")) {
+			try {
+				begin_date_value = LocalDate.parse(begin_date);
+			}
+			catch (DateTimeParseException e) {
+				clearConsole();
+				showMessage("Invalid date format. Checking distance failed.");
+				return;
+			}
+			clearConsole();
+		}
+		clearConsole();
+		String end_date = getUserInput(
+				"Enter the ending date of the period (yyyy-MM-dd) or press enter to check until today: ");
+		LocalDate end_date_value = null;
+		if (!end_date.equals("")) {
+			try {
+				end_date_value = LocalDate.parse(end_date);
+			}
+			catch (DateTimeParseException e) {
+				clearConsole();
+				showMessage("Invalid date format. Checking distance failed.");
+				return;
+			}
+		}
+		if ((begin_date_value == null && end_date_value != null) || (begin_date_value != null && end_date_value == null)
+				|| (begin_date_value != null && end_date_value != null && end_date_value.isBefore(begin_date_value))) {
+			clearConsole();
+			showMessage("Invalid date range. Checking distance failed.");
+			return;
+		}
+
+		clearConsole();
+		String message = controller.checkMostCaloriesBurned(begin_date_value, end_date_value);
+		showMessage(message);
+		showMessage("Press any key to continue...");
+		scanner.nextLine();
+		clearConsole();
+	}
+
+	public void handle_check_user_with_most_activities(AppController controller) {
+		clearConsole();
+
+		// asking begin and end date if nedeed
+		String begin_date = getUserInput(
+				"Enter the beginning date of the period (yyyy-MM-dd) or press enter to check from the beginning: ");
+		LocalDate begin_date_value = null;
+		if (!begin_date.equals("")) {
+			try {
+				begin_date_value = LocalDate.parse(begin_date);
+			}
+			catch (DateTimeParseException e) {
+				clearConsole();
+				showMessage("Invalid date format. Checking distance failed.");
+				return;
+			}
+			clearConsole();
+		}
+		clearConsole();
+		String end_date = getUserInput(
+				"Enter the ending date of the period (yyyy-MM-dd) or press enter to check until today: ");
+		LocalDate end_date_value = null;
+		if (!end_date.equals("")) {
+			try {
+				end_date_value = LocalDate.parse(end_date);
+			}
+			catch (DateTimeParseException e) {
+				clearConsole();
+				showMessage("Invalid date format. Checking distance failed.");
+				return;
+			}
+		}
+		if ((begin_date_value == null && end_date_value != null) || (begin_date_value != null && end_date_value == null)
+				|| (begin_date_value != null && end_date_value != null && end_date_value.isBefore(begin_date_value))) {
+			clearConsole();
+			showMessage("Invalid date range. Checking distance failed.");
+			return;
+		}
+
+		String message = controller.checkUserWithMostActivities(begin_date_value, end_date_value);
+		showMessage(message);
+		showMessage("Press any key to continue...");
+		scanner.nextLine();
+		clearConsole();
 	}
 
 	public void clearConsole() {
