@@ -67,7 +67,14 @@ public abstract class User implements Serializable {
 	}
 
 	public int getAverageHeartRate() {
-		return pastActivities.isEmpty() ? 0 : averageHeartRateSum / pastActivities.size();
+
+		// training plans are not considered in the average heart rate calculation because
+		// we are not sure if the user has done the activities in the training plan
+		return pastActivities.isEmpty() ? 0
+				: (averageHeartRateSum / pastActivities.stream()
+					.filter(pastActivity -> pastActivity.getAverageHeartRate() > 0)
+					.toList()
+					.size());
 	}
 
 	public abstract double calculateFitnessMultiplier();
