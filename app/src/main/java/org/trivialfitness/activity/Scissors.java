@@ -10,7 +10,9 @@ public class Scissors extends RepetitionsActivity {
 
 	@Override
 	public Scissors copy() {
+
 		return new Scissors(this.getRepetitions());
+
 	}
 
 }

@@ -10,7 +10,10 @@ public class JumpingJacks extends RepetitionsActivity {
 
 	@Override
 	public JumpingJacks copy() {
+
 		return new JumpingJacks(this.getRepetitions());
+
+
 	}
 
 }
