@@ -1,6 +1,5 @@
 package org.trivialfitness.activity;
 
-
 import org.trivialfitness.activity.activityType.RepetitionsActivity;
 
 public class Burpees extends RepetitionsActivity {

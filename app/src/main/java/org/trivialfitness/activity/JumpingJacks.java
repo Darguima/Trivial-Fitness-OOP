@@ -13,7 +13,6 @@ public class JumpingJacks extends RepetitionsActivity {
 
 		return new JumpingJacks(this.getRepetitions());
 
-
 	}
 
 }

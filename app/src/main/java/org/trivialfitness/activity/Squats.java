@@ -1,6 +1,5 @@
 package org.trivialfitness.activity;
 
-
 import org.trivialfitness.activity.activityType.RepetitionsActivity;
 
 public class Squats extends RepetitionsActivity {
@@ -13,7 +12,6 @@ public class Squats extends RepetitionsActivity {
 	public Squats copy() {
 
 		return new Squats(this.getRepetitions());
-
 
 	}
 
