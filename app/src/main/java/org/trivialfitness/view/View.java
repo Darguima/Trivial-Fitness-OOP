@@ -3,7 +3,6 @@ package org.trivialfitness.view;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import org.trivialfitness.controler.AppController;
-import org.trivialfitness.state.AppState;
 
 public class View {
 
@@ -74,12 +73,15 @@ public class View {
 						handlers.handleAddNewActivity(controller);
 						break;
 					case "4":
-						// handerls.handleCreateTrainingPlan();
+						handlers.handleCreateTrainingPlan(controller);
 						break;
 					case "5":
 						// handlers.handleGenerateTrainingPlan();
 						break;
 					case "6":
+						handlers.handleAdvanceTime(controller);
+						break;
+					case "7":
 						handlers.clearConsole();
 						handlers.handleSaveStatus(controller);
 						handlers.clearConsole();

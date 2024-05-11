@@ -14,6 +14,7 @@ import java.io.ObjectInputStream;
 import org.trivialfitness.user.*;
 
 import org.trivialfitness.activity.activityType.*;
+import org.trivialfitness.trainingPlan.TrainingPlan;
 
 import java.util.stream.Collectors;
 import org.trivialfitness.activity.*;
@@ -135,6 +136,10 @@ public class AppState implements Serializable {
 	public BiFunction<Integer, Integer, Activity> getActivityCreator(String activityName) {
 		Map<String, BiFunction<Integer, Integer, Activity>> activityCreators = initializeActivityCreators();
 		return activityCreators.get(activityName);
+	}
+
+	public TrainingPlan getNewTrainingPlan(LocalDate startingDate, LocalDate endingDate) {
+		return new TrainingPlan(startingDate, endingDate);
 	}
 
 	public String saveProgress() {

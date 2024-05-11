@@ -5,6 +5,8 @@ import org.trivialfitness.user.CasualUser;
 import org.trivialfitness.user.PastActivity;
 import org.trivialfitness.user.ProfessionalUser;
 import org.trivialfitness.user.User;
+
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -12,7 +14,7 @@ import java.util.function.BiFunction;
 import org.trivialfitness.activity.activityType.*;
 
 import org.trivialfitness.state.AppState;
-
+import org.trivialfitness.trainingPlan.TrainingPlan;
 import org.trivialfitness.trainingPlan.TrainingPlanActivity;
 
 public class AppController {
@@ -180,6 +182,52 @@ public class AppController {
 
 	public String saveStatus() {
 		return appState.saveProgress();
+	}
+
+	public String advanceInTime(int days) {
+		appState.advanceDays(days);
+		return "Time advanced successfully. Current date: " + appState.getCurrentDate();
+	}
+
+	public TrainingPlan createTrainingPlan(LocalDate startingDate, LocalDate endingDate) {
+		TrainingPlan trainingPlan = appState.getNewTrainingPlan(startingDate, endingDate);
+		return trainingPlan;
+
+	}
+
+	public String addActivityToTrainingPlan(TrainingPlan trainingPlan, String activityName, DayOfWeek weekDay,
+			int distanceValue, int altimetryValue, int repetitions, int weightValue, String activityType) {
+		BiFunction<Integer, Integer, Activity> activityCreator = appState.getActivityCreator(activityName);
+
+		if (activityCreator == null) {
+			return "Activity not found.";
+		}
+		if (activityType.equals("Distance")) {
+			Activity newActivity = activityCreator.apply(distanceValue, 0);
+			trainingPlan.addActivity(new TrainingPlanActivity(newActivity, weekDay));
+		}
+		else if (activityType.equals("DistanceAltimetry")) {
+			Activity newActivity = activityCreator.apply(distanceValue, altimetryValue);
+			trainingPlan.addActivity(new TrainingPlanActivity(newActivity, weekDay));
+		}
+		else if (activityType.equals("Repetition")) {
+			Activity newActivity = activityCreator.apply(repetitions, 0);
+			trainingPlan.addActivity(new TrainingPlanActivity(newActivity, weekDay));
+		}
+		else if (activityType.equals("RepetitionWeight")) {
+			Activity newActivity = activityCreator.apply(repetitions, weightValue);
+			trainingPlan.addActivity(new TrainingPlanActivity(newActivity, weekDay));
+		}
+		else {
+			return "Activity not found.";
+		}
+		System.out.println(trainingPlan.getActivities().size());
+		return "Activity added successfully.";
+
+	}
+
+	public void addTrainingPlanToUser(TrainingPlan trainingPlan) {
+		currentUser.addTrainingPlan(trainingPlan);
 	}
 
 }
