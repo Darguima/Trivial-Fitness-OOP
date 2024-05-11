@@ -6,7 +6,7 @@ import org.trivialfitness.user.User;
 public class Swimming extends DistanceActivity {
 
 	public Swimming(int distanceKm) {
-		super("Swimming", "Distance", true, distanceKm, 12);
+		super("Swimming", "Distance", true, distanceKm, 25);
 	}
 
 	@Override

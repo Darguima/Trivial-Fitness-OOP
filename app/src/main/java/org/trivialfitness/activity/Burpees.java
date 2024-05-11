@@ -5,7 +5,7 @@ import org.trivialfitness.activity.activityType.RepetitionsActivity;
 public class Burpees extends RepetitionsActivity {
 
 	public Burpees(int repetitions) {
-		super("Burpees", false, repetitions, 0.15);
+		super("Burpees", false, repetitions, 0.8);
 	}
 
 	@Override
