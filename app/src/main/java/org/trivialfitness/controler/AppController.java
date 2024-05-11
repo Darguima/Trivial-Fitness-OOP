@@ -230,4 +230,22 @@ public class AppController {
 		currentUser.addTrainingPlan(trainingPlan);
 	}
 
+	public String checkDistanceTraveled(LocalDate beginDate, LocalDate endDate) {
+		int distance = 0;
+		for (PastActivity activity : currentUser.getPastActivities()) {
+			if ((beginDate == null && endDate == null)
+					|| activity.getDate().isAfter(beginDate) && activity.getDate().isBefore(endDate)) {
+				if (activity.getActivity() instanceof DistanceActivity) {
+					distance += ((DistanceActivity) activity.getActivity()).getDistanceKm();
+				}
+				else if (activity.getActivity() instanceof DistanceAltimetryActivity) {
+					distance += ((DistanceAltimetryActivity) activity.getActivity()).getDistanceKm();
+				}
+			}
+		}
+
+		return "Distance traveled from " + (beginDate == null ? "the beginning" : beginDate) + " to "
+				+ (endDate == null ? "now" : endDate) + ": " + distance + " km.";
+	}
+
 }

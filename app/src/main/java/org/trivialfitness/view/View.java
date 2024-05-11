@@ -82,6 +82,12 @@ public class View {
 						handlers.handleAdvanceTime(controller);
 						break;
 					case "7":
+						handlers.handle_check_distance_traveled(controller);
+						break;
+					case "8":
+						// handlers.handleViewAvailableActivities(controller);
+						break;
+					case "9":
 						handlers.clearConsole();
 						handlers.handleSaveStatus(controller);
 						handlers.clearConsole();

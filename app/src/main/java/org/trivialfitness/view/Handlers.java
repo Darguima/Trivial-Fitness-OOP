@@ -43,7 +43,9 @@ public class Handlers {
 		System.out.println("4. Add New Training Plan");
 		System.out.println("5. Generate Training Plan");
 		System.out.println("6, Advance Time");
-		System.out.println("7. Save");
+		System.out.println("7. Check distance traveled");
+		System.out.println("8. View Progress");
+		System.out.println("9. Save");
 		System.out.println("0. Logout\n");
 		System.out.print("Choose an option: ");
 	}
@@ -618,6 +620,53 @@ public class Handlers {
 				repetitionsValue, weightValue, "RepetitionWeight");
 		clearConsole();
 		showMessage(message);
+	}
+
+	public void handle_check_distance_traveled(AppController controller) {
+		clearConsole();
+		// user can check betweeen dates or from foverer, if he enters enter in a date,
+		// then is dorever
+		String begin_date = getUserInput(
+				"Enter the beginning date of the period (yyyy-MM-dd) or press enter to check from the beginning: ");
+		LocalDate begin_date_value = null;
+		if (!begin_date.equals("")) {
+			try {
+				begin_date_value = LocalDate.parse(begin_date);
+			}
+			catch (DateTimeParseException e) {
+				clearConsole();
+				showMessage("Invalid date format. Checking distance failed.");
+				return;
+			}
+			clearConsole();
+		}
+		String end_date = getUserInput(
+				"Enter the ending date of the period (yyyy-MM-dd) or press enter to check until today: ");
+		LocalDate end_date_value = null;
+		if (!end_date.equals("")) {
+			try {
+				end_date_value = LocalDate.parse(end_date);
+			}
+			catch (DateTimeParseException e) {
+				clearConsole();
+				showMessage("Invalid date format. Checking distance failed.");
+				return;
+			}
+		}
+		if ((begin_date_value == null && end_date_value != null) || (begin_date_value != null && end_date_value == null)
+				|| (begin_date_value != null && end_date_value != null && end_date_value.isBefore(begin_date_value))) {
+			clearConsole();
+			showMessage("Invalid date range. Checking distance failed.");
+			return;
+		}
+
+		String message = controller.checkDistanceTraveled(begin_date_value, end_date_value);
+		clearConsole();
+		showMessage(message);
+		showMessage("Press any key to continue...");
+		scanner.nextLine();
+		clearConsole();
+
 	}
 
 	public void clearConsole() {
