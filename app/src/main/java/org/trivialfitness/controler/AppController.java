@@ -82,9 +82,3 @@ public class AppController {
 	}
 
 }
-
-/*
-	
-
-
-*/
