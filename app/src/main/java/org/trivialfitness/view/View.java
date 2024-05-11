@@ -17,8 +17,8 @@ public class View {
 
 	private Handlers handlers;
 
-	public View(AppState appState) {
-		this.controller = new AppController(appState);
+	public View() {
+		this.controller = new AppController();
 		this.handlers = new Handlers();
 
 	}
@@ -52,8 +52,10 @@ public class View {
 						break;
 					case "0":
 						handlers.clearConsole();
+						handlers.handleSaveStatus(controller);
 						System.out.println("Thanks for using Trivial Fitness! We hope to see you soon.");
 						wantsToExit = true;
+
 						break;
 					default:
 						handlers.clearConsole();
@@ -76,6 +78,11 @@ public class View {
 						break;
 					case "5":
 						// handlers.handleGenerateTrainingPlan();
+						break;
+					case "6":
+						handlers.clearConsole();
+						handlers.handleSaveStatus(controller);
+						handlers.clearConsole();
 						break;
 					case "0":
 						isLoggedIn = false;

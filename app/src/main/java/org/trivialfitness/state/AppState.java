@@ -6,9 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import org.trivialfitness.user.*;
 
 import org.trivialfitness.activity.activityType.*;
-import org.trivialfitness.user.User;
+
 import java.util.stream.Collectors;
 import org.trivialfitness.activity.*;
 
@@ -26,18 +32,20 @@ public class AppState implements Serializable {
 			new Climbing(0, 0), new Deadlift(0, 0), new IndoorCycling(0), new JumpRope(0), new OutdoorCycling(0, 0),
 			new Running(0), new Scissors(0), new Squats(0), new Surfing(0), new Swimming(0), new Weightlifting(0, 0));
 
-	private List<List<String>> activityNamesByType = List.of(List.of("Rowing"), List.of("Mountain Bike"),
-			List.of("Push Ups", "Burpees", "Scissors", "Squats", "Jumping Jacks"), List.of("Bench Press"));
+	private List<List<String>> activityNamesByType = List.of(
+			List.of("Rowing", "Running", "Swimming", "Surfing", "Indoor Cycling", "Walking"),
+			List.of("Mountain Bike", "Outdoor Cycling", "Climbing"),
+			List.of("Push Ups", "Burpees", "Scissors", "Squats", "Jumping Jacks", "Jump Rope"),
+			List.of("Bench Press", "Deadlift", "Weightlifting"));
 
 	public AppState() {
-		now = LocalDate.now();
-		users = new ArrayList<>();
-	}
-
-	public AppState(AppState appState) {
-		now = appState.now;
-		users = appState.users.stream().map(User::copy).collect(Collectors.toList());
-
+		try {
+			loadProgress();
+		}
+		catch (Exception e) {
+			now = LocalDate.now();
+			users = new ArrayList<>();
+		}
 	}
 
 	public Map<String, BiFunction<Integer, Integer, Activity>> initializeActivityCreators() {
@@ -50,6 +58,17 @@ public class AppState implements Serializable {
 		activityCreators.put("Squats", (repetitions, something) -> new Squats(repetitions));
 		activityCreators.put("Jumping Jacks", (repetitions, something) -> new JumpingJacks(repetitions));
 		activityCreators.put("Bench Press", (repetitions, weight) -> new BenchPress(repetitions, weight));
+		activityCreators.put("Climbing", (distance, altimetry) -> new Climbing(distance, altimetry));
+		activityCreators.put("Deadlift", (repetitions, weight) -> new Deadlift(repetitions, weight));
+		activityCreators.put("Indoor Cycling", (distance, something) -> new IndoorCycling(distance));
+		activityCreators.put("Jump Rope", (repetitions, something) -> new JumpRope(repetitions));
+		activityCreators.put("Outdoor Cycling", (distance, altimetry) -> new OutdoorCycling(distance, altimetry));
+		activityCreators.put("Running", (distance, something) -> new Running(distance));
+		activityCreators.put("Surfing", (distance, something) -> new Surfing(distance));
+		activityCreators.put("Swimming", (distance, something) -> new Swimming(distance));
+		activityCreators.put("Weightlifting", (repetitions, weight) -> new Weightlifting(repetitions, weight));
+		activityCreators.put("Walking", (distance, something) -> new Walking(distance));
+
 		return activityCreators;
 	}
 
@@ -79,7 +98,7 @@ public class AppState implements Serializable {
 	}
 
 	public User getUser(String userId) {
-		return users.stream().filter(user -> user.getUserId().equals(userId)).findFirst().map(User::copy).orElse(null);
+		return users.stream().filter(user -> user.getUserId().equals(userId)).findFirst().orElse(null);
 	}
 
 	public List<String> getAvailableActivitiesTypesNames() {
@@ -116,6 +135,66 @@ public class AppState implements Serializable {
 	public BiFunction<Integer, Integer, Activity> getActivityCreator(String activityName) {
 		Map<String, BiFunction<Integer, Integer, Activity>> activityCreators = initializeActivityCreators();
 		return activityCreators.get(activityName);
+	}
+
+	public String saveProgress() {
+		try {
+			FileOutputStream fileOut = new FileOutputStream("appState.bin");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(this.now);
+			out.writeObject(this.users);
+			out.close();
+			fileOut.close();
+			return "Progress saved.";
+		}
+		catch (IOException i) {
+			i.printStackTrace();
+			return "Error saving progress.";
+		}
+	}
+
+	public void loadProgress() {
+		try {
+			FileInputStream fileIn = new FileInputStream("appState.bin");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			this.now = (LocalDate) in.readObject();
+			this.users = readUsers(in);
+			in.close();
+			fileIn.close();
+			return;
+		}
+		catch (IOException i) {
+			i.printStackTrace();
+			return;
+		}
+		catch (ClassNotFoundException c) {
+			c.printStackTrace();
+			return;
+		}
+
+	}
+
+	private List<User> readUsers(ObjectInputStream in) throws IOException {
+		try {
+			Object obj = in.readObject();
+			if (obj instanceof List<?>) {
+				List<?> lista = (List<?>) obj;
+
+				List<User> users = new ArrayList<>();
+				for (Object item : lista) {
+					if (item instanceof User) {
+						users.add((User) item);
+					}
+				}
+				return users;
+			}
+			else {
+				throw new IOException("Invalid data format: expected a list of users");
+			}
+		}
+		catch (ClassNotFoundException e) {
+			throw new IOException("Failed to read users: class not found", e);
+		}
 	}
 
 }

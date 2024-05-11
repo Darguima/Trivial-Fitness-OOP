@@ -9,8 +9,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import org.trivialfitness.activity.*;
-
 import org.trivialfitness.activity.activityType.*;
 
 import org.trivialfitness.state.AppState;
@@ -23,8 +21,8 @@ public class AppController {
 
 	private User currentUser;
 
-	public AppController(AppState appState) {
-		this.appState = new AppState(appState);
+	public AppController() {
+		this.appState = new AppState();
 	}
 
 	public boolean isLogged() {
@@ -178,6 +176,10 @@ public class AppController {
 
 	public String activityDistanceName(int activity) {
 		return appState.getActivityDistanceName(activity);
+	}
+
+	public String saveStatus() {
+		return appState.saveProgress();
 	}
 
 }

@@ -29,6 +29,7 @@ public class Handlers {
 	public void showStartMenu() {
 		System.out.println("\n1. Login");
 		System.out.println("2. Register");
+		System.out.println("3. Save");
 		System.out.println("0. Exit\n");
 		System.out.print("Choose an option: ");
 	}
@@ -38,12 +39,21 @@ public class Handlers {
 		System.out.println("2. View Activities");
 		System.out.println("3. Add New Activity");
 		System.out.println("4. Add New Training Plan");
+		System.out.println("5. Generate Training Plan");
+		System.out.println("6. Save");
 		System.out.println("0. Logout\n");
 		System.out.print("Choose an option: ");
 	}
 
 	public void showError(String message) {
 		System.err.println(message);
+	}
+
+	public void handleSaveStatus(AppController controller) {
+		clearConsole();
+		String message = controller.saveStatus();
+		showMessage(message);
+
 	}
 
 	public boolean handleLogin(AppController controller) {
