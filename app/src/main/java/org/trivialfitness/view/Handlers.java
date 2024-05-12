@@ -43,7 +43,7 @@ public class Handlers {
 		System.out.println("3. Add New Activity");
 		System.out.println("4. Add New Training Plan");
 		System.out.println("5. Generate Training Plan");
-		System.out.println("6, Advance Time");
+		System.out.println("6. Advance Time");
 		System.out.println("7. Check distance traveled");
 		System.out.println("8. Check altimetry total");
 		System.out.println("9. Check most famous activity type");

@@ -103,7 +103,7 @@ public class AppController {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Training plans:\n");
 		for (int i = 0; i < currentUser.getTrainingPlans().size(); i++) {
-			sb.append("Training plan from " + currentUser.getTrainingPlans().get(i).getStartingDate() + " to "
+			sb.append("\nTraining plan from " + currentUser.getTrainingPlans().get(i).getStartingDate() + " to "
 					+ currentUser.getTrainingPlans().get(i).getEndingDate() + " with "
 					+ currentUser.getTrainingPlans().get(i).getActivities().size() + " exercises:\n");
 			for (TrainingPlanActivity trainingPlanActivity : currentUser.getTrainingPlans().get(i).getActivities()) {
