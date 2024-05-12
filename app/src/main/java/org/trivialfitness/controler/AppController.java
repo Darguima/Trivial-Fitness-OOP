@@ -8,6 +8,7 @@ import org.trivialfitness.user.User;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -117,7 +118,7 @@ public class AppController {
 
 	public List<String> getAvailableActivitiesTypesNames() {
 
-		List<String> activityType = AppState.getAvailableActivitiesTypesNames();
+		List<String> activityType = new ArrayList<>(AppState.getAvailableActivitiesTypesNames());
 
 		activityType.sort(null);
 		return activityType;
@@ -240,10 +241,10 @@ public class AppController {
 		for (PastActivity activity : currentUser.getPastActivities()) {
 			if ((beginDate == null && endDate == null)
 					|| activity.getDate().isAfter(beginDate) && activity.getDate().isBefore(endDate)) {
-				if (activity.getActivity() instanceof DistanceActivity) {
+				if (activity.getActivity().getClass().getSuperclass().equals(DistanceActivity.class)) {
 					distance += ((DistanceActivity) activity.getActivity()).getDistanceKm();
 				}
-				else if (activity.getActivity() instanceof DistanceAltimetryActivity) {
+				else if (activity.getActivity().getClass().getSuperclass().equals(DistanceAltimetryActivity.class)) {
 					distance += ((DistanceAltimetryActivity) activity.getActivity()).getDistanceKm();
 					altimetry += ((DistanceAltimetryActivity) activity.getActivity()).getHeightMt();
 				}
@@ -264,7 +265,7 @@ public class AppController {
 	}
 
 	public String checkMostFamousActivityType() {
-		List<String> activityTypeNames = appState.getAvailableActivitiesTypesNames();
+		List<String> activityTypeNames = AppState.getAvailableActivitiesTypesNames();
 		int[] activityType = new int[activityTypeNames.size()];
 		// cheking for all the users
 		for (User user : appState.getUsers()) {
@@ -281,7 +282,7 @@ public class AppController {
 				index = i;
 			}
 		}
-		return "Most famous activity type is " + appState.getAvailableActivitiesTypesNames().get(index) + " with " + max
+		return "Most famous activity type is " + AppState.getAvailableActivitiesTypesNames().get(index) + " with " + max
 				+ " activities.";
 	}
 
