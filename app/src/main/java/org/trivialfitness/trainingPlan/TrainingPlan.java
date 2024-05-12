@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.trivialfitness.user.User;
-import org.trivialfitness.activity.*;
+import org.trivialfitness.activity.activityType.*;
 import org.trivialfitness.state.AppState;
 import org.trivialfitness.user.PastActivity;
 

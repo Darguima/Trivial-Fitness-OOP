@@ -2,7 +2,6 @@ package org.trivialfitness.view;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
-
 import org.trivialfitness.controler.AppController;
 import org.trivialfitness.state.AppState;
 
@@ -16,72 +15,84 @@ public class View {
 
 	private boolean wantsToExit = false;
 
-	public View(AppState appState) {
-		this.controller = new AppController(appState);
+	private Handlers handlers;
+
+	public View() {
+		this.controller = new AppController();
+		this.handlers = new Handlers();
 
 	}
 
 	public void run() {
 		String option = "";
-		clearConsole();
-		showMessage(" _____     _       _       _   _____ _ _");
-		showMessage("|_   _| __(_)_   _(_) __ _| | |  ___(_) |_ _ __   ___  ___ ___");
-		showMessage("  | || '__| \\ \\ / / |/ _` | | | |_  | | __| '_ \\ / _ \\/ __/ __|");
-		showMessage("  | || |  | |\\ V /| | (_| | | |  _| | | |_| | | |  __/\\__ \\__ \\");
-		showMessage("  |_||_|  |_| \\_/ |_|\\__,_|_| |_|   |_|\\__|_| |_|\\___||___/___/");
+		handlers.clearConsole();
+		handlers.showMessage(" _____     _       _       _   _____ _ _");
+		handlers.showMessage("|_   _| __(_)_   _(_) __ _| | |  ___(_) |_ _ __   ___  ___ ___");
+		handlers.showMessage("  | || '__| \\ \\ / / |/ _` | | | |_  | | __| '_ \\ / _ \\/ __/ __|");
+		handlers.showMessage("  | || |  | |\\ V /| | (_| | | |  _| | | |_| | | |  __/\\__ \\__ \\");
+		handlers.showMessage("  |_||_|  |_| \\_/ |_|\\__,_|_| |_|   |_|\\__|_| |_|\\___||___/___/");
 
 		do {
 
 			if (!isLoggedIn) {
-				showStartMenu();
+				handlers.showStartMenu();
 			}
 			else {
-				showUserMenu();
+				handlers.showUserMenu();
 			}
-			option = getUserInput("");
+			option = handlers.getUserInput("");
 
 			if (!isLoggedIn) {
 				switch (option) {
 					case "1":
-						handleLogin();
+						isLoggedIn = handlers.handleLogin(controller);
 						break;
 					case "2":
-						handleRegister();
+						handlers.handleRegister(controller);
 						break;
 					case "0":
+						handlers.clearConsole();
+						handlers.handleSaveStatus(controller);
 						System.out.println("Thanks for using Trivial Fitness! We hope to see you soon.");
 						wantsToExit = true;
+
 						break;
 					default:
+						handlers.clearConsole();
 						System.out.println("Invalid option. Please try again.");
 				}
 			}
 			else {
 				switch (option) {
 					case "1":
-						// handleViewTrainingPlans();
+						handlers.handleViewTrainingPlans(controller);
 						break;
 					case "2":
-						// handleViewActivities();
+						handlers.handleViewPastActivities(controller);
 						break;
 					case "3":
-						// handleAddNewActivity();
+						handlers.handleAddNewActivity(controller);
 						break;
 					case "4":
-						// handleAddNewTrainingPlan();
+						// handerls.handleCreateTrainingPlan();
 						break;
 					case "5":
-						// handleGenerateTrainingPlan();
+						// handlers.handleGenerateTrainingPlan();
+						break;
+					case "6":
+						handlers.clearConsole();
+						handlers.handleSaveStatus(controller);
+						handlers.clearConsole();
 						break;
 					case "0":
 						isLoggedIn = false;
 						wantsToExit = false;
-						clearConsole();
+						handlers.clearConsole();
 						controller.logout();
 						System.out.println("Logged out successfully.");
 						break;
 					default:
-						clearConsole();
+						handlers.clearConsole();
 						System.out.println("Invalid option. Please try again.");
 						break;
 				}
@@ -89,118 +100,6 @@ public class View {
 		}
 		while (!option.equals("0") || !wantsToExit);
 		scanner.close();
-	}
-
-	public void showMessage(String message) {
-		System.out.println(message);
-	}
-
-	public String getUserInput(String prompt) {
-		System.out.print(prompt);
-		if (scanner.hasNextLine()) {
-			return scanner.nextLine();
-		}
-		return null;
-	}
-
-	public void showStartMenu() {
-		System.out.println("\n1. Login");
-		System.out.println("2. Register");
-		System.out.println("0. Exit");
-		System.out.println("Choose an option: ");
-	}
-
-	public void showUserMenu() {
-		System.out.println("\n1. View Training Plans");
-		System.out.println("2. View Activities");
-		System.out.println("3. Add New Activity");
-		System.out.println("4. Add New Training Plan");
-		System.out.println("0. Logout");
-		System.out.println("Choose an option: ");
-	}
-
-	public void showError(String message) {
-		System.err.println(message);
-	}
-
-	public void handleLogin() {
-		clearConsole();
-		String userId = getUserInput("Enter your user ID: ");
-		String message = controller.login(userId);
-		this.isLoggedIn = controller.isLogged();
-		clearConsole();
-		showMessage(message);
-	}
-
-	public void handleRegister() {
-		clearConsole();
-		showMessage("Registering a new user...");
-
-		showMessage("Choose the type of user:");
-		showMessage("1. Professional User");
-		showMessage("2. Amateur User");
-		showMessage("3. Casual User");
-		String userType = getUserInput("");
-		if (!userType.equals("1") && !userType.equals("2") && !userType.equals("3")) {
-			clearConsole();
-			showMessage("Invalid user type selected. Registration failed.");
-			return;
-		}
-
-		clearConsole();
-		String userId = getUserInput("Enter a new user ID: ");
-		if (controller.checkIfUserExists(userId)) {
-			clearConsole();
-			showMessage("User ID already exists. Registration failed.");
-			return;
-		}
-		String name = getUserInput("Enter your name: ");
-		String address = getUserInput("Enter your address: ");
-		String email = getUserInput("Enter your email: ");
-		String weight = getUserInput("Enter your weight: ");
-		double weightValue;
-
-		try {
-			weightValue = Double.parseDouble(weight);
-		}
-		catch (NumberFormatException e) {
-			showMessage("Invalid weight value. Registration failed.");
-			return;
-		}
-
-		String message = "";
-
-		switch (userType) {
-			case "1":
-				message = controller.registerProfessionalUser(userId, name, address, email, weightValue);
-				break;
-			case "2":
-				message = controller.registerAmateurUser(userId, name, address, email, weightValue);
-				break;
-			default:
-				message = controller.registerCasualUser(userId, name, address, email, weightValue);
-				break;
-		}
-
-		clearConsole();
-		showMessage(message);
-	}
-
-	public void clearConsole() {
-		try {
-			final String os = System.getProperty("os.name");
-
-			if (os.contains("Windows")) {
-				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-			}
-			else {
-				System.out.print("\033[H\033[2J");
-				System.out.flush();
-			}
-		}
-		catch (Exception e) {
-			System.out.println("Error clearing console: " + e.getMessage());
-		}
 	}
 
 }

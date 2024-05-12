@@ -1,4 +1,4 @@
-package org.trivialfitness.activity;
+package org.trivialfitness.activity.activityType;
 
 import java.io.Serializable;
 

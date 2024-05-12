@@ -1,5 +1,7 @@
 package org.trivialfitness.activity;
 
+import org.trivialfitness.activity.activityType.WeightRepetitionsActivity;
+
 public class BenchPress extends WeightRepetitionsActivity {
 
 	public BenchPress(int repetitions, int weightKg) {
