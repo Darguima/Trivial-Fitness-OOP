@@ -178,6 +178,11 @@ public class AppState implements Serializable {
 			fileIn.close();
 			return;
 		}
+		catch (java.io.FileNotFoundException e) {
+			this.now = LocalDate.now();
+			this.users = new ArrayList<>();
+			return;
+		}
 		catch (IOException i) {
 			i.printStackTrace();
 			return;
