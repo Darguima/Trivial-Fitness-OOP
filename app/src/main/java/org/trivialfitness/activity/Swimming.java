@@ -1,7 +1,6 @@
 package org.trivialfitness.activity;
 
 import org.trivialfitness.activity.activityType.DistanceActivity;
-import org.trivialfitness.user.User;
 
 public class Swimming extends DistanceActivity {
 
@@ -12,10 +11,6 @@ public class Swimming extends DistanceActivity {
 	@Override
 	public Swimming copy() {
 		return new Swimming(getDistanceKm());
-	}
-
-	public double calculateCalories(User user) {
-		return super.calculateCalories(user);
 	}
 
 }

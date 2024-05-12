@@ -30,6 +30,8 @@ public abstract class Activity implements Serializable {
 		return hard;
 	}
 
+	public abstract void setActivityAttributesWithCaloryGoal(User user, int caloriesGoal);
+
 	public abstract double calculateCalories(User user);
 
 	public abstract String getActivityAttributesString();

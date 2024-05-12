@@ -5,6 +5,8 @@ import org.trivialfitness.user.User;
 
 public class PushUps extends RepetitionsActivity {
 
+	private static double caloriesPerUserKg = 0.01;
+
 	public PushUps(int repetitions) {
 		super("Push Ups", false, repetitions, 0.11);
 	}
@@ -16,10 +18,15 @@ public class PushUps extends RepetitionsActivity {
 
 	@Override
 	public double calculateCalories(User user) {
-		double prevCalories = super.calculateCalories(user);
-		double weightLifted = user.getWeight() * 0.64;
+		double repetitionCalories = super.calculateCalories(user);
 
-		return prevCalories * weightLifted * user.calculateFitnessMultiplier();
+		return repetitionCalories + (user.getWeight() * caloriesPerUserKg * user.calculateFitnessMultiplier());
+	}
+
+	@Override
+	public void setActivityAttributesWithCaloryGoal(User user, int caloriesGoal) {
+		caloriesGoal -= user.getWeight() * caloriesPerUserKg * user.calculateFitnessMultiplier();
+		super.setActivityAttributesWithCaloryGoal(user, caloriesGoal + 1);
 	}
 
 }

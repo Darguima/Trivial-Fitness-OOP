@@ -31,12 +31,18 @@ public abstract class DistanceAltimetryActivity extends DistanceActivity {
 	@Override
 	public double calculateCalories(User user) {
 		double prevCalories = super.calculateCalories(user);
-		return (heightMt * caloriesPerHeightMt) * user.calculateFitnessMultiplier() + prevCalories;
+		return prevCalories + (heightMt * caloriesPerHeightMt * user.calculateFitnessMultiplier());
 	}
 
 	@Override
 	public String getActivityAttributesString() {
 		return super.getActivityAttributesString() + " and " + heightMt + " Mt of elevation gain";
+	}
+
+	@Override
+	public void setActivityAttributesWithCaloryGoal(User user, int caloriesGoal) {
+		this.distanceKm = (int) (caloriesGoal * 0.9 / (caloriesPerDistanceKm * user.calculateFitnessMultiplier())) + 1;
+		this.heightMt = (int) ((caloriesGoal * 0.1) / (caloriesPerHeightMt * user.calculateFitnessMultiplier())) + 1;
 	}
 
 }

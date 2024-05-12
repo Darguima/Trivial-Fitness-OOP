@@ -119,7 +119,7 @@ public class Handlers {
 		String name = getUserInput("Enter your name: ");
 		String address = getUserInput("Enter your address: ");
 		String email = getUserInput("Enter your email: ");
-		String weight = getUserInput("Enter your weight: ");
+		String weight = getUserInput("Enter your weight (in kg): ");
 		double weightValue;
 
 		try {

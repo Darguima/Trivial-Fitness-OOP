@@ -8,6 +8,7 @@ import org.trivialfitness.user.User;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -107,8 +108,8 @@ public class AppController {
 					+ currentUser.getTrainingPlans().get(i).getEndingDate() + " with "
 					+ currentUser.getTrainingPlans().get(i).getActivities().size() + " exercises:\n");
 			for (TrainingPlanActivity trainingPlanActivity : currentUser.getTrainingPlans().get(i).getActivities()) {
-				sb.append("\t" + trainingPlanActivity.activity.getActivityName() + " on " + trainingPlanActivity.weekDay
-						+ ";\n");
+				sb.append("\t" + trainingPlanActivity.getActivity().getActivityName() + " on "
+						+ trainingPlanActivity.getWeekDay() + ";\n");
 			}
 		}
 
@@ -117,14 +118,14 @@ public class AppController {
 
 	public List<String> getAvailableActivitiesTypesNames() {
 
-		List<String> activityType = appState.getAvailableActivitiesTypesNames();
+		List<String> activityType = new ArrayList<>(AppState.getAvailableActivitiesTypesNames());
 
 		activityType.sort(null);
 		return activityType;
 	}
 
 	public List<String> getActivitiesFromSpecificType(int type) {
-		return appState.getActivitiesFromSpecificType(type - 1);
+		return AppState.getActivitiesFromSpecificType(type - 1);
 	}
 
 	public String addNewActivity(int average_heart_rate_value, int durationValue, int distanceValue, int altimetryValue,
@@ -169,19 +170,19 @@ public class AppController {
 	}
 
 	public String activityRepetitionWeightName(int activity) {
-		return appState.getActivityRepetitionWeightName(activity);
+		return AppState.getActivityRepetitionWeightName(activity);
 	}
 
 	public String activityRepetitionName(int activity) {
-		return appState.getActivityRepetitionName(activity);
+		return AppState.getActivityRepetitionName(activity);
 	}
 
 	public String activityDistanceAltimetryName(int activity) {
-		return appState.getActivityDistanceAltimetryName(activity);
+		return AppState.getActivityDistanceAltimetryName(activity);
 	}
 
 	public String activityDistanceName(int activity) {
-		return appState.getActivityDistanceName(activity);
+		return AppState.getActivityDistanceName(activity);
 	}
 
 	public String saveStatus() {
@@ -240,10 +241,10 @@ public class AppController {
 		for (PastActivity activity : currentUser.getPastActivities()) {
 			if ((beginDate == null && endDate == null)
 					|| activity.getDate().isAfter(beginDate) && activity.getDate().isBefore(endDate)) {
-				if (activity.getActivity() instanceof DistanceActivity) {
+				if (activity.getActivity().getClass().getSuperclass().equals(DistanceActivity.class)) {
 					distance += ((DistanceActivity) activity.getActivity()).getDistanceKm();
 				}
-				else if (activity.getActivity() instanceof DistanceAltimetryActivity) {
+				else if (activity.getActivity().getClass().getSuperclass().equals(DistanceAltimetryActivity.class)) {
 					distance += ((DistanceAltimetryActivity) activity.getActivity()).getDistanceKm();
 					altimetry += ((DistanceAltimetryActivity) activity.getActivity()).getHeightMt();
 				}
@@ -264,7 +265,7 @@ public class AppController {
 	}
 
 	public String checkMostFamousActivityType() {
-		List<String> activityTypeNames = appState.getAvailableActivitiesTypesNames();
+		List<String> activityTypeNames = AppState.getAvailableActivitiesTypesNames();
 		int[] activityType = new int[activityTypeNames.size()];
 		// cheking for all the users
 		for (User user : appState.getUsers()) {
@@ -281,7 +282,7 @@ public class AppController {
 				index = i;
 			}
 		}
-		return "Most famous activity type is " + appState.getAvailableActivitiesTypesNames().get(index) + " with " + max
+		return "Most famous activity type is " + AppState.getAvailableActivitiesTypesNames().get(index) + " with " + max
 				+ " activities.";
 	}
 

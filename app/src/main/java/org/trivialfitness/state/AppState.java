@@ -27,16 +27,22 @@ public class AppState implements Serializable {
 
 	private List<User> users;
 
-	private List<Activity> availableActivities = List.of(new BenchPress(0, 0), new MountainBike(0, 0), new PushUps(0),
+	private static List<Activity> availableActivities = List.of(new BenchPress(0, 0), new MountainBike(0, 0),
+			new PushUps(0),
 
 			new Burpees(0), new Scissors(0), new Squats(0), new JumpingJacks(0), new Rowing(0), new BenchPress(0, 0),
 			new Climbing(0, 0), new Deadlift(0, 0), new IndoorCycling(0), new JumpRope(0), new OutdoorCycling(0, 0),
-			new Running(0), new Scissors(0), new Squats(0), new Surfing(0), new Swimming(0), new Weightlifting(0, 0));
+			new Running(0), new Scissors(0), new Sprint(0), new Squats(0), new Surfing(0), new Swimming(0),
+			new Weightlifting(0, 0));
 
-	private List<List<String>> activityNamesByType = List.of(
+	private static List<List<String>> activityNamesByType = List.of(
+			/* Distance */
 			List.of("Rowing", "Running", "Swimming", "Surfing", "Indoor Cycling", "Walking"),
+			/* Distance/Altimetry */
 			List.of("Mountain Bike", "Outdoor Cycling", "Climbing"),
-			List.of("Push Ups", "Burpees", "Scissors", "Squats", "Jumping Jacks", "Jump Rope"),
+			/* Repetitions */
+			List.of("Push Ups", "Burpees", "Scissors", "Squats", "Jumping Jacks", "Jump Rope", "Sprint"),
+			/* Repetitions/Weight */
 			List.of("Bench Press", "Deadlift", "Weightlifting"));
 
 	public AppState() {
@@ -51,24 +57,29 @@ public class AppState implements Serializable {
 
 	public Map<String, BiFunction<Integer, Integer, Activity>> initializeActivityCreators() {
 		Map<String, BiFunction<Integer, Integer, Activity>> activityCreators = new HashMap<>();
+		/* Distance */
 		activityCreators.put("Rowing", (distance, something) -> new Rowing(distance));
+		activityCreators.put("Indoor Cycling", (distance, something) -> new IndoorCycling(distance));
+		activityCreators.put("Running", (distance, something) -> new Running(distance));
+		activityCreators.put("Walking", (distance, something) -> new Walking(distance));
+		activityCreators.put("Surfing", (distance, something) -> new Surfing(distance));
+		activityCreators.put("Swimming", (distance, something) -> new Swimming(distance));
+		/* Distance/Altimetry */
 		activityCreators.put("Mountain Bike", (distance, altimetry) -> new MountainBike(distance, altimetry));
+		activityCreators.put("Outdoor Cycling", (distance, altimetry) -> new OutdoorCycling(distance, altimetry));
+		activityCreators.put("Climbing", (distance, altimetry) -> new Climbing(distance, altimetry));
+		/* Repetitions */
 		activityCreators.put("Push Ups", (repetitions, something) -> new PushUps(repetitions));
 		activityCreators.put("Burpees", (repetitions, something) -> new Burpees(repetitions));
 		activityCreators.put("Scissors", (repetitions, something) -> new Scissors(repetitions));
 		activityCreators.put("Squats", (repetitions, something) -> new Squats(repetitions));
-		activityCreators.put("Jumping Jacks", (repetitions, something) -> new JumpingJacks(repetitions));
-		activityCreators.put("Bench Press", (repetitions, weight) -> new BenchPress(repetitions, weight));
-		activityCreators.put("Climbing", (distance, altimetry) -> new Climbing(distance, altimetry));
-		activityCreators.put("Deadlift", (repetitions, weight) -> new Deadlift(repetitions, weight));
-		activityCreators.put("Indoor Cycling", (distance, something) -> new IndoorCycling(distance));
 		activityCreators.put("Jump Rope", (repetitions, something) -> new JumpRope(repetitions));
-		activityCreators.put("Outdoor Cycling", (distance, altimetry) -> new OutdoorCycling(distance, altimetry));
-		activityCreators.put("Running", (distance, something) -> new Running(distance));
-		activityCreators.put("Surfing", (distance, something) -> new Surfing(distance));
-		activityCreators.put("Swimming", (distance, something) -> new Swimming(distance));
+		activityCreators.put("Jumping Jacks", (repetitions, something) -> new JumpingJacks(repetitions));
+		activityCreators.put("Sprint", (repetitions, something) -> new Sprint(repetitions));
+		/* Repetitions/Weight */
+		activityCreators.put("Bench Press", (repetitions, weight) -> new BenchPress(repetitions, weight));
+		activityCreators.put("Deadlift", (repetitions, weight) -> new Deadlift(repetitions, weight));
 		activityCreators.put("Weightlifting", (repetitions, weight) -> new Weightlifting(repetitions, weight));
-		activityCreators.put("Walking", (distance, something) -> new Walking(distance));
 
 		return activityCreators;
 	}
@@ -102,34 +113,38 @@ public class AppState implements Serializable {
 		return users.stream().filter(user -> user.getUserId().equals(userId)).findFirst().orElse(null);
 	}
 
-	public List<String> getAvailableActivitiesTypesNames() {
-		return availableActivities.stream().map(Activity::getActivityTypeName).distinct().collect(Collectors.toList());
+	public static List<Activity> getAvailableActivities() {
+		return availableActivities.stream().map(Activity::copy).toList();
 	}
 
-	public List<String> getAvailableActivitiesNames() {
+	public static List<String> getAvailableActivitiesTypesNames() {
+		return availableActivities.stream().map(Activity::getActivityTypeName).distinct().toList();
+	}
+
+	public static List<String> getAvailableActivitiesNames() {
 		return availableActivities.stream().map(Activity::getActivityName).toList();
 	}
 
-	public List<String> getActivitiesFromSpecificType(int type) {
+	public static List<String> getActivitiesFromSpecificType(int type) {
 		return activityNamesByType.get(type);
 
 	}
 
-	public String getActivityDistanceName(int activity) {
+	public static String getActivityDistanceName(int activity) {
 		return activityNamesByType.get(0).get(activity);
 
 	}
 
-	public String getActivityDistanceAltimetryName(int activity) {
+	public static String getActivityDistanceAltimetryName(int activity) {
 		return activityNamesByType.get(1).get(activity);
 
 	}
 
-	public String getActivityRepetitionName(int activity) {
+	public static String getActivityRepetitionName(int activity) {
 		return activityNamesByType.get(2).get(activity);
 	}
 
-	public String getActivityRepetitionWeightName(int activity) {
+	public static String getActivityRepetitionWeightName(int activity) {
 		return activityNamesByType.get(3).get(activity);
 	}
 
@@ -166,6 +181,11 @@ public class AppState implements Serializable {
 			this.users = readUsers(in);
 			in.close();
 			fileIn.close();
+			return;
+		}
+		catch (java.io.FileNotFoundException e) {
+			this.now = LocalDate.now();
+			this.users = new ArrayList<>();
 			return;
 		}
 		catch (IOException i) {

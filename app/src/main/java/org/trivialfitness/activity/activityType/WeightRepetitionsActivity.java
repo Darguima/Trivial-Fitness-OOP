@@ -31,12 +31,18 @@ public abstract class WeightRepetitionsActivity extends RepetitionsActivity {
 	@Override
 	public double calculateCalories(User user) {
 		double prevCalories = super.calculateCalories(user);
-		return (prevCalories + (weightKg * caloriesPerWeightKg)) * user.calculateFitnessMultiplier();
+		return prevCalories + (weightKg * caloriesPerWeightKg * user.calculateFitnessMultiplier());
 	}
 
 	@Override
 	public String getActivityAttributesString() {
 		return super.getActivityAttributesString() + " with " + weightKg + " Kg";
+	}
+
+	@Override
+	public void setActivityAttributesWithCaloryGoal(User user, int caloriesGoal) {
+		this.repetitions = (int) (caloriesGoal * 0.9 / (caloriesPerRepetition * user.calculateFitnessMultiplier())) + 1;
+		this.weightKg = (int) ((caloriesGoal * 0.1) / (caloriesPerWeightKg * user.calculateFitnessMultiplier())) + 1;
 	}
 
 }

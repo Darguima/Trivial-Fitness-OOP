@@ -14,4 +14,3 @@ public class OutdoorCycling extends DistanceAltimetryActivity {
 	}
 
 }
-// considerando que a bicicleta tem altímetro, acho eu haha

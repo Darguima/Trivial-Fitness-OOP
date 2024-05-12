@@ -29,12 +29,17 @@ public abstract class DistanceActivity extends Activity {
 
 	@Override
 	public double calculateCalories(User user) {
-		return (distanceKm * caloriesPerDistanceKm) * user.calculateFitnessMultiplier();
+		return distanceKm * caloriesPerDistanceKm * user.calculateFitnessMultiplier();
 	}
 
 	@Override
 	public String getActivityAttributesString() {
 		return distanceKm + " Km of distance";
+	}
+
+	@Override
+	public void setActivityAttributesWithCaloryGoal(User user, int caloriesGoal) {
+		this.distanceKm = (int) (caloriesGoal / (caloriesPerDistanceKm * user.calculateFitnessMultiplier())) + 1;
 	}
 
 }
