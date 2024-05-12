@@ -15,8 +15,9 @@ public class AppState implements Serializable {
 
 	private List<User> users;
 
-	private List<Activity> availableActivities = List.of(new BenchPress(0, 0), new MountainBike(0, 0), new PushUps(0),
-			new Burpees(0), new Scissors(0), new Squats(0), new JumpingJacks(0), new Rowing(0));
+	private static List<Activity> availableActivities = List.of(new BenchPress(0, 0), new MountainBike(0, 0),
+			new PushUps(0), new Burpees(0), new Scissors(0), new Squats(0), new JumpingJacks(0), new Rowing(0),
+			new Sprint(0));
 
 	public AppState() {
 		now = LocalDate.now();
@@ -57,11 +58,15 @@ public class AppState implements Serializable {
 		return users.stream().filter(user -> user.getUserId().equals(userId)).findFirst().map(User::copy).orElse(null);
 	}
 
-	public List<String> getAvailableActivitiesTypesNames() {
+	public static List<Activity> getAvailableActivities() {
+		return availableActivities.stream().map(Activity::copy).toList();
+	}
+
+	public static List<String> getAvailableActivitiesTypesNames() {
 		return availableActivities.stream().map(Activity::getActivityTypeName).distinct().toList();
 	}
 
-	public List<String> getAvailableActivitiesNames() {
+	public static List<String> getAvailableActivitiesNames() {
 		return availableActivities.stream().map(Activity::getActivityName).toList();
 	}
 

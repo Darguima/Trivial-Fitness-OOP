@@ -7,9 +7,9 @@ import org.trivialfitness.activity.Activity;
 
 public class TrainingPlanActivity implements Serializable {
 
-	public Activity activity;
+	private Activity activity;
 
-	public DayOfWeek weekDay;
+	private DayOfWeek weekDay;
 
 	public TrainingPlanActivity(Activity activity, DayOfWeek weekDay) {
 		this.activity = activity;

@@ -6,7 +6,6 @@ import org.trivialfitness.state.AppState;
 import org.trivialfitness.trainingPlan.*;
 import org.trivialfitness.user.*;
 import org.trivialfitness.activity.*;
-import org.trivialfitness.view.*;
 
 public class App {
 
@@ -18,8 +17,8 @@ public class App {
 		AppState appState = new AppState();
 		System.out.println("Today is " + appState.getCurrentDate() + ";");
 
-		System.out.println("\nAvailable activities types are: " + appState.getAvailableActivitiesTypesNames());
-		System.out.println("Available activities are: " + appState.getAvailableActivitiesNames());
+		System.out.println("\nAvailable activities types are: " + AppState.getAvailableActivitiesTypesNames());
+		System.out.println("Available activities are: " + AppState.getAvailableActivitiesNames());
 
 		PushUps pushUps = new PushUps(10);
 		BenchPress benchPress = new BenchPress(10, 100);
@@ -53,8 +52,8 @@ public class App {
 					+ trainingPlan.getEndingDate() + " with " + trainingPlan.getActivities().size() + " exercises:\n");
 
 			for (TrainingPlanActivity trainingPlanActivity : trainingPlan.getActivities()) {
-				System.out.println("\t" + trainingPlanActivity.activity.getActivityName() + " on "
-						+ trainingPlanActivity.weekDay + ";");
+				System.out.println("\t" + trainingPlanActivity.getActivity().getActivityName() + " on "
+						+ trainingPlanActivity.getWeekDay() + ";");
 			}
 
 			user.addTrainingPlan(trainingPlan);
@@ -83,8 +82,17 @@ public class App {
 				.println("\t" + pastActivity.getActivity().getActivityName() + " on " + pastActivity.getDate() + ";");
 		}
 
-		View view = new View(appState);
-		view.run();
+		System.out.println("\nGenerating new Training Plan");
+		TrainingPlan trainingPlan = new TrainingPlan(user, appState.getCurrentDate(),
+				appState.getCurrentDate().plusDays(90), 2, 3, 4, 75, true, RepetitionsActivity.class);
+
+		System.out.println("\nTraining Plan from " + trainingPlan.getStartingDate() + " to "
+				+ trainingPlan.getEndingDate() + " with " + trainingPlan.getActivities().size() + " exercises:\n");
+		for (TrainingPlanActivity trainingPlanActivity : trainingPlan.getActivities()) {
+			System.out.println("\t" + trainingPlanActivity.getActivity().getActivityName() + " on "
+					+ trainingPlanActivity.getWeekDay() + " with "
+					+ trainingPlanActivity.getActivity().getActivityAttributesString() + ";");
+		}
 	}
 
 }

@@ -29,12 +29,17 @@ public abstract class RepetitionsActivity extends Activity {
 
 	@Override
 	public double calculateCalories(User user) {
-		return (repetitions * caloriesPerRepetition) * user.calculateFitnessMultiplier();
+		return repetitions * caloriesPerRepetition * user.calculateFitnessMultiplier();
 	}
 
 	@Override
 	public String getActivityAttributesString() {
 		return repetitions + " repetitions";
+	}
+
+	@Override
+	public void setActivityAttributesWithCaloryGoal(User user, int caloriesGoal) {
+		this.repetitions = (int) (caloriesGoal / (caloriesPerRepetition * user.calculateFitnessMultiplier())) + 1;
 	}
 
 }
