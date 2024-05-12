@@ -12,7 +12,7 @@ public class TrainingPlanActivity implements Serializable {
 	private DayOfWeek weekDay;
 
 	public TrainingPlanActivity(Activity activity, DayOfWeek weekDay) {
-		this.activity = activity;
+		this.activity = activity.copy();
 		this.weekDay = weekDay;
 	}
 
