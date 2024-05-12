@@ -91,9 +91,18 @@ public class AppController {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Past activities:\n");
 		for (int i = 0; i < currentUser.getPastActivities().size(); i++) {
-			sb.append("\t" + currentUser.getPastActivities().get(i).getActivity().getActivityName() + " on "
-					+ currentUser.getPastActivities().get(i).getDate() + " <-> "
-					+ currentUser.getPastActivities().get(i).getActivity().getActivityAttributesString() + ";\n");
+			PastActivity pastActivity = currentUser.getPastActivities().get(i);
+			if (pastActivity.getDurationInMinutes() == 0) {
+				continue;
+			}
+			sb.append("\t" + String.format("%20s", pastActivity.getActivity().getActivityName()) + "\t"
+					+ pastActivity.getDate() + " " + String.format("%02d", pastActivity.getHour()) + ":00\t"
+					+ (pastActivity.getActivity().isHard() ? "  is hard\t" : "isn't hard\t")
+					+ pastActivity.getActivity().getActivityAttributesString() + " \t "
+					+ String.format("%5s", pastActivity.getAverageHeartRate()) + " bps \t "
+					+ String.format("%4s", pastActivity.getDurationInMinutes()) + " minutes \t"
+					+ String.format("%.3f", pastActivity.getActivity().calculateCalories(currentUser))
+					+ " calories;\n");
 		}
 
 		return sb.toString();
@@ -108,8 +117,14 @@ public class AppController {
 					+ currentUser.getTrainingPlans().get(i).getEndingDate() + " with "
 					+ currentUser.getTrainingPlans().get(i).getActivities().size() + " exercises:\n");
 			for (TrainingPlanActivity trainingPlanActivity : currentUser.getTrainingPlans().get(i).getActivities()) {
-				sb.append("\t" + trainingPlanActivity.getActivity().getActivityName() + " on "
-						+ trainingPlanActivity.getWeekDay() + ";\n");
+
+				sb.append("\t" + String.format("%20s", trainingPlanActivity.getActivity().getActivityName()) + "\t"
+						+ String.format("%10s", trainingPlanActivity.getWeekDay().toString()) + "\t"
+						+ (trainingPlanActivity.getActivity().isHard() ? "  is hard\t" : "isn't hard\t")
+						+ trainingPlanActivity.getActivity().getActivityAttributesString() + " \t "
+						+ String.format("%.3f", trainingPlanActivity.getActivity().calculateCalories(currentUser))
+						+ " calories;\n");
+
 			}
 		}
 
@@ -346,6 +361,41 @@ public class AppController {
 		return "User " + maxActivitiesUser + " has the most activities between "
 				+ (beginDate == null ? "the beggining" : beginDate) + " and " + (endDate == null ? "now" : endDate)
 				+ " with " + maxActivities + " activities.";
+	}
+
+	public String getNewTrainingPlan(LocalDate startingDate, LocalDate endingDate, int maxActivitiesPerDays,
+			int maxDifferentActivities, int activitiesWeeklyFreq, int caloriesGoal, boolean hasHard, int activityType) {
+		TrainingPlan trainingPlan = appState.getNewTrainingPlan(startingDate, endingDate, maxActivitiesPerDays,
+				maxDifferentActivities, activitiesWeeklyFreq, caloriesGoal, hasHard, activityType, currentUser);
+		currentUser.addTrainingPlan(trainingPlan);
+		return "Training plan created successfully.";
+
+	}
+
+	public String getTrainingPlanMostCalories() {
+		// check from all users and save also the training plan to print it
+		double maxCalories = 0;
+		TrainingPlan maxCaloriesTrainingPlan = null;
+		for (User user : appState.getUsers()) {
+			for (TrainingPlan trainingPlan : user.getTrainingPlans()) {
+				double calories = 0;
+				for (TrainingPlanActivity activity : trainingPlan.getActivities()) {
+					calories += activity.getActivity().calculateCalories(user);
+				}
+				if (calories > maxCalories) {
+					maxCalories = calories;
+					maxCaloriesTrainingPlan = trainingPlan;
+				}
+			}
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append("Training plan with most calories burned is from " + maxCaloriesTrainingPlan.getStartingDate()
+				+ " to " + maxCaloriesTrainingPlan.getEndingDate() + " with " + maxCalories + " calories burned.\n");
+		for (TrainingPlanActivity activity : maxCaloriesTrainingPlan.getActivities()) {
+			sb.append("\t" + activity.getActivity().getActivityName() + " on " + activity.getWeekDay() + ";\n");
+		}
+		return sb.toString();
+
 	}
 
 }

@@ -5,6 +5,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+
+import org.trivialfitness.activity.activityType.Activity;
 import org.trivialfitness.controler.AppController;
 import org.trivialfitness.trainingPlan.TrainingPlan;
 
@@ -50,7 +52,8 @@ public class Handlers {
 		System.out.println("10. Check status");
 		System.out.println("11. Check User with most calories burned");
 		System.out.println("12. Check User with most activities done");
-		System.out.println("13. Save");
+		System.out.println("13. Check most hard workout");
+		System.out.println("14. Save");
 		System.out.println("0. Logout\n");
 		System.out.print("Choose an option: ");
 	}
@@ -777,6 +780,138 @@ public class Handlers {
 		}
 
 		String message = controller.checkUserWithMostActivities(begin_date_value, end_date_value);
+		showMessage(message);
+		showMessage("Press any key to continue...");
+		scanner.nextLine();
+		clearConsole();
+	}
+
+	public void handleGenerateTrainingPlan(AppController controller) {
+		clearConsole();
+		// public TrainingPlan(User user, LocalDate startingDate, LocalDate endingDate,
+		// int maxActivitiesPerDays,
+		// int maxDifferentActivities, int activitiesWeeklyFreq, int caloriesGoal, boolean
+		// hasHard,
+		// Class<? extends Activity> activitiesType)
+		String begin_date = getUserInput("Enter the beginning date of the training plan (yyyy-MM-dd): ");
+		LocalDate begin_date_value = null;
+		try {
+			begin_date_value = LocalDate.parse(begin_date);
+		}
+		catch (DateTimeParseException e) {
+			clearConsole();
+			showMessage("Invalid date format. Generating training plan failed.");
+			return;
+		}
+		clearConsole();
+		String end_date = getUserInput("Enter the ending date of the training plan (yyyy-MM-dd): ");
+		LocalDate end_date_value = null;
+		try {
+			end_date_value = LocalDate.parse(end_date);
+		}
+		catch (DateTimeParseException e) {
+			clearConsole();
+			showMessage("Invalid date format. Generating training plan failed.");
+			return;
+		}
+		if (end_date_value.isBefore(begin_date_value)) {
+			clearConsole();
+			showMessage("Invalid date range. Generating training plan failed.");
+			return;
+		}
+		clearConsole();
+		String max_activities_per_day = getUserInput("Enter the maximum number of activities per day: ");
+		int max_activities_per_day_value;
+		try {
+			max_activities_per_day_value = Integer.parseInt(max_activities_per_day);
+		}
+		catch (NumberFormatException e) {
+			clearConsole();
+			showMessage("Invalid number of activities per day. Generating training plan failed.");
+			return;
+		}
+
+		String max_different_activities = getUserInput("Enter the maximum number of different activities: ");
+		int max_different_activities_value;
+		try {
+			max_different_activities_value = Integer.parseInt(max_different_activities);
+		}
+		catch (NumberFormatException e) {
+			clearConsole();
+			showMessage("Invalid number of different activities. Generating training plan failed.");
+			return;
+		}
+		clearConsole();
+		String activities_weekly_freq = getUserInput("Enter the activity frequency: ");
+		int activities_weekly_freq_value;
+		try {
+			activities_weekly_freq_value = Integer.parseInt(activities_weekly_freq);
+		}
+		catch (NumberFormatException e) {
+			clearConsole();
+			showMessage("Invalid activity frequency. Generating training plan failed.");
+			return;
+		}
+		clearConsole();
+		String calories_goal = getUserInput("Enter the calories goal: ");
+		int calories_goal_value;
+		try {
+			calories_goal_value = Integer.parseInt(calories_goal);
+		}
+		catch (NumberFormatException e) {
+			clearConsole();
+			showMessage("Invalid calories goal. Generating training plan failed.");
+			return;
+		}
+
+		clearConsole();
+		String has_hard = getUserInput("Do you want to include hard activities? (yes/no): ");
+		boolean has_hard_value;
+		if (has_hard.equals("yes")) {
+			has_hard_value = true;
+		}
+		else if (has_hard.equals("no")) {
+			has_hard_value = false;
+		}
+		else {
+			clearConsole();
+			showMessage("Invalid option. Generating training plan failed.");
+			return;
+		}
+		clearConsole();
+		int size = 0;
+		for (String activityTypeName : controller.getAvailableActivitiesTypesNames()) {
+			size++;
+			showMessage(size + ". " + activityTypeName);
+		}
+		showMessage("");
+		String activities_type_choose = getUserInput("Choose an activity type: ");
+		int activities_type;
+		try {
+			activities_type = Integer.parseInt(activities_type_choose);
+		}
+		catch (NumberFormatException e) {
+			clearConsole();
+			showMessage("Invalid activity type. Generating training plan failed.");
+			return;
+		}
+		if (activities_type < 1 || activities_type > size) {
+			clearConsole();
+			showMessage("Invalid activity type. Generating training plan failed.");
+			return;
+		}
+		clearConsole();
+		String message = controller.getNewTrainingPlan(begin_date_value, end_date_value, max_activities_per_day_value,
+				max_different_activities_value, activities_weekly_freq_value, calories_goal_value, has_hard_value,
+				activities_type);
+
+		showMessage(message);
+
+	}
+
+	public void handle_check_most_hard_workout(AppController controller) {
+		clearConsole();
+		String message = controller.getTrainingPlanMostCalories();
 		showMessage(message);
 		showMessage("Press any key to continue...");
 		scanner.nextLine();
