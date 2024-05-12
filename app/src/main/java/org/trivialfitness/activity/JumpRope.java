@@ -1,7 +1,6 @@
 package org.trivialfitness.activity;
 
 import org.trivialfitness.activity.activityType.RepetitionsActivity;
-import org.trivialfitness.user.User;
 
 public class JumpRope extends RepetitionsActivity {
 
@@ -12,10 +11,6 @@ public class JumpRope extends RepetitionsActivity {
 	@Override
 	public JumpRope copy() {
 		return new JumpRope(getRepetitions());
-	}
-
-	public double calculateCalories(User user) {
-		return super.calculateCalories(user);
 	}
 
 }
