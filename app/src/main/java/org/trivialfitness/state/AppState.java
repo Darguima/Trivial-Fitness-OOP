@@ -16,7 +16,6 @@ import org.trivialfitness.user.*;
 import org.trivialfitness.activity.activityType.*;
 import org.trivialfitness.trainingPlan.TrainingPlan;
 
-import java.util.stream.Collectors;
 import org.trivialfitness.activity.*;
 
 import java.util.function.BiFunction;
@@ -155,6 +154,30 @@ public class AppState implements Serializable {
 
 	public TrainingPlan getNewTrainingPlan(LocalDate startingDate, LocalDate endingDate) {
 		return new TrainingPlan(startingDate, endingDate);
+	}
+
+	public TrainingPlan getNewTrainingPlan(LocalDate startingDate, LocalDate endingDate, int maxActivitiesPerDays,
+			int maxDifferentActivities, int activitiesWeeklyFreq, int caloriesGoal, boolean hasHard, int activitiesType,
+			User user) {
+		Class<? extends Activity> activityClass = null;
+		switch (activitiesType) {
+			case 1:
+				activityClass = DistanceActivity.class;
+				break;
+			case 2:
+				activityClass = DistanceAltimetryActivity.class;
+				break;
+			case 3:
+				activityClass = RepetitionsActivity.class;
+				break;
+			case 4:
+				activityClass = WeightRepetitionsActivity.class;
+				break;
+			default:
+				return null;
+		}
+		return new TrainingPlan(user, startingDate, endingDate, maxActivitiesPerDays, maxDifferentActivities,
+				activitiesWeeklyFreq, caloriesGoal, hasHard, activityClass);
 	}
 
 	public String saveProgress() {

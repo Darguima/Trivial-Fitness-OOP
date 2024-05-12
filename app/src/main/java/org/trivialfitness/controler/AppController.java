@@ -348,4 +348,39 @@ public class AppController {
 				+ " with " + maxActivities + " activities.";
 	}
 
+	public String getNewTrainingPlan(LocalDate startingDate, LocalDate endingDate, int maxActivitiesPerDays,
+			int maxDifferentActivities, int activitiesWeeklyFreq, int caloriesGoal, boolean hasHard, int activityType) {
+		TrainingPlan trainingPlan = appState.getNewTrainingPlan(startingDate, endingDate, maxActivitiesPerDays,
+				maxDifferentActivities, activitiesWeeklyFreq, caloriesGoal, hasHard, activityType, currentUser);
+		currentUser.addTrainingPlan(trainingPlan);
+		return "Training plan created successfully.";
+
+	}
+
+	public String getTrainingPlanMostCalories() {
+		// check from all users and save also the training plan to print it
+		double maxCalories = 0;
+		TrainingPlan maxCaloriesTrainingPlan = null;
+		for (User user : appState.getUsers()) {
+			for (TrainingPlan trainingPlan : user.getTrainingPlans()) {
+				double calories = 0;
+				for (TrainingPlanActivity activity : trainingPlan.getActivities()) {
+					calories += activity.getActivity().calculateCalories(user);
+				}
+				if (calories > maxCalories) {
+					maxCalories = calories;
+					maxCaloriesTrainingPlan = trainingPlan;
+				}
+			}
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append("Training plan with most calories burned is from " + maxCaloriesTrainingPlan.getStartingDate()
+				+ " to " + maxCaloriesTrainingPlan.getEndingDate() + " with " + maxCalories + " calories burned.\n");
+		for (TrainingPlanActivity activity : maxCaloriesTrainingPlan.getActivities()) {
+			sb.append("\t" + activity.getActivity().getActivityName() + " on " + activity.getWeekDay() + ";\n");
+		}
+		return sb.toString();
+
+	}
+
 }

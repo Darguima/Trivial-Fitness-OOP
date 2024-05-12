@@ -76,7 +76,7 @@ public class View {
 						handlers.handleCreateTrainingPlan(controller);
 						break;
 					case "5":
-						// handlers.handleGenerateTrainingPlan();
+						handlers.handleGenerateTrainingPlan(controller);
 						break;
 					case "6":
 						handlers.handleAdvanceTime(controller);
@@ -104,6 +104,10 @@ public class View {
 						break;
 
 					case "13":
+						handlers.handle_check_most_hard_workout(controller);
+						break;
+
+					case "14":
 						handlers.clearConsole();
 						handlers.handleSaveStatus(controller);
 						handlers.clearConsole();
