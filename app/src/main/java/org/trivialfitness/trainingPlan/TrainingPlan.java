@@ -23,6 +23,8 @@ public class TrainingPlan implements Serializable {
 
 	private LocalDate endingDate;
 
+	private Random random = new Random();
+
 	private List<TrainingPlanActivity> activities;
 
 	public TrainingPlan(LocalDate startingDate, LocalDate endingDate) {
@@ -191,7 +193,6 @@ public class TrainingPlan implements Serializable {
 					continue;
 				}
 
-				Random random = new Random();
 				int randomAverageHearRate = random.nextInt(100, 170);
 				int randomDuration = random.nextInt(50, 200);
 				int randomHour = random.nextInt(6, 24);
