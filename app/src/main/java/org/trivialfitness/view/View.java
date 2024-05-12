@@ -3,7 +3,6 @@ package org.trivialfitness.view;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import org.trivialfitness.controler.AppController;
-import org.trivialfitness.state.AppState;
 
 public class View {
 
@@ -38,7 +37,7 @@ public class View {
 				handlers.showStartMenu();
 			}
 			else {
-				handlers.showUserMenu();
+				handlers.showUserMenu(controller);
 			}
 			option = handlers.getUserInput("");
 
@@ -74,12 +73,37 @@ public class View {
 						handlers.handleAddNewActivity(controller);
 						break;
 					case "4":
-						// handerls.handleCreateTrainingPlan();
+						handlers.handleCreateTrainingPlan(controller);
 						break;
 					case "5":
 						// handlers.handleGenerateTrainingPlan();
 						break;
 					case "6":
+						handlers.handleAdvanceTime(controller);
+						break;
+					case "7":
+						handlers.handle_check_distance_traveled(controller, true);
+						break;
+					case "8":
+						handlers.handle_check_distance_traveled(controller, false);
+						break;
+					case "9":
+						handlers.handle_check_most_famous_activity_type(controller);
+						break;
+
+					case "10":
+						handlers.handle_check_status(controller);
+						break;
+
+					case "11":
+						handlers.handle_check_most_calories_burned(controller);
+						break;
+
+					case "12":
+						handlers.handle_check_user_with_most_activities(controller);
+						break;
+
+					case "13":
 						handlers.clearConsole();
 						handlers.handleSaveStatus(controller);
 						handlers.clearConsole();
