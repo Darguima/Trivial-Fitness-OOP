@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.trivialfitness.user.User;
@@ -21,6 +22,8 @@ public class TrainingPlan implements Serializable {
 	private LocalDate startingDate;
 
 	private LocalDate endingDate;
+
+	private Random random = new Random();
 
 	private List<TrainingPlanActivity> activities;
 
@@ -190,7 +193,12 @@ public class TrainingPlan implements Serializable {
 					continue;
 				}
 
-				pastActivities.add(new PastActivity(activity.getActivity(), 0, 0, releaseDate, 0));
+				int randomAverageHearRate = random.nextInt(100, 170);
+				int randomDuration = random.nextInt(50, 200);
+				int randomHour = random.nextInt(6, 24);
+
+				pastActivities.add(new PastActivity(activity.getActivity(), randomAverageHearRate, randomDuration,
+						releaseDate, randomHour));
 			}
 		}
 
