@@ -842,14 +842,14 @@ public class Handlers {
 			return;
 		}
 		clearConsole();
-		String activities_weekly_freq = getUserInput("Enter the number of activities per week: ");
+		String activities_weekly_freq = getUserInput("Enter the activity frequency: ");
 		int activities_weekly_freq_value;
 		try {
 			activities_weekly_freq_value = Integer.parseInt(activities_weekly_freq);
 		}
 		catch (NumberFormatException e) {
 			clearConsole();
-			showMessage("Invalid number of activities per week. Generating training plan failed.");
+			showMessage("Invalid activity frequency. Generating training plan failed.");
 			return;
 		}
 		clearConsole();
