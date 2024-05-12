@@ -46,18 +46,18 @@ public class TrainingPlan implements Serializable {
 		this.activities = new ArrayList<>();
 
 		List<Activity> availableActivities = AppState.getAvailableActivities()
-				.stream()
-				.filter(activity -> activity.getClass().getSuperclass().equals(activitiesType))
-				.filter(activity -> !activity.isHard() || hasHard)
-				.collect(Collectors.toList());
+			.stream()
+			.filter(activity -> activity.getClass().getSuperclass().equals(activitiesType))
+			.filter(activity -> !activity.isHard() || hasHard)
+			.collect(Collectors.toList());
 
 		List<Activity> softActivities = availableActivities.stream()
-				.filter(activity -> !activity.isHard())
-				.collect(Collectors.toList());
+			.filter(activity -> !activity.isHard())
+			.collect(Collectors.toList());
 
 		List<Activity> hardActivities = availableActivities.stream()
-				.filter(Activity::isHard)
-				.collect(Collectors.toList());
+			.filter(Activity::isHard)
+			.collect(Collectors.toList());
 
 		maxActivitiesPerDays = Math.min(maxActivitiesPerDays, 3);
 		maxDifferentActivities = Math.min(maxDifferentActivities, maxActivitiesPerDays * 7 / activitiesWeeklyFreq);
@@ -72,7 +72,8 @@ public class TrainingPlan implements Serializable {
 			differentHardActivities = differentHardActivities == 0 ? 1 : differentHardActivities;
 			differentHardActivities = Math.min(differentHardActivities, hardActivities.size());
 			differentHardActivities = Math.min(differentHardActivities, 7 / hardActivitiesWeeklyFreq);
-		} else {
+		}
+		else {
 			differentHardActivities = 0;
 		}
 
@@ -101,7 +102,7 @@ public class TrainingPlan implements Serializable {
 			int activitiesToAllocate = hardActivitiesTotalQnt;
 			while (activitiesToAllocate > 0) {
 				Activity pickedActivity = pickedHardActivities.get(activitiesToAllocate % pickedHardActivities.size())
-						.copy();
+					.copy();
 				pickedActivity.setActivityAttributesWithCaloryGoal(user, caloryGoalPerActivity);
 				TrainingPlanActivity plannedActivity = new TrainingPlanActivity(pickedActivity, weekDay);
 
@@ -129,7 +130,7 @@ public class TrainingPlan implements Serializable {
 			int activitiesToAllocate = softActivitiesTotalQnt;
 			while (activitiesToAllocate > 0) {
 				Activity pickedActivity = pickedSoftActivities.get(activitiesToAllocate % pickedSoftActivities.size())
-						.copy();
+					.copy();
 				pickedActivity.setActivityAttributesWithCaloryGoal(user, caloryGoalPerActivity);
 				TrainingPlanActivity plannedActivity = new TrainingPlanActivity(pickedActivity, weekDay);
 
@@ -177,7 +178,7 @@ public class TrainingPlan implements Serializable {
 		// For each complete week just add the activities and decrease a week to vars
 		LocalDate currentLoopDate = startingDate;
 		for (; daysDifference >= 7 && currentLoopDate
-				.isBefore(this.endingDate); daysDifference -= 7, currentLoopDate = currentLoopDate.plusDays(7)) {
+			.isBefore(this.endingDate); daysDifference -= 7, currentLoopDate = currentLoopDate.plusDays(7)) {
 			for (TrainingPlanActivity activity : activities) {
 				// How many days to shift from the weekDay of startingDate
 				int weekDaysShift = (activity.getWeekDay().getValue() - currentLoopDate.getDayOfWeek().getValue() + 7)
@@ -195,7 +196,8 @@ public class TrainingPlan implements Serializable {
 				int randomDuration = random.nextInt(50, 200);
 				int randomHour = random.nextInt(6, 24);
 
-				pastActivities.add(new PastActivity(activity.getActivity(), randomAverageHearRate, randomDuration, releaseDate, randomHour));
+				pastActivities.add(new PastActivity(activity.getActivity(), randomAverageHearRate, randomDuration,
+						releaseDate, randomHour));
 			}
 		}
 
