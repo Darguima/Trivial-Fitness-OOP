@@ -5,7 +5,7 @@ import org.trivialfitness.activity.activityType.DistanceActivity;
 public class Walking extends DistanceActivity {
 
 	public Walking(int distanceKm) {
-		super("Walking", "Distance", true, distanceKm, 8);
+		super("Walking", "Distance", false, distanceKm, 8);
 	}
 
 	@Override
