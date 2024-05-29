@@ -5,7 +5,7 @@ import org.trivialfitness.activity.activityType.DistanceAltimetryActivity;
 public class OutdoorCycling extends DistanceAltimetryActivity {
 
 	public OutdoorCycling(int distanceKm, int heightMt) {
-		super("Outdoor Cycling", "Distance and Altimetry", true, distanceKm, 20, heightMt, 5);
+		super("Outdoor Cycling", "Distance and Altimetry", false, distanceKm, 20, heightMt, 5);
 	}
 
 	@Override
