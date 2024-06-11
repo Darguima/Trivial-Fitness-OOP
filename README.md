@@ -60,7 +60,7 @@ Although, I explain here the most important ones.
 ##### Developing 🧑‍💻
 
 ```bash
-$ ./gradlew run
+$ ./gradlew run --console=plain
 ```
 
 ##### Compiling the code 🛠️
