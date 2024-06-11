@@ -10,6 +10,10 @@ This project was developed for the subject OOP (POO in portuguese) from Universi
 
 https://github.com/Darguima/Trivial-Fitness-OOP/assets/49988070/bbd2d70a-da1f-415c-ab43-aceebe0d9468
 
+## Download 📥📲
+
+You can download the app on [project's releases](https://github.com/Darguima/Trivial-Fitness-OOP/releases).
+
 ### The goal ⛳️
 
 In some words, the goal of this project was to create a Java app to manage athletes and their activities. The app should be able to add, remove, edit and list athletes, trains and plans.
