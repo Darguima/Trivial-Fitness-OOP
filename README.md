@@ -4,12 +4,11 @@
 
 This project was developed for the subject OOP (POO in portuguese) from University of Minho - Software Engineering degree.
 
-#### Grade ⭐️ ⚠️⚠️ Complete this after the project is done ⚠️⚠️/20
+#### Grade ⭐️ 17/20
 
 ### Demo 📽️
 
-⚠️⚠️ Complete this after the project is done ⚠️⚠️
-<!-- ![Demo Image](./demo.png) -->
+https://github.com/Darguima/Trivial-Fitness-OOP/assets/49988070/bbd2d70a-da1f-415c-ab43-aceebe0d9468
 
 ### The goal ⛳️
 
@@ -19,7 +18,9 @@ If you want, you can read the [project statement](enunciado.pdf) (in Portuguese)
 
 ### About the Code 🧑‍💻
 
-⚠️⚠️ Complete this after the project is done ⚠️⚠️
+The main classes of the project are `TrainingPlans`, `Activities`, and `Users`. The latter two are abstract classes since there will be different types of activities and users. From a broad perspective, users store completed activities and training plans, while training plans store planned activities.
+
+The activity classes follow this hierarchy: `Activity > TypeOfActivity > SpecificActivity`. For example, `Activity -> RepetitionsActivity -> PushUps`.
 
 ## Getting Started 🚀
 
